@@ -148,7 +148,7 @@
         "prpp": 12,
         "pagination": "infinite",
         "filters": true,
-        "sbpos": "left",
+        "sbpos": "top",
         "tbg": false,
         "flbgcl": "#ffffff",
         "flbdr": "#f5f5f5",
