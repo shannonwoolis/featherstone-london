@@ -1,0 +1,1686 @@
+{% liquid
+    assign secSt = section.settings
+    assign isRtl = false
+    assign pmLeft = 'left'
+    assign pmRight = 'right'
+    assign lisRtl = 'ar,dv,ha,he,ku,fa,ur,ug' | split: ','
+    if lisRtl contains request.locale.iso_code or settings.rtl
+        assign isRtl = true
+        assign pmLeft = 'right'
+        assign pmRight = 'left'
+    endif
+%}
+<style>
+    #shopify-section-categories { z-index:99; }
+    .catmnTtl {min-width:220px; padding-{{ pmRight }}:15px; font-size:{{ section.settings.fst }}px; font-weight:{{ section.settings.fwt }}; color:{{ section.settings.mlcl }}; border-{{ pmRight }}:1px solid {{ section.settings.sepration }}; margin-{{ pmRight }}:10px; cursor:pointer;  }
+    .catmnTtl:hover { color:{{ section.settings.mlclh }}; }
+
+    #catNav { padding:13px 0; margin-top: 1px; pointer-events:none; opacity:0; visibility:hidden; position:absolute; {{ pmLeft }}:0; top:100%; width:250px; pointer-events:none;
+        background-color:{{ secSt.bg }}; border-radius:0 0 6px 6px; transform:translateY(20px); transition:all 0.3s ease-in; }
+	
+    #shopify-section-categories:hover #catNav { transform:translateY(0); opacity:1; visibility:visible; pointer-events:visible; pointer-events:visible; }
+    
+    #catNav a .lbl { color:{{ settings.nav_link_lbl }}; font-family:var(--ft1); font-size:11px; font-weight:400; letter-spacing:0; line-height:1; display:inline-block; padding:3px 4px; margin-top: 1px; height: 16px; margin-left:5px; }
+    #catNav .nm_lbl1 { background-color:{{ secSt.nlbl1 }}; }
+    #catNav .nm_lbl1 { background-color:{{ secSt.nlbl1 }}; }
+    #catNav .nm_lbl2 { background-color:{{ secSt.nlbl2 }}; }
+    #catNav .nm_lbl3 { background-color:{{ secSt.nlbl3 }}; }
+    #catNav .nm_lbl4 { background-color:{{ secSt.nlbl4 }}; }
+    #catNav .nm_lbl5 { background-color:{{ secSt.nlbl5 }}; }
+
+    #catNav > li > a { color:{{ secSt.cl }}; font-family:var(--{{ secSt.ft }}); font-size:{{ secSt.fs }}px; font-weight:{{ secSt.fw }}; padding:8px 20px 8px 25px; display:flex; align-items:center; }
+    #catNav > li:hover > a, #catNav > li > a.active { color:{{ secSt.clh }};}
+
+    .cmgmenu { opacity:0; visibility:hidden; padding:30px 35px 20px; margin:0; position:absolute; top:0; {{ pmLeft }}:100%; z-index:9999; min-height:100%; max-height:550px; width:950px; overflow:auto; border-radius:0 0 6px 6px;   background-color:{{ secSt.bg }};     
+        {% if section.settings.boxshdow %} box-shadow:0px 0px 15px rgba(0,0,0,0.1); {% endif %} pointer-events:none; transform:translateY(20px); transition:all 0.3s ease-in; }
+
+    .cmgmenu a.snav { color:{{ secSt.mcl }}; font-family:var(--{{ secSt.mft }}); font-size:{{ secSt.mfs }}px; font-weight:{{ secSt.mfw }}; display:inline-flex; margin-bottom:10px; }
+    .cmgmenu a.snav:hover { color:{{ secSt.mclh }}; }
+    
+    #catNav li.lvl-1 { margin-bottom:10px; }
+    #catNav a.lvl-1 { color:{{ secSt.mtcl }}; font-family:var(--{{ secSt.mtft }}); font-size:{{ secSt.mtfs }}px; font-weight:{{ secSt.mtfw }}; }
+    #catNav a.lvl-1:hover {  color:{{ secSt.mtclh }} }
+
+    .cmgmenu.st1 .imageCol { margin-bottom:30px; }
+    .cmgmenu.st1 .img-ttl { padding:6px 20px; border-radius:2px; color:{{ settings.nav_mm_link }}; background:{{ settings.nav_mm_bg }}; display:block; position:absolute; bottom:20px; }
+
+    .cmgmenu.st2 { padding:0; }
+    .cmgmenu.st2 .prColumn, #catNav > li .cmgmenu.style2 .mmftcolumn { padding:20px; width:auto; }
+    .cmgmenu.st2 .grid_bx { line-height:1.2; }
+
+    .cmgmenu.st4 { background-repeat:no-repeat; background-size:auto 100%; }
+    
+    .cmgmenu.st5 { padding:0;  }
+    .cm5main { border-bottom:1px solid #eee; }
+    #catNav .cm5main a.lvl-1 { padding:15px 20px; display:block; border-left:1px solid #eee; border-bottom:2px solid transparent; }
+    #catNav .cm5main a.lvl-1:last-child { border-right:1px solid #eee; }
+    #catNav .cm5main a.lvl-1:hover,
+    #catNav .cm5main a.lvl-1.active { color:{{ secSt.mtclh }}; border-bottom:2px solid {{ secSt.mtclh }}; }
+    
+    .admmsub { display:none; padding:30px; }
+    .admmsub.active { display:flex; }
+    .admmsub a { display:block; }
+    .mcatImg { width:var(--isz); height:var(--isz); border-radius:var(--ibr); }
+    .cmgmenu a.mcatLink { color:{{ secSt.mcl }}; font-size:{{section.settings.mfs}}px; display:inline-flex; padding:6px 10px 7px; align-items:center; }
+    .cmgmenu a.mcatLink:hover { color:{{ secSt.mclh }};}
+    
+    .cm6main { width:220px; margin-bottom:30px; }
+    #catNav .cm6main a.lvl-1 { font-size:{{section.settings.mtfs}}px; padding:12px; display:flex; align-items:center; border-{{ pmLeft }}:2px solid transparent; }
+    #catNav .cm6main a.lvl-1 + a.lvl-1 { border-top:1px solid #eee; }
+    #catNav .cm6main a.lvl-1:hover,
+    #catNav .cm6main a.lvl-1.active { color:{{ secSt.mtclh }}; border-{{ pmLeft }}-color:{{ secSt.mtclh }}; }
+    .cmgmenu.st6 .admmsub { padding:{% if isRtl %}0 30px 30px 0{% else %}0 0 30px 30px{% endif %}; }
+    
+    .cmgmenu.st7 { padding:30px; }
+
+    #catNav li:hover > div.cmgmenu { transform:translateY(0); opacity:1; visibility:visible; pointer-events:visible; }
+	
+	.admmsub .pr_review {   display: none; }
+
+    .cmgmenu.st7 li { padding-bottom:10px;}
+</style>
+{%- if section.blocks.size > 0 -%}
+<div class="catmnTtl fl f-aic f-jcs">
+    <svg class="at-icon mr15" viewBox="0 0 464.205 464.205" xmlns="http://www.w3.org/2000/svg"><g><g id="grip-solid-horizontal_1_"><path d="m435.192 406.18h-406.179c-16.024 0-29.013-12.99-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.99 29.013 29.013-.001 16.023-12.99 29.013-29.014 29.013z"/><path d="m435.192 261.115h-406.179c-16.024 0-29.013-12.989-29.013-29.012s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.012-29.014 29.012z"/><path d="m435.192 116.051h-406.179c-16.024 0-29.013-12.989-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.013-29.014 29.013z"/></g></g></svg></svg>
+    {{ section.settings.lbltx }} {% render 'icon-arrow', class: 'ml_auto mr10' %}
+</div>
+{% render 'navigation', secSt: section.settings, secblk:section.blocks, navType: 'cat', pmLeft:pmLeft, pmRiht:pmRiht %}
+<!--mbnav-->
+{% render 'mobile-nav', secSt: section.settings, navType: 'cat' %}
+<!--mbnave-->
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Categories",
+    "class": "fl pr hide-sm hide-md",
+    "settings": [	
+        {
+            "type":"checkbox",
+            "id":"sicn",
+            "label":"Show Icon/Image with Links?",
+            "default": true,
+			"info":"[How to set?](https://www.adornthemes.com/knowledge-base/icon-image-for-collection/)"
+        },
+        {
+            "type": "range",
+            "id": "icn",
+            "label": "Icon/img Size",
+            "default":30,
+            "min": 10,
+            "max": 70,
+            "step": 1,
+            "unit": "px"
+        }, 
+		{
+            "type":"text",
+            "id":"lbltx",
+            "label":"Menu Label ====",
+            "default": "Browse Categories"
+        },
+		{
+        "type": "range",
+        "id": "fst",
+        "label": "Font Size",
+        "default": 13,
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "fwt",
+        "label": "Font Weight",
+        "default": "400",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },	
+	  {
+        "type": "color",
+        "id": "mlcl",
+        "label": "Color",
+        "default": "#222"
+      },
+	 {
+        "type": "color",
+        "id": "mlclh",
+        "label": "Color Hover",
+        "default": "#777"
+      },
+       {
+        "type": "color",
+        "id": "sepration",
+        "label": "Separation Border",
+        "default": "#666"
+      },
+      {
+		"type": "header",
+        "content": "Mobile Navigation"
+	  },
+        {
+            "type":"checkbox",
+            "id":"sicnm",
+            "label":"Show Icon/Image with Links?",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "icnm",
+            "label": "Icon/img Size",
+            "default":30,
+            "min": 10,
+            "max": 70,
+            "step": 1,
+            "unit": "px"
+      },
+      {
+        "type": "checkbox",
+        "id": "spnav",
+        "label": "Display different Menu for Mobile?",		
+        "default": false
+      },
+      {
+        "type": "link_list",
+        "id": "mbmenu",
+        "label": "Select Mobile Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "header",
+        "content": "Popup Appearance ====="
+      },
+      {
+        "type": "color",
+        "id": "bg",
+        "label": "Background",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "cl",
+        "label": "Main Links",
+        "default": "#555"
+      },
+      {
+        "type": "color",
+        "id": "clh",
+        "label": "Main Links Hover & Active",
+        "default": "#000"
+      },
+      {
+        "type": "select",
+        "id": "ft",
+        "label": "Font Family",
+        "default": "ft1",
+        "options": [
+          {
+            "value": "ft1",
+            "label": "Font 1"
+          },
+          {
+            "value": "ft2",
+            "label": "Font 2"
+          },
+          {
+            "value": "ft3",
+            "label": "Font 3"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "fs",
+        "label": "Font Size",
+        "default": 13,
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "fw",
+        "label": "Font Weight",
+        "default": "400",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "boxshdow",
+        "label": "Enable Box Shadow?",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Megamenu Column Title ===="
+      },
+      {
+        "type": "color",
+        "id": "mtcl",
+        "label": "Link",
+        "default": "#555"
+      },
+      {
+        "type": "color",
+        "id": "mtclh",
+        "label": "Link Hover & Active",
+        "default": "#000"
+      },
+      {
+        "type": "select",
+        "id": "mtft",
+        "label": "Font Family",
+        "default": "ft2",
+        "options": [
+          {
+            "value": "ft1",
+            "label": "Font 1"
+          },
+          {
+            "value": "ft2",
+            "label": "Font 2"
+          },
+          {
+            "value": "ft3",
+            "label": "Font 3"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "mtfs",
+        "label": "Font Size",
+        "default": 14,
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "mtfw",
+        "label": "Font Weight",
+        "default": "700",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": "Megamenu Links ===="
+      },
+      {
+        "type": "color",
+        "id": "mcl",
+        "label": "Link",
+        "default": "#555"
+      },
+      {
+        "type": "color",
+        "id": "mclh",
+        "label": "Link Hover & Active",
+        "default": "#000"
+      },
+      {
+        "type": "select",
+        "id": "mft",
+        "label": "Font Family",
+        "default": "ft1",
+        "options": [
+          {
+            "value": "ft1",
+            "label": "Font 1"
+          },
+          {
+            "value": "ft2",
+            "label": "Font 2"
+          },
+          {
+            "value": "ft3",
+            "label": "Font 3"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "mfs",
+        "label": "Font Size",
+        "default": 13,
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "mfw",
+        "label": "Font Weight",
+        "default": "400",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+		"type": "header",
+        "content": "Menu Labels"
+	  },
+      {
+        "type": "color",
+        "id": "nav_link_lbl",
+        "label": "Label Text",
+        "default": "#fff"
+      },
+	  {
+        "type": "text",
+        "id": "nm_lbl1",
+        "label":"Label 1",
+        "default": "New"
+      },
+      {
+        "type": "color",
+        "id": "nlbl1",
+        "label": "Label 1",
+        "default": "#F26F6F"
+      },
+	  {
+        "type": "text",
+        "id": "nm_lbl2",
+        "label":"Label 2",
+        "default": "Sale"
+      },
+      {
+        "type": "color",
+        "id": "nlbl2",
+        "label": "Label 2",
+        "default": "#77D4D4"
+      },
+	  {
+        "type": "text",
+        "id": "nm_lbl3",
+        "label":"Label 3",
+        "default": "Hot"
+      },
+      {
+        "type": "color",
+        "id": "nlbl3",
+        "label": "Label 3",
+        "default": "#7fbf10"
+      },
+	  {
+        "type": "text",
+        "id": "nm_lbl4",
+        "label":"Label 4",
+        "default": "Popular"
+      },
+      {
+        "type": "color",
+        "id": "nlbl4",
+        "label": "Label 4",
+        "default": "#ED87B5"
+      },
+	  {
+        "type": "text",
+        "id": "nm_lbl5",
+        "label":"Label 5",
+        "default": "New"
+      },
+      {
+        "type": "color",
+        "id": "nlbl5",
+        "label": "Label 5",
+        "default": "#E79E82"
+      }
+	],
+    "blocks": [
+	  {
+        "type": "slink",
+        "name": "Single Link",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+             "default":"Menu Item"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          }         
+        ]
+      }, 
+	  {
+        "type": "m1",
+        "name": "MM Modern",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+            "default":"Menu Item"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          },
+ 			{
+            "type": "checkbox",
+            "id": "newtab",
+            "label": "Open Link in New Window?"
+          },  
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 2
+          },
+          {
+            "type": "header",
+            "content": "Image Columns ==="
+          },
+          {
+            "type": "select",
+            "id": "callPos",
+            "label": "Right or Bottom",
+            "default": "right",
+			"info": "You can show images at right or bottom of links",
+            "options": [
+              { "value": "right", "label": "Right" },
+              {
+                "value": "bottom",
+                "label": "Bottom"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "colWd",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "label": "Column Width",
+            "default": 50,
+			"unit": "%",
+			"info": "Option work when images show right of links"
+          },
+          {
+            "type": "range",
+            "id": "icol",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "label": "Columns per row",
+            "default": 2
+          },         
+          {
+            "type": "paragraph",
+            "content": "Image 1 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "iTtl1",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl1",
+            "label": "Link on Image"
+          },
+          {
+            "type": "paragraph",
+            "content": "Image 2 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "iTtl2",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl2",
+            "label": "Image 2 Link"
+          },
+          {
+            "type": "paragraph",
+            "content": "Image 3 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image3",
+            "label": "Image 3"
+          },
+          {
+            "type": "text",
+            "id": "iTtl3",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl3",
+            "label": "Image 3 Link"
+          },
+          {
+            "type": "paragraph",
+            "content": "Image 4 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image4",
+            "label": "Image 4",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "text",
+            "id": "iTtl4",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl4",
+            "label": "Image 4 Link"
+          },
+           {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Image Border Radius",
+            "default": 0
+          },
+           {
+            "type": "select",
+            "id": "ttla",
+            "label": "Title Alignment ====",
+            "default": "tc",
+            "options": [
+              { "value": "tl", "label": "Left" },
+              { "value": "tc", "label": "Center" },
+              { "value": "tr", "label": "Right" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "ttcl",
+            "label": "Title Color",
+            "default": "#111"
+          },
+          {
+            "type": "range",
+            "id": "ttfs",
+            "label": "Title Font Size",
+            "default": 13,
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+          },
+          {
+            "type": "select",
+            "id": "ttfw",
+            "label": "Title Font Weight",
+            "default": "600",
+            "options": [
+              {
+                "value": "300",
+                "label": "Light"
+              },
+              {
+                "value": "400",
+                "label": "Regular"
+              },
+              {
+                "value": "500",
+                "label": "Medium"
+              },
+              {
+                "value": "600",
+                "label": "Semi Bold"
+              },
+              {
+                "value": "700",
+                "label": "Bold"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          }
+        ]
+      },
+	  {
+        "type": "m2",
+        "name": "MM Products",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+             "default":"Menu Item"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+          	"type": "collection",
+          	"id": "collection",
+          	"label": "Sellect Collection"
+          },
+          {
+            "type": "range",
+            "id": "limit",
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "label": "Products Limit",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 2
+          },
+          {
+            "type": "text",
+            "id": "prodall",
+            "label": "Button Text",
+            "default": "View All Products"
+          },
+          {
+				"type": "select",
+				"id": "btn-style",
+				"label": "Select Button",
+				"default": "btn1",
+				"options": [
+				  {
+					"label": "Button 1",
+					"value": "btn1"
+				  },
+				  {
+					"label": "Button 2",
+					"value": "btn2"
+				  },
+				  {
+					"label": "Button 3",
+					"value": "btn3"
+				  },
+				  {
+					"label": "Button 4",
+					"value": "btn4"
+				  },
+				 {
+					"label": "Button 5",
+					"value": "btn5"
+				  },
+                  {
+                      "label": "Button 6",
+                      "value": "btn6"
+                  },
+                   {
+                      "label": "Button 7 Gradient",
+                      "value": "btn7"
+                  },
+                  {
+                      "label": "Button 8 Gradient",
+                      "value": "btn8"
+                  },
+                  {
+                      "label": "Link",
+                      "value": "btnLink"
+                    }  
+				]
+			  },
+          {
+            "type": "header",
+            "content": "Featured Column ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "ftcl",
+            "label": "Enable ?",
+			"default": true
+          },
+          {
+            "type": "range",
+            "id": "ftcl_wd",
+            "min": 20,
+            "max": 80,
+            "step": 1,
+            "label": "Columns Width",
+			"unit": "%",
+            "default": 50
+          },
+          {
+            "type": "image_picker",
+            "id": "ft_img",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "ft_ttl",
+            "label": "Title"
+          },
+          {
+            "type": "range",
+            "id": "ft_ttls",
+            "min": 13,
+            "max": 100,
+            "step": 1,
+            "label": "Title Size",
+            "default": 30
+          },
+          {
+            "type": "text",
+            "id": "ft_sttl",
+            "label": "Sub Title"
+          },
+          {
+            "type": "range",
+            "id": "ft_sttls",
+            "min": 10,
+            "max": 40,
+            "step": 1,
+            "label": "Sub Title Size",
+            "default": 15
+          },
+          {
+            "type": "text",
+            "id": "ft_btn",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "ft_link",
+            "label": "Link"
+          },
+          {
+            "type": "color",
+            "id": "ft_bg",
+            "label": "Background",
+            "default": "#333"
+          },
+          {
+            "type": "color",
+            "id": "txtcl",
+            "label": "Text",
+            "default": "#fff"
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          }
+        ]
+      },
+	  {
+        "type": "m3",
+        "name": "MM Top Image Columns",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+             "default":"Menu Item"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 1"
+          },
+          {
+            "type": "text",
+            "id": "ttl1",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Image"
+          },
+          {
+            "type": "collection",
+            "id": "url1",
+            "label": "Image Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu1",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 2"
+          },
+          {
+            "type": "text",
+            "id": "ttl2",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Image"
+          },
+          {
+            "type": "collection",
+            "id": "url2",
+            "label": "Image Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu2",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 3"
+          },
+          {
+            "type": "text",
+            "id": "ttl3",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image3",
+            "label": "Image",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "collection",
+            "id": "url3",
+            "label": "Image Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu3",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 4"
+          },
+          {
+            "type": "text",
+            "id": "ttl4",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image4",
+            "label": "Image",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "collection",
+            "id": "url4",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu4",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 5"
+          },
+          {
+            "type": "text",
+            "id": "ttl5",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image5",
+            "label": "Image",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "collection",
+            "id": "url5",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu5",
+            "label": "Select Menu"
+          },
+           {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Image Border Radius",
+            "default": 0
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          }
+        ]
+      },
+	  {
+        "type": "m4",
+        "name": "MM Background Image",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+             "default":"Menu Item"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 3
+          },
+          {
+            "type": "image_picker",
+            "id": "bg",
+            "label": "Background Image"
+          },
+          {
+            "type": "select",
+            "id": "bgimg_pos",
+            "label": "Image Position",
+			"default": "right",
+            "options": [
+              { "value": "left","label": "Left" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "space",
+            "label": "Space for Image",
+			"default": "30%",
+            "options": [
+              { "value": "20%","label": "20%" },
+              { "value": "30%", "label": "30%" },
+              { "value": "40%", "label": "40%" },
+              { "value": "50%", "label": "50%" },
+              { "value": "60%", "label": "60%" },
+              { "value": "70%", "label": "70%" }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          }
+        ]
+      },
+	  {
+        "type": "m5",
+        "name": "MM Advanced",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+             "default":"Menu Item"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          },
+ 			{
+            "type": "checkbox",
+            "id": "newtab",
+            "label": "Open Link in New Window?"
+          },  
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 2
+          },
+          {
+            "type": "header",
+            "content": "=== Products Block ==="
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection1",
+          	"label": "Link 1 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection2",
+          	"label": "Link 2 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection3",
+          	"label": "Link 3 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection4",
+          	"label": "Link 4 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection5",
+          	"label": "Link 5 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection6",
+          	"label": "Link 6 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection7",
+          	"label": "Link 7 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection8",
+          	"label": "Link 8 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection9",
+          	"label": "Link 9 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection10",
+          	"label": "Link 10 Collection"
+          },
+          {
+            "type": "range",
+            "id": "grid",
+            "label": "Products Per Row",
+            "default": 2,
+            "min": 1,
+            "max": 4,
+            "step": 1
+          },
+          {
+            "type": "range",
+            "id": "prlimit",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "label": "Number of Product to show",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "prColwd",
+            "min": 20,
+            "max": 70,
+            "step": 1,
+            "label": "Products Column Width",
+            "default": 40,
+			"unit": "%"
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          },
+          {
+            "type": "select",
+            "id": "mmal",
+            "label": "Box Align",
+			"default": "center",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": false,
+			"info":"Set inner content width max to layout width"
+          }
+		 
+        ]
+      },
+	  {
+        "type": "m6",
+        "name": "MM Categories",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu",
+            "info": "Use collection links only to show link with image"
+          },
+          {
+            "type": "checkbox",
+            "id": "icn",
+            "label": "Show Icon for Main Links?",
+            "default": false
+			
+          },
+           {
+            "type": "checkbox",
+            "id": "icn1",
+            "label": "Show Icon for Sub Links?",
+            "default": false			
+          },
+          {
+            "type": "radio",
+            "id": "icnt",
+            "label": "Icon Type",
+            "default": "1",
+            "options": [
+              {
+                "value": "1",
+                "label": "Collection Image"
+              },
+              {
+                "value": "2",
+                "label": "Icon/Image added by Metafield"
+              }
+            ],
+            "info":"[How to add by metafield?](https://www.adornthemes.com/knowledge-base/icon-image-for-collection/)"
+          },
+          {
+            "type": "header",
+            "content": "Main Links ==="
+          },
+          {
+            "type": "range",
+            "id": "icnsz",
+            "min": 20,
+            "max": 100,
+            "step": 2,
+            "label": "Icon Size",
+            "default": 30
+          },
+          {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Border Radius",
+            "default": 15
+          },
+          {
+            "type": "range",
+            "id": "fs",
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "label": "Font Size",
+            "default": 14
+          },
+          {
+            "type": "header",
+            "content": "Sub Links ==="
+          },
+          {
+            "type": "range",
+            "id": "sicnsz",
+            "min": 20,
+            "max": 200,
+            "step": 2,
+            "label": "Icon Size",
+            "default": 50
+          },
+          {
+            "type": "range",
+            "id": "sicnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Border Radius",
+            "default": 30
+          },
+          {
+            "type": "range",
+            "id": "sfs",
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "label": "Font Size",
+            "default": 16
+          },
+          {
+            "type": "radio",
+            "id": "tps",
+            "label": "Link Position",
+            "default": "1",
+            "options": [
+              {
+                "value": "1",
+                "label": "Left of Image"
+              },
+              {
+                "value": "2",
+                "label": "Bottom of Image"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 3
+          },
+          {
+            "type": "header",
+            "content": "Products ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "showpr",
+            "label": "Show Prducts?",
+            "default": true
+          },
+          {
+            "type": "range",
+            "id": "grid",
+            "label": "Products Per Row",
+            "default": 2,
+            "min": 1,
+            "max": 4,
+            "step": 1
+          },
+          {
+            "type": "range",
+            "id": "prlimit",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "label": "Number of Product to show",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "prColwd",
+            "min": 20,
+            "max": 70,
+            "step": 1,
+            "label": "Products Column Width",
+            "default": 40,
+			"unit": "%"
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+ 	    {
+			"type": "checkbox",
+			"id": "cwd",
+			"label": "Custom Width?",
+			"default": false
+		  },
+		  {
+			"type": "text",
+			"id": "bxwd",
+			"label": "Box Width",
+			"default": "600"
+		  },
+		  {
+			"type": "select",
+			"id": "mmal",
+			"label": "Box Align",
+			"default": "center",
+			"options": [
+			  { "value": "left", "label": "Left" },
+			  { "value": "center", "label": "Center" },
+			  { "value": "right", "label": "Right" }
+			]
+		  },
+		 {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": false,
+			"info":"Inner content width is equal to the layout width while fullwidth header."
+          }
+        ]
+      },
+	  {
+        "type": "m7",
+        "name": "MM Collections",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "collection",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu",
+            "info": "Use collection links only for this menu"
+          },
+          {
+            "type": "checkbox",
+            "id": "icn",
+            "label": "Show Icon/image?",
+            "default": true		
+          },
+          {
+            "type": "radio",
+            "id": "icnt",
+            "label": "Image Type",
+            "default": "1",
+            "info":"[How to add by metafield??](https://www.adornthemes.com/knowledge-base/icon-image-for-collection/)",
+            "options": [
+              {
+                "value": "1",
+                "label": "Collection Image"
+              },
+              {
+                "value": "2",
+                "label": "Image added by Metafield"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "icnsz",
+            "min": 20,
+            "max": 300,
+            "step": 5,
+            "label": "Image Size",
+            "default": 200
+          },
+          {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Border Radius",
+            "default": 0
+          },
+          {
+            "type": "radio",
+            "id": "tps",
+            "label": "Link Position",
+            "default": "2",
+            "options": [
+              {
+                "value": "1",
+                "label": "Left of Image"
+              },
+              {
+                "value": "2",
+                "label": "Bottom of Image"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "fs",
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "label": "Font Size",
+            "default": 14
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 5
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+		 {
+			"type": "checkbox",
+			"id": "cwd",
+			"label": "Custom Width?",
+			"default": false
+		  },
+		  {
+			"type": "text",
+			"id": "bxwd",
+			"label": "Box Width",
+			"default": "600"
+		  },
+		  {
+			"type": "select",
+			"id": "mmal",
+			"label": "Box Align",
+			"default": "center",
+			"options": [
+			  { "value": "left", "label": "Left" },
+			  { "value": "center", "label": "Center" },
+			  { "value": "right", "label": "Right" }
+			]
+		  },
+		  {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": false,
+			"info":"Inner content width is equal to the layout width while fullwidth header."
+          }
+        ]
+      }      
+    ]
+  }
+{% endschema %}

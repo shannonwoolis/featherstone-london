@@ -1,0 +1,254 @@
+{% assign secSt = section.settings %}
+{%- capture sidebar -%}
+    <div class="gitem wd20-md hide-sm" style="--cl:{{ secSt.scl }};--clh:{{ secSt.sclh }};--bg:{{ secSt.sbg }};--fs:{{ secSt.sfs }}px;--fsm:{{ secSt.sfsm }}px;--bdr:{{ secSt.scl | color_modify:'alpha', 0.1 }};">
+        <ul class="account-links">
+            <li class="mb20">{{ 'customer.account.welcome_text' | t }} <b class="dbi">{{ customer.name }}</b></li>
+            <li><a href="{{ routes.account_url }}"> {{ 'customer.orders.link_name' | t }} </a></li>
+            <li><a href="{{ routes.account_addresses_url }}"> {{ 'customer.addresses.link_name' | t }} </a></li>
+            <li><a href="{{ routes.account_logout_url }}"> {{ 'customer.account.logout' | t }} </a></li>
+        </ul>      
+    </div>
+{%- endcapture -%}
+<div class="sec_cov" style="--sbg:{{ secSt.bg }};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">  
+    <div class="page_min_h page-width">
+        {%- if request.page_type == 'customers/account' -%}
+            {% render 'ct-account', secSt: secSt, sidebar: sidebar %}
+        {%- elsif request.page_type == 'customers/order' -%}
+            {% render 'ct-order', secSt: secSt, sidebar: sidebar %}
+        {%- elsif request.page_type == 'customers/addresses' -%}
+            {% render 'ct-addresses', secSt: secSt, sidebar: sidebar %}
+        {%- endif -%}
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Account",
+  "settings": [
+		{
+            "type": "paragraph",
+            "content": "Title Text ===="
+        },
+        {
+            "type": "color",
+            "id": "cl",
+            "label": "Text Color",
+            "default": "#000"
+        },
+        {
+            "type": "range",
+            "id": "fs",
+            "label": "Font Size",
+            "default": 20,
+            "min": 10,
+            "max": 100,
+            "step": 1,
+            "unit": "px"
+        }, 
+        {
+            "type": "range",
+            "id": "fsm",
+            "label": "Font Size (mobile)",
+            "default": 18,
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "select",
+            "id": "fw",
+            "label": "Font Weight",
+            "default": "600",
+            "options": [
+                {
+                    "value": "300",
+                    "label": "Light"
+                },
+                {
+                    "value": "400",
+                    "label": "Regular"
+                },
+                {
+                    "value": "500",
+                    "label": "Medium"
+                },
+                {
+                    "value": "600",
+                    "label": "Semi Bold"
+                },
+                {
+                    "value": "700",
+                    "label": "Bold"
+                }
+            ]
+        },
+		{
+            "type": "paragraph",
+            "content": "Button ===="
+        },
+        {
+            "type": "select",
+            "id": "btn",
+            "label": "Button Design",
+            "default": "btn1",
+            "options": [
+              {
+                "label": "Button 1",
+                "value": "btn1"
+              },
+              {
+                "label": "Button 2",
+                "value": "btn2"
+              },
+              {
+                "label": "Button 3",
+                "value": "btn3"
+              },
+              {
+                "label": "Button 4",
+                "value": "btn4"
+              },
+              {
+                "label": "Button 5",
+                "value": "btn5"
+              },
+			  {
+                "label": "Button 6",
+                "value": "btn6"
+              },
+               {
+                  "label": "Button 7 Gradient",
+                  "value": "btn7"
+              },
+              {
+                  "label": "Button 8 Gradient",
+                  "value": "btn8"
+              },
+			  {
+                "label": "Link",
+                "value": "btnLink"
+              } 
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btnsz",
+            "label": "Button Size",
+            "default": "btn-md",
+            "options": [
+                {
+                    "label": "Small",
+                    "value": "btn-sm"
+                },
+                {
+                    "label": "Medium",
+                    "value": "btn-md"
+                },
+                {
+                    "label": "Large",
+                    "value": "btn-lg"
+                } 		  
+            ]
+        },
+		{
+            "type": "header",
+            "content": "Sidebar"
+        },
+        {
+            "type": "range",
+            "id": "sfs",
+            "label": "Font Size",
+            "default": 14,
+            "min": 10,
+            "max": 100,
+            "step": 1,
+            "unit": "px"
+        }, 
+        {
+            "type": "range",
+            "id": "sfsm",
+            "label": "Font Size (mobile)",
+            "default": 13,
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "color",
+            "id": "scl",
+            "label": "Text/Link",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "sclh",
+            "label": "Link Hover",
+            "default": "#555"
+        },
+        {
+            "type": "color",
+            "id": "sbg",
+            "label": "background",
+            "default": "#f3f3f3"
+        },
+		{
+            "type": "header",
+            "content": "SECTION"
+        },
+		{
+            "type": "paragraph",
+            "content": "Section Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background"        
+        }       
+  ] 
+}
+{% endschema %}

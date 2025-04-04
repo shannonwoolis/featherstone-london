@@ -1,0 +1,249 @@
+{% capture upsellBundel %}
+{% assign secSt = section.settings %}
+{%- assign crProduct = product -%}
+{%- assign fbtCollection = collections[secSt.collection] -%}
+{% if fbtCollection != blank and fbtCollection.products.size > 1 %}
+<style>
+    .fbtGroup .gitem { min-height:100%; height: auto; }
+    .fbtGroup .swiper-wrapper .gitem + .gitem:before { content:"+"; font-size:25px; font-weight:300; position:absolute; top:44%; left:-6px; opacity: 0.8; }
+    .fbtCol { background-color:#fff; padding:10px; margin:0 5px; }
+    .fbtCol:not(.checked) { opacity:0.5; }
+    .fbtCol .fblbl  { cursor:pointer; padding:15px 0 10px; }
+    .fbtCol .fblbl .checkbox {margin-top:5px;}
+    .fbtCol .mainPr { pointer-events:none; }
+    .fbtCol .price { color:{{ settings.gprice_clr }}; }
+    .fbtbtnCall { width:100%; padding:0 10px;}
+    .fbtPrice { color:{{ settings.gprice_clr }}; font-size:120%; }
+    @media only screen and (min-width:766px){       
+        .fbtbtnCall { width:250px; margin-left: 30px; }
+    }
+</style>
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">   
+    <div class="{% if secSt.sw %}fw-sec{% else %}page-width{% endif %}" id="{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="upsale">
+        {% render 'sec-title' %}
+        <product-bundel>
+            {%- assign product_form_id = 'product-upsell-' | append: section.id -%}
+            {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                <div class="fbtGroup fl f-col f-row-md f-aic f-jcsb">
+                    <div id="upsellSlider" class="grid w_100 rwcols-{{ secSt.gridmb }} rwcols-md-{{ secSt.gridtb }} rwcols-lg-{{ secSt.grid }} grid-products swiper mb20 mb0-md">
+                        <div class="swiper-wrapper">
+                        {% for product in fbtCollection.products %}
+                            {%- assign current_variant = product.selected_or_first_available_variant -%}
+                            {%- assign index = forloop.index -%}
+                            {%- assign cu_pr = current_variant.price -%}
+                            {%- assign price = price | plus:cu_pr -%}
+                            <div class="swiper-slide gitem fl">
+                                <div class="fbtCol w_100 checked">
+                                    <a class="grid-view-item__link" href="{{ product.url }}" title="{{ product.title }}">
+                                        <div class="grid_img lazyload" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes: '150,300,420' %}" data-sizes="auto" data-parent-fit="contain"></div>
+                                    </a>
+                                    <div class="fbdata">
+                                        <label class="fl fblbl mb0{% if crProduct == product %} mainPr{% endif %}">
+                                             <input type="checkbox" id="fbtCk{{ index }}" class="custCheck fbtCheck" checked="checked"><span class="checkbox"></span>
+                                             <div>
+                                             <p class="mb5">{% if crProduct == product %}<b class="hide">{{ 'products.upsell.this_item' | t }} :</b>{% endif %} {{ product.title | truncatewords: 12 }}</p>
+                                             <div class="price fwb mb5">{{ current_variant.price | money }}</div>
+                                            </div>
+                                        </label>
+                                        <label class="hidden_txt" for="PrSelect-{{ product.id }}">Select Variant</label>
+                                        <select name="items[][id]" id="PrSelect-{{ product.id }}" class="w_100 mb0 fbtVr{% if product.variants[0].title == 'Default Title'  %} hide{% endif %}{%- unless current_variant.available -%} disable{% endunless %}">
+                                            {%- for variant in product.variants -%}
+                                                {%- if variant.available -%}<option{% if variant == current_variant %} selected="selected"{% endif %} value="{{ variant.id }}" {%- if variant.image -%}data-img="{{ variant.image | default:pr.featured_image | img_url:'350x' }}"{% endif %} data-price="{{ variant.price }}">{{ variant.title }}</option>{%- endif -%}
+                                            {%- endfor -%}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                        <div class="swarw upslnext swiper-button-next"></div>
+                        <div class="swarw upslprev swiper-button-prev"></div>
+                    </div>
+                    <div class="fbtbtnCall">
+                        <p>{{ 'products.upsell.total' | t }}: <b class="fbtPrice" data-total="{{ price }}" data-pr="{{ price }}">{{ price | money }}</b></p>
+                        <div class="pform-error-wrap errors" role="alert" hidden> {% render 'icon-error' %}<span class="ml5 pform-error-msg"></span></div>
+                        <p>
+                            <button type="submit" name="add" id="AddToCart-{{ section.id }}" class="btn upsellAddToCart">
+                                <span class="txt">{{ 'products.upsell.button' | t }}</span>
+                                <div class="loading-overlay__spinner hidden">{% render 'icon-loading' %}</div>
+                            </button>
+                        </p>
+                        <div>{{ fbtCollection.description }}</div>
+                    </div>
+                </div>
+            {%- endform -%}
+        </product-bundel>
+    </div>
+</div>
+<script src="{{ 'upsell-bundle.js' | asset_url }}" defer="defer"></script>
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+    var swiper = new Swiper('#upsellSlider', {
+      loop: false,
+      slidesPerView: 'auto',
+      watchOverflow: true,
+    navigation: {
+        nextEl: ".upslnext",
+        prevEl: ".upslprev",
+      },
+    });
+});
+</script>
+{% endif %}
+{% endcapture %}
+{{ upsellBundel | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+  {
+    "name": "Upsell Product Bundle",
+    "class": "index-section",
+    "settings": [
+      {
+        "type":"paragraph",
+        "content":"[How to display?](https://www.adornthemes.com/knowledge-base/how-to-set-upsell-product-bundle/)"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Frequently Bought Together"
+      },	  
+	  {
+         "type": "textarea",
+         "id": "subtitle",
+         "label": "Sub Heading",
+         "default": "Describe your products, collection etc..."		
+      },
+      {
+         "id": "collection",
+         "type": "collection",
+         "label": "Select Collection"
+      },           	 
+      {
+        "type": "paragraph",
+        "content": "Products Per Row ==="
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": "Desktop",
+        "default": 4,
+        "min": 2,
+        "max": 7,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridtb",
+        "label": "Tablet",
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridmb",
+        "label": "Mobile",
+        "default": 2,
+        "min": 1,
+        "max": 3,
+        "step": 1
+      },
+	  {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate Products",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "speed",
+        "label": "Change Product Every",
+        "default": 5,
+        "min": 1,
+        "max": 30,
+        "step": 1,
+		"unit": "Sec"
+      },
+	  {
+		"type":"paragraph",
+		"content":"Set other Products grid option from Theme Settings --> Products Grid"
+	 },
+	{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fafafa"	         
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false           
+        },		               
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide in Mobile?",
+            "default": false
+        }
+	 ]
+  }
+{% endschema %}

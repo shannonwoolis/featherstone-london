@@ -1,0 +1,390 @@
+{% assign secSt = section.settings %}
+{%- capture storeFeatures -%}
+{%- capture style -%}
+    --cl:{{ secSt.cl }};--ftfs:{{ secSt.ftfs }}px;--ftfsm:{{ secSt.ftfsm }}px;--ftfw:{{ secSt.ftfw }};--fs:{{ secSt.fs }}px;--fsm:{{ secSt.fsm }}px;--icns:{{ secSt.icns }}px;--icnsm:{{ secSt.icnsm }}px;
+	--iconbg:{{ secSt.iconbg }};--boxbg:{{ secSt.boxbg }}; --bdr:{{ secSt.bdr }}; --bdrh:{{ secSt.bdr | color_darken:5 }}; --brad:{{ secSt.brad }}px;    
+	{% if secSt.style == 'stl4' %}
+       --icnwd:{{ secSt.icns | plus:40 }}px;--icnwdm:{{ secSt.icnsm | plus:40 }}px;
+    {% else %}
+        --icnwd:{{ secSt.icns | plus:20 }}px;--icnwdm:{{ secSt.icnsm | plus:20 }}px;
+    {% endif %}		
+{%- endcapture -%}
+
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">  	
+    <div class="{% if secSt.sw %}fw-sec{% else %}page-width{% endif %}">   
+        {% render 'sec-title' %}
+        <ul class="grid rwcols-{{ secSt.gridmb }} rwcols-md-{{ secSt.gridtb }} rwcols-lg-{{ secSt.grid }} store-info {{ secSt.style }}{% if secSt.style == 'stl1' or secSt.style == 'stl4'%} tc{% endif %}" style="{{ style }}">
+            {% for block in section.blocks limit: section.blocks.size %}
+                {%- assign blkSt = block.settings -%}
+                <li class="gitem{% if secSt.style == 'stl5' %} fl tc{% endif %}" {{ block.shopify_attributes }}>
+                    <{% if blkSt.url != blank %}a href="{{ blkSt.url }}"{% else %}div{% endif %} class="db{% if secSt.box %} futr{% endif %}{% if secSt.style == 'stl2' %} fl{% elsif secSt.style == 'stl3'%} fl f-aic{% elsif secSt.style == 'stl5' %} w_100{% endif %}">
+                        {% if secSt.showicn %}
+                        <div class="icnWr">
+                            {% if blkSt.image != blank %}
+                                {%- assign iconsz = secSt.icns | times: 2 | append: 'x' -%}
+                                <img class="imgFl lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ blkSt.image | img_url: iconsz }}" width="{{ secSt.icns }}" height="{{ secSt.icns }}" alt="{{ blkSt.image.alt | default: blkSt.title | escape }}" />
+                            {%- else -%}
+                                <svg class="iconph" xmlns="http://www.w3.org/2000/svg" width="256px" height="256px" viewBox="0 0 256 256"><polygon points="127.997,239.248 255,16.752 179.3,16.767 100.177,155.267 30.775,33.679 65.334,33.679 105.458,103.75 114.998,87.999 74.331,16.752 1,16.752 99.949,190.107 189.239,33.679 225.335,33.679 128.056,204.112 117.638,185.902 107.553,203.606" fill="{{ secSt.cl }}"/></svg>
+                            {%- endif -%}
+                        </div>
+                        {% endif %}
+                        <div class="fl1">
+                            {% if blkSt.title != blank %}<div class="bl_ttl">{{ blkSt.title }}</div>{% endif %}
+                            {% if secSt.style != 'stl3' and blkSt.text != blank %}{{ blkSt.text }}{% endif %}
+                        </div>
+                    </{% if blkSt.url != blank %}a{% else %}div{% endif %}>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if section.blocks.size == 0 %}{% render 'no-blocks' %}{% endif %}
+    </div>
+</div>
+{%- endcapture -%}
+{{ storeFeatures | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+    "name": "Icons & Text",
+    "class": "index-section",
+    "settings":[              		
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"       
+        },
+        {
+            "type": "textarea",
+            "id": "subtitle",
+            "label": "Sub Heading"         
+        }, 		
+        {
+            "type": "select",
+            "id": "style",
+            "label": "Select Style",
+            "default": "stl1",
+            "info":"[preview style](https://vogal-demo.myshopify.com/pages/icon-with-text)",
+            "options": [
+                {
+                    "value": "stl1",
+                    "label": "Style 1 : Multiple Line Text"
+                },
+                {
+                    "value": "stl2",
+                    "label": "Style 2 : 2 Line Text"
+                },
+                {
+                    "value": "stl3",
+                    "label": "Style 3 : 1 Line Text"
+                },
+                {
+                    "value": "stl4",
+                    "label": "Style 4 : Icons Background"
+                }               
+            ]
+        },	
+        {
+            "type":"checkbox",
+            "id":"showicn",
+            "label":"Show Icon?",
+            "default": true
+        },
+		{
+            "type": "range",
+            "id": "icns",
+            "label": "Icons Size",
+            "default": 30,
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "icnsm",
+            "label": "Icons Size (mobile)",
+            "default": 30,
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "unit": "px"
+        },     
+		{
+            "type": "color",
+            "id": "iconbg",
+            "label": "Icons Background",
+            "default":"#fff"
+        },				       
+        {
+            "type": "color",
+            "id": "cl",
+            "label": "Features Text",
+            "default":"#333"
+        },
+        {
+            "type":"paragraph",
+            "content":"Title Text ===="
+        },
+        {
+            "type": "range",
+            "id": "ftfs",
+            "label": "Title Size",
+            "default": 15,
+            "min": 10,
+            "max": 60,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "ftfsm",
+            "label": "Title Size (mobile)",
+            "default": 14,
+            "min": 10,
+            "max": 60,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "select",
+            "id": "ftfw",
+            "label": "Font Weight",
+            "default": "600",
+            "options": [
+              {
+                "value": "300",
+                "label": "Light"
+              },
+              {
+                "value": "400",
+                "label": "Regular"
+              },
+              {
+                "value": "500",
+                "label": "Medium"
+              },
+              {
+                "value": "600",
+                "label": "Semi Bold"
+              },
+              {
+                "value": "700",
+                "label": "Bold"
+              }
+            ]
+        },
+        {
+            "type":"paragraph",
+            "content":"Small Text ===="
+        },
+        {
+            "type": "range",
+            "id": "fs",
+            "label": "Text Size",
+            "default": 14,
+            "min": 10,
+            "max": 60,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "fsm",
+            "label": "Text Size (mobile)",
+            "default": 13,
+            "min": 10,
+            "max": 60,
+            "step": 1,
+            "unit": "px"
+        },
+		{
+            "type": "checkbox",
+            "id": "box",
+            "label": "Add Box?",
+            "default": false
+        },	
+		{
+            "type": "color",
+            "id": "boxbg",
+            "label": "Box Background",
+            "default":"#fafafa"           
+        },		 
+		{
+            "type": "color",
+            "id": "bdr",
+            "label": "Box Border",
+            "default":"#fff"            
+        },
+		{
+            "type": "range",
+            "id": "brad",
+            "label": "Box Radius",
+            "default": 5,
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "unit": "px"
+        },       
+        {
+            "type": "paragraph",
+            "content": "Features Per Row ==="
+        },
+        {
+            "type": "range",
+            "id": "grid",
+            "label": "Desktop",
+            "default": 4,
+            "min": 1,
+            "max": 8,
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "gridtb",
+            "label": "Tablet",
+            "default": 4,
+            "min": 1,
+            "max": 4,
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "gridmb",
+            "label": "Mobile",
+            "default": 1,
+            "min": 1,
+            "max": 3,
+            "step": 1
+        },              
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },		              
+	   {
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	 
+    ],
+    "blocks": [
+        {
+            "type": "text_block",
+            "name": "Column",
+            "settings": [    
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image or Svg Icon",
+                    "info":"[Available SVG icons.](https://adornthemes.com/documentation/vogal/svg-icons.html)"
+                },                
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "FEATURE TITLE TEXT"                   
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Text",
+                    "default":"Add feature short description"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Url"            
+                }   
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Icons & Text",        
+            "blocks": [
+                {
+                    "type": "text_block"
+                },
+                {
+                    "type": "text_block"
+                },
+                {
+                    "type": "text_block"
+                },
+                {
+                    "type": "text_block"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

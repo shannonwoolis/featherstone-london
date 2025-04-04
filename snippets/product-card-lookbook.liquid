@@ -1,0 +1,48 @@
+{%- liquid
+    assign prUrl = product.url | within: collection
+	assign quickUrl = product.url | split: "?" | first
+    
+    if settings.clurl
+        assign prUrl = product.url
+    endif
+-%}
+{%- assign all_my_products = collections['all'].products %}
+{% paginate collections['all'].products by '1000' %}
+    {% for tmp_product in collections['all'].products %}
+    	{% if tmp_product.handle == slproduct %}
+        	{%- assign product = tmp_product -%}
+            {% break %}
+		{% endif %}
+    {% endfor %}
+{% endpaginate %}
+<div class="lb_shop fl f-aic {{ postion }}{% unless product.available %} sold-out{% endunless %} brad" style="--brad:{{ secSt.sbrad  }}px;">
+    <a class="lb_img" href="{{ prUrl }}">
+      <div class="grid_img lazyload{% if secondImg and product.images.size > 1 %} primary{% endif %}" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes:'100,200,300,400' %}" data-sizes="auto" data-parent-fit="contain"></div>
+    </a>
+
+  <div class="details fl1 ml15">
+    {% if settings.show_vendor %}<div class="grid_vendor hide">{{ product.vendor }}</div>{% endif %}
+    <a href="{{ prUrl }}" class="grid_title">{{ product.title }}</a>
+    {% unless settings.catalogmode %}
+      <div class="grid_meta">{% render 'product-price', product: product %}</div>
+      {% assign variantCount = product.variants | size %}
+      {% if variantCount > 1 %}
+          {% if settings.quickshop %}
+              <a class="btn {{ secSt.btn-style }} mt5 btn--small btn-options quickShop" href="{{ quickUrl }}?section_id=quick-shop">{{ 'products.product.quick_shop' | t}}</a>                  	
+          {% else %}
+              <a class="btn {{ secSt.btn-style }} mt5 btn--small btn-options" href="{{ prUrl }}">{{ 'products.product.select_options' | t }}</a>
+          {% endif %}
+      {% else %}
+          <a class="btn {{ secSt.btn-style }} mt5 btn--small add-to-cart" href="javascript:void(0);" id="{{ product.variants.first.id }}" rel="1">{{ 'products.product.add_to_cart' | t }}</a>
+          <product-form class="product-form hide">
+            {%- form 'product', product, id: 'quickadd', class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <div class="product-form__buttons">
+              <button type="submit" name="add" id="AddToCart-{{ product.id }}" class="cartBtn"><span id="AddToCartText-{{ product.id }}">{{ 'products.product.add_to_cart' | t }}</span><div class="loading__spinner hidden"></div></button>
+            </div>
+            {%- endform -%}
+        </product-form>
+      {% endif %}
+    {% endunless %}
+  </div>
+</div>

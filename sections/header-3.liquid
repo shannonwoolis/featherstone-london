@@ -1,0 +1,1617 @@
+{%- capture siteHeader -%}
+{%- assign secSt = section.settings -%}
+{%- liquid
+    assign logo = settings.logo
+    assign istrnsparent = false
+    if secSt.trhead
+        assign logo = secSt.logo | default: logo
+    endif
+    assign pageType = request.page_type
+    if pageType == 'index' and secSt.trhead 
+        assign istrnsparent = true 
+    elsif pageType == 'collection' and secSt.trheadcl
+        assign istrnsparent = true
+    elsif pageType == 'blog' and secSt.trheadbg
+        assign istrnsparent = true
+    elsif pageType == 'article' and secSt.trheadar and article.image != blank
+        assign istrnsparent = true
+    else
+        assign istrnsparent = false 
+    endif
+-%}
+  
+<style>
+{% if istrnsparent %}
+    .hdr_wrap:not(.sticky_hdr) { height:0; overflow:visible; }
+    .hdr_wrap:not(.sticky_hdr) .hdicon,
+    .hdr_wrap:not(.sticky_hdr) .lvl1 > a,
+    .hdr_wrap:not(.sticky_hdr) .crlgTtl,  .hdr_wrap:not(.sticky_hdr) .socIcn a  { color:{{ secSt.thcl }}!important; }
+    .hdr_wrap:not(.sticky_hdr) .stlogo,
+    .hdr_wrap.sticky_hdr .trlogo { display:none !important; }
+    .hdr_wrap:not(.sticky_hdr) #main_navwr { background-color:transparent; border:0 none; }
+    .hdr_wrap.sticky_hdr { position:fixed; }
+    #PageContainer { --hdht:{{ settings.headerht | plus: 40 }}px; --hdhtm:{{ settings.headerhtm }}px; }
+{% endif %}
+.leftcol .s_res {width:400px !important}
+</style>
+  
+{%- capture logo -%}
+<div class="header-logo">
+  <a href="{{ routes.root_url }}" itemprop="url" class="hdr_logo_lnk">
+    {%- capture logoWidth -%}{{ settings.logo_width }}x{%- endcapture -%}
+    {%- assign istrLogo = false -%}
+    {%- if istrnsparent -%}
+        <img loading="lazy" src="{{ logo | img_url: logoWidth }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: logo.aspect_ratio | floor }}" alt="{{ logo.alt | default: shop.name }}" srcset="{{ logo | img_url: logoWidth }} 1x, {{ logo | img_url: logoWidth, scale: 2 }} 2x" class="trlogo">
+    {%- endif -%}
+    {%- if settings.logo != blank -%}
+        <img loading="lazy" src="{{ logo | img_url: logoWidth }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | floor }}" alt="{{ settings.logo.alt | default: shop.name }}" srcset="{{ settings.logo | img_url: logoWidth, scale: 2 }} 1x, {{ settings.logo | img_url: logoWidth, scale: 4 }} 1.1x" class="stlogo">
+    {%- else -%}
+        {{ shop.name }}
+    {%- endif -%}
+    <span class="hidden_txt">{{ shop.name }}</span>
+  </a>
+  </div>
+{%- endcapture -%}
+
+{%- capture promo -%}
+    {%- if section.settings.protxt != blank -%}
+        <div class="fl f-aic promo_txt hide-sm{% if secSt.hdrStyle == '2' %} big{% endif %}">
+            {%- if secSt.prico != blank -%}
+              <img class="at-icon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ secSt.prico | img_url: iconsz }}" width="30" height="30" alt="{{ secSt.prico.alt }}" />
+            {%- endif -%}
+            <div style="color:{{ section.settings.ptxtcl }}">{{ section.settings.protxt }}</div>
+        </div>
+    {%- endif -%}
+{%- endcapture -%}
+
+<header id="header" class="fl f-aic pr main_hdr{% if settings.headerfw or settings.layout_style == 'fullwidth' %} fw-sec{% else %} page-width{% endif %}" data-section-id="header" data-section-type="header" style="--hdspac:{{ secSt.head_space }}px;">
+
+      <div class="fl1 fl f-aic mbnavCol hide-lg">
+        <a href="#" class="hdicon navToggle" title="{{ 'sections.navigation.menu' | t }}"><svg class="at-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 464.205 464.205"><path d="m435.192 406.18h-406.179c-16.024 0-29.013-12.99-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.99 29.013 29.013-.001 16.023-12.99 29.013-29.014 29.013z"/><path d="m435.192 261.115h-406.179c-16.024 0-29.013-12.989-29.013-29.012s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.012-29.014 29.012z"/><path d="m435.192 116.051h-406.179c-16.024 0-29.013-12.989-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.013-29.014 29.013z"/></svg></a>
+          {% if settings.enable_search %}
+		  <a class="hdicon searchIcn" href="{{ routes.search_url }}" title="{{ 'sections.header.search' | t }}">{% render 'icon-search' %}</a>
+        {% endif %}
+      </div>
+      <div class="fl1 leftcol fl f-aic hide-sm hide-md">
+          {% if secSt.leftcol == '1' %}
+                {{ promo }}
+            {% elsif secSt.leftcol == '2' %}
+                {% if settings.mlcurrency or settings.mlLang %}{% render 'currencyLang' %}{% endif %}
+            {% elsif secSt.leftcol == '3' %}
+                {% render 'social-media' %}
+            {% elsif secSt.leftcol == '4' %}
+              {% render 'search-form', frmClas: 'hdSearch' %}
+            {% endif %}
+      </div>
+
+      {{ logo }}
+
+      <div class="fl1 fl f-jce icons-col">                                                                                                           
+
+        {% if settings.enable_search %}
+          {%  unless section.settings.leftcol == '4' %}
+		  <a class="hdicon searchIcn hide-sm hide-md" href="{{ routes.search_url }}" title="{{ 'sections.header.search' | t }}">
+              {% render 'icon-search', icntyp: secSt.icntyp %}
+              <p class="m0{% if secSt.icntyp == '1' %} hide{% else %} hide-sm hide-md{% endif %}{% if secSt.icntyp == '2' %} pdt5{% endif %}">{{ 'sections.header.search' | t }}</p>
+          </a>
+          {%  endunless %}
+        {% endif %}
+        
+        {% if shop.customer_accounts_enabled %}
+		  <a class="hdicon user-menu" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" title="{{ 'sections.header.account' | t }}">
+                {% render 'icon-account', icntyp: secSt.icntyp %}
+                <p class="m0{% if secSt.icntyp == '1' %} hide{% else %} hide-sm hide-md{% endif %}{% if secSt.icntyp == '2' %} pdt5{% endif %}">{{ 'sections.header.account' | t }}</p>
+            </a>
+        {% endif %}
+
+        {% if settings.wishlist %}
+            <a class="hdicon" href="{{ pages[settings.wishlist_page].url }}" title="{{ 'sections.header.wishlist' | t }}">
+                {% render 'icon-wishlist', icntyp: secSt.icntyp %}
+                <p class="m0{% if secSt.icntyp == '1' %} hide{% else %} hide-sm hide-md{% endif %}{% if secSt.icntyp == '2' %} pdt5{% endif %}">{{ 'sections.header.wishlist' | t }}</p>
+            </a>
+        {% endif %}
+
+        {%- unless settings.catalog-mode -%}						
+            <a href="{{ routes.cart_url }}" class="hdicon" id="cartLink" title="{{ 'sections.header.cart' | t }}">
+                {% render 'icon-cart', icntyp: secSt.icntyp %}
+                {% if secSt.icntyp != '3' %}<b id="cart-icon-bubble" class="cartCount pp">{{ cart.item_count }}</b>{% endif %}
+                <p class="m0{% if secSt.icntyp == '1' %} hide{% else %} hide-sm hide-md{% endif %}{% if secSt.icntyp == '2' %} pdt5{% endif %}">{{ 'sections.header.cart' | t }}{% if secSt.icntyp == '3' %} (<b id="cart-icon-bubble" class="cartCount">{{ cart.item_count }}</b>){% endif %}</p>
+            </a>
+        {%- endunless -%}
+      </div>
+    </header>
+    <nav id="main_navwr" class="{% if istrnsparent %}trnsprt{% endif %} hide-sm hide-md" role="navigation">
+        {% render 'navigation', secSt: section.settings, secblk:section.blocks %}
+    </nav>
+</div>
+<div class="mob_nav_wr hide-lg" role="navigation">
+    <div class="closeMnav navToggle fl f-jcc f-aic" role="button" aria-label="{{ 'sections.navigation.close' | t }}">{% render 'icon-close' %}</div>
+    {% if secSt.catnav %}
+        <div class="fl">
+            <a href="#mobNav" class="fl1 mnvTtl active">{{ 'sections.navigation.menu' | t }}</a>
+            <a href="#mobCtnav" class="fl1 mnvTtl">{{ 'sections.navigation.categories' | t }}</a>
+        </div>
+    {% endif %}
+    {% render 'mobile-nav', secSt: section.settings, secblk:section.blocks %}
+    {% if secSt.catnav %}<ul id="mobCtnav" class="mobNav" style="--icnrad:{{ section.settings.icnrad}}px">{% for link in linklists[secSt.catmenu].links %}{% render 'mb-cat-links', link: link, secSt: section.settings %}{% endfor %}</ul>{% endif %}
+{%- endcapture -%}
+{{ siteHeader | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+ {
+    "name": "Header - Menu Bottom",
+	"class":"hdr_wrap",
+    "settings": [      	 
+ 	  {
+        "type": "select",
+        "id": "icntyp",
+        "label": "Group Button Type",
+        "default": "1",
+        "options": [
+          {
+            "label": "Icons only",
+            "value": "1"
+          },         
+          {
+          "label": "Icon with Text",
+            "value": "2"
+          },         
+          {
+          "label": "Text only",
+            "value": "3"
+          }
+        ]
+      },
+	  {
+        "type": "header",
+        "content": "Left Column"
+      },
+      {
+            "type": "select",
+            "id": "leftcol",
+            "label": "Left Column",
+            "default": "1",
+            "info":"Enable Currency & Language from Theme Settings",
+            "options": [
+              {
+                "label": "Promo Text",
+                "value": "1"
+              },         
+              {
+              "label": "Currency & Language",
+                "value": "2"
+              },         
+              {
+              "label": "Social Icons",
+                "value": "3"
+              },         
+              {
+              "label": "Small Search",
+                "value": "4"
+              }
+            ]
+        },
+        {
+		 "type": "paragraph",
+		 "content":"Promo Text ===="
+      },
+      {
+          "type": "image_picker",
+          "id": "prico",
+          "label": "Image or Svg Icon",
+          "info":"[Available SVG icons.](https://adornthemes.com/documentation/vogal/svg-icons.html)"
+      },
+      {
+        "type": "textarea",
+        "id": "protxt",
+        "label": "Promo Text",
+        "default": "Expert Support<br \/>Available 24\/7 via chat"
+      },
+	 {
+        "type": "color",
+        "id": "ptxtcl",
+        "label": "Promo Text",
+        "default": "#111"
+     },
+	  {
+        "type": "header",
+        "content": "Transparent Header"
+      },
+      {
+        "type": "checkbox",
+        "id": "trhead",
+        "label": "Enable for home page",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "trheadcl",
+        "label": "Enable for collection page",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "trheadbg",
+        "label": "Enable for blog page",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "trheadar",
+        "label": "Enable for article page",
+        "default": false
+      },
+	  {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo Image"
+      },     
+	  {
+        "type": "color",
+        "id": "thcl",
+        "label": "Text & Icon",
+        "default": "#fff"
+      },
+	 {
+        "type": "header",
+        "content": "Main Navigation"
+      },
+      {
+		 "type": "paragraph",
+		 "content":"[Preview all styles and how to set](https://adornthemes.gitbook.io/vogal-theme/basic-configuration/menu-setup) Customize look from Theme Settings -> Header -> Main Navigation"
+      }, 
+      {
+		"type": "header",
+        "content": "Mobile Navigation"
+	  },
+      {
+        "type": "checkbox",
+        "id": "spnav",
+        "label": "Show different Menu for mobile",		
+        "default": true
+      },
+      {
+        "type": "link_list",
+        "id": "mbmenu",
+        "label": "Select Mobile Menu",
+        "default": "main-menu"
+      },
+      {
+		"type": "paragraph",
+        "content": "Categories Menu ===="
+	  },
+      {
+        "type": "checkbox",
+        "id": "catnav",
+        "label": "Show?",
+        "default": true
+      },
+      {
+        "type": "link_list",
+        "id": "catmenu",
+        "label": "Select Menu",
+        "default": "main-menu"
+      },
+      {
+            "type":"checkbox",
+            "id":"sicnm",
+            "label":"Show Icon Image?",
+            "default": true,
+			"info":"[How to add?](https://www.adornthemes.com/knowledge-base/icon-image-for-collection/)"
+      },
+      {
+            "type": "range",
+            "id": "icnm",
+            "label": "Icon/img Size",
+            "default":30,
+            "min": 10,
+            "max": 70,
+            "step": 1,
+            "unit": "px"
+      },
+      {
+            "type": "range",
+            "id": "icnrad",
+            "label": "Border Radius",
+            "default":30,
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+      },
+      {
+        "type": "textarea",
+        "id": "help",
+        "label": "Help Block"
+      }       
+	],
+    "blocks": [
+        {
+        "type": "home",
+        "name": "Home Link",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+			"default": "Home"
+          }
+        ]
+      },
+	  {
+        "type": "slink",
+        "name": "Single Link",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name",
+            "default": "Menu Item"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          }         
+        ]
+      }, 	
+      {
+        "type": "dd",
+        "name": "Dropdown Menu",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          }
+        ]
+      },
+	  {
+        "type": "m1",
+        "name": "MM Modern",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+ 			{
+            "type": "checkbox",
+            "id": "newtab",
+            "label": "Open Link in New Window?"
+          },  
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 2
+          },
+          {
+            "type": "header",
+            "content": "Image Columns ==="
+          },
+          {
+            "type": "select",
+            "id": "callPos",
+            "label": "Right or Bottom",
+            "default": "right",
+			"info": "You can show images at right or bottom of links",
+            "options": [
+              { "value": "right", "label": "Right" },
+              {
+                "value": "bottom",
+                "label": "Bottom"
+              }
+            ]
+          },
+
+          {
+            "type": "range",
+            "id": "colWd",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "label": "Column Width",
+            "default": 50,
+			"unit": "%",
+			"info": "Option work when images show right of links"
+          },
+          {
+            "type": "range",
+            "id": "icol",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "label": "Columns per row",
+            "default": 2
+          },         
+          {
+            "type": "paragraph",
+            "content": "Image 1 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "iTtl1",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl1",
+            "label": "Link on Image"
+          },
+          {
+            "type": "paragraph",
+            "content": "Image 2 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "iTtl2",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl2",
+            "label": "Image 2 Link"
+          },
+          {
+            "type": "paragraph",
+            "content": "Image 3 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image3",
+            "label": "Image 3"
+          },
+          {
+            "type": "text",
+            "id": "iTtl3",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl3",
+            "label": "Image 3 Link"
+          },
+          {
+            "type": "paragraph",
+            "content": "Image 4 ==="
+          },
+          {
+            "type": "image_picker",
+            "id": "image4",
+            "label": "Image 4",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "text",
+            "id": "iTtl4",
+            "label": "Title Text"
+          },
+          {
+            "type": "url",
+            "id": "imgurl4",
+            "label": "Image 4 Link"
+          },
+           {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Image Border Radius",
+            "default": 0
+          },
+          {
+            "type": "select",
+            "id": "ttla",
+            "label": "Title Alignment ====",
+            "default": "tc",
+            "options": [
+              { "value": "tl", "label": "Left" },
+              { "value": "tc", "label": "Center" },
+              { "value": "tr", "label": "Right" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "ttcl",
+            "label": "Title Color",
+            "default": "#111"
+          },
+          {
+            "type": "range",
+            "id": "ttfs",
+            "label": "Title Font Size",
+            "default": 13,
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+          },
+          {
+            "type": "select",
+            "id": "ttfw",
+            "label": "Title Font Weight",
+            "default": "600",
+            "options": [
+              {
+                "value": "300",
+                "label": "Light"
+              },
+              {
+                "value": "400",
+                "label": "Regular"
+              },
+              {
+                "value": "500",
+                "label": "Medium"
+              },
+              {
+                "value": "600",
+                "label": "Semi Bold"
+              },
+              {
+                "value": "700",
+                "label": "Bold"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          },
+          {
+            "type": "select",
+            "id": "mmal",
+            "label": "Box Align",
+			"default": "center",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": true,
+			"info":"Set inner content width max to layout width"
+          }
+        ]
+      },
+	  {
+        "type": "m2",
+        "name": "MM Products",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+          	"type": "collection",
+          	"id": "collection",
+          	"label": "Sellect Collection"
+          },
+          {
+            "type": "range",
+            "id": "limit",
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "label": "Products Limit",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 4
+          },
+          {
+            "type": "text",
+            "id": "prodall",
+            "label": "Button Text",
+            "default": "View All Products"
+          },
+          {
+            "type": "select",
+            "id": "btn-style",
+            "label": "Select Button",
+            "default": "btn1",
+            "options": [
+              {
+                "label": "Button 1",
+                "value": "btn1"
+              },
+              {
+                "label": "Button 2",
+                "value": "btn2"
+              },
+              {
+                "label": "Button 3",
+                "value": "btn3"
+              },
+              {
+                "label": "Button 4",
+                "value": "btn4"
+              },
+              {
+                "label": "Button 5",
+                "value": "btn5"
+              }
+            ]
+         },
+          {
+            "type": "header",
+            "content": "Featured Column ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "ftcl",
+            "label": "Enable ?",
+			"default": true
+          },
+          {
+            "type": "range",
+            "id": "ftcl_wd",
+            "min": 20,
+            "max": 80,
+            "step": 1,
+            "label": "Columns Width",
+			"unit": "%",
+            "default": 50
+          },
+          {
+            "type": "image_picker",
+            "id": "ft_img",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "ft_ttl",
+            "label": "Title"
+          },
+          {
+            "type": "range",
+            "id": "ft_ttls",
+            "min": 13,
+            "max": 100,
+            "step": 1,
+            "label": "Font Size",
+            "default": 30
+          },
+          {
+            "type": "text",
+            "id": "ft_sttl",
+            "label": "Sub Title"
+          },
+          {
+            "type": "range",
+            "id": "ft_sttls",
+            "min": 10,
+            "max": 40,
+            "step": 1,
+            "label": "Font Size",
+            "default": 15
+          },
+          {
+            "type": "text",
+            "id": "ft_btn",
+            "label": "Button Text"
+          },
+          {
+            "type": "url",
+            "id": "ft_link",
+            "label": "Link"
+          },
+          {
+            "type": "select",
+            "id": "btn-style2",
+            "label": "Select Button",
+            "default": "btn1",
+            "options": [
+              {
+                "label": "Button 1",
+                "value": "btn1"
+              },
+              {
+                "label": "Button 2",
+                "value": "btn2"
+              },
+              {
+                "label": "Button 3",
+                "value": "btn3"
+              },
+              {
+                "label": "Button 4",
+                "value": "btn4"
+              },
+              {
+                "label": "Button 5",
+                "value": "btn5"
+              }
+            ]
+        },
+          {
+            "type": "color",
+            "id": "ft_bg",
+            "label": "Text Background",
+            "default": "#333"
+          },
+          {
+            "type": "color",
+            "id": "txtcl",
+            "label": "Text",
+            "default": "#fff"
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          },
+          {
+            "type": "select",
+            "id": "mmal",
+            "label": "Box Align",
+			"default": "center",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+           {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": true,
+			"info":"Set inner content width max to layout width"
+          }
+        ]
+      },
+	  {
+        "type": "m3",
+        "name": "MM Top Image Columns",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 1"
+          },
+          {
+            "type": "text",
+            "id": "ttl1",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image1",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "url1",
+            "label": "Image Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu1",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 2"
+          },
+          {
+            "type": "text",
+            "id": "ttl2",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "url2",
+            "label": "Image Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu2",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 3"
+          },
+          {
+            "type": "text",
+            "id": "ttl3",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image3",
+            "label": "Image",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "url",
+            "id": "url3",
+            "label": "Image Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu3",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 4"
+          },
+          {
+            "type": "text",
+            "id": "ttl4",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image4",
+            "label": "Image",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "url",
+            "id": "url4",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu4",
+            "label": "Select Menu"
+          },
+		  {
+            "type":"header",
+        	"content": "Column 5"
+          },
+          {
+            "type": "text",
+            "id": "ttl5",
+            "label": "Title text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image5",
+            "label": "Image",
+            "info": "Image to show in menu"
+          },
+          {
+            "type": "url",
+            "id": "url5",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu5",
+            "label": "Select Menu"
+          },
+           {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Image Border Radius",
+            "default": 0
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          },
+          {
+            "type": "select",
+            "id": "mmal",
+            "label": "Box Align",
+			"default": "center",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+           {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": true,
+			"info":"Set inner content width max to layout width"
+          }
+        ]
+      },
+	  {
+        "type": "m4",
+        "name": "MM Background Image",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 3
+          },
+          {
+            "type": "image_picker",
+            "id": "bg",
+            "label": "Background Image"
+          },
+          {
+            "type": "select",
+            "id": "bgimg_pos",
+            "label": "Image Position",
+			"default": "right",
+            "options": [
+              { "value": "left","label": "Left" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "space",
+            "label": "Space for Image",
+			"default": "30%",
+            "options": [
+
+              { "value": "20%","label": "20%" },
+              { "value": "30%", "label": "30%" },
+              { "value": "40%", "label": "40%" },
+              { "value": "50%", "label": "50%" },
+              { "value": "60%", "label": "60%" },
+              { "value": "70%", "label": "70%" }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          },
+          {
+            "type": "select",
+            "id": "mmal",
+            "label": "Box Align",
+			"default": "center",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+           {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": true,
+			"info":"Set inner content width max to layout width"
+          }
+        ]
+      },
+	  {
+        "type": "m5",
+        "name": "MM Advanced",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+ 			{
+            "type": "checkbox",
+            "id": "newtab",
+            "label": "Open Link in New Window?"
+          },  
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 2
+          },
+          {
+            "type": "header",
+            "content": "=== Products Block ==="
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection1",
+          	"label": "Link 1 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection2",
+          	"label": "Link 2 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection3",
+          	"label": "Link 3 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection4",
+          	"label": "Link 4 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection5",
+          	"label": "Link 5 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection6",
+          	"label": "Link 6 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection7",
+          	"label": "Link 7 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection8",
+          	"label": "Link 8 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection9",
+          	"label": "Link 9 Collection"
+          },  
+          {
+          	"type": "collection",
+          	"id": "collection10",
+          	"label": "Link 10 Collection"
+          },
+          {
+            "type": "range",
+            "id": "grid",
+            "label": "Products Per Row",
+            "default": 2,
+            "min": 1,
+            "max": 4,
+            "step": 1
+          },
+          {
+            "type": "range",
+            "id": "prlimit",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "label": "Number of Product to show",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "prColwd",
+            "min": 20,
+            "max": 70,
+            "step": 1,
+            "label": "Products Column Width",
+            "default": 40,
+			"unit": "%"
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "cwd",
+            "label": "Custom Width?",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "bxwd",
+            "label": "Box Width",
+            "default": "600"
+          },
+          {
+            "type": "select",
+            "id": "mmal",
+            "label": "Box Align",
+			"default": "center",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": true,
+			"info":"Set inner content width max to layout width"
+          }
+		 
+        ]
+      },
+	  {
+        "type": "m6",
+        "name": "MM Categories",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu",
+            "info": "Use collection links only to show link with image"
+          },
+          {
+            "type": "checkbox",
+            "id": "icn",
+            "label": "Show Icon for Main Links?",
+            "default": false
+			
+          },
+           {
+            "type": "checkbox",
+            "id": "icn1",
+            "label": "Show Icon for Sub Links?",
+            "default": false			
+          },
+          {
+            "type": "radio",
+            "id": "icnt",
+            "label": "Icon Type",
+            "default": "1",
+            "options": [
+              {
+                "value": "1",
+                "label": "Collection Image"
+              },
+              {
+                "value": "2",
+                "label": "Icon/Image added by Metafield"
+              }
+            ],
+            "info":"[How to add by metafield?](https://www.adornthemes.com/knowledge-base/icon-image-for-collection/)"
+          },
+          {
+            "type": "header",
+            "content": "Main Links ==="
+          },
+          {
+            "type": "range",
+            "id": "icnsz",
+            "min": 20,
+            "max": 100,
+            "step": 2,
+            "label": "Icon Size",
+            "default": 30
+          },
+          {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Border Radius",
+            "default": 15
+          },
+          {
+            "type": "range",
+            "id": "fs",
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "label": "Font Size",
+            "default": 14
+          },
+          {
+            "type": "header",
+            "content": "Sub Links ==="
+          },
+          {
+            "type": "range",
+            "id": "sicnsz",
+            "min": 20,
+            "max": 200,
+            "step": 2,
+            "label": "Icon Size",
+            "default": 50
+          },
+          {
+            "type": "range",
+            "id": "sicnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Border Radius",
+            "default": 30
+          },
+          {
+            "type": "range",
+            "id": "sfs",
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "label": "Font Size",
+            "default": 16
+          },
+          {
+            "type": "radio",
+            "id": "tps",
+            "label": "Link Position",
+            "default": "1",
+            "options": [
+              {
+                "value": "1",
+                "label": "Left of Image"
+              },
+              {
+                "value": "2",
+                "label": "Bottom of Image"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 3
+          },
+          {
+            "type": "header",
+            "content": "Products ==="
+          },
+          {
+            "type": "checkbox",
+            "id": "showpr",
+            "label": "Show Prducts?",
+            "default": true
+          },
+          {
+            "type": "range",
+            "id": "grid",
+            "label": "Products Per Row",
+            "default": 2,
+            "min": 1,
+            "max": 4,
+            "step": 1
+          },
+          {
+            "type": "range",
+            "id": "prlimit",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "label": "Number of Product to show",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "prColwd",
+            "min": 20,
+            "max": 70,
+            "step": 1,
+            "label": "Products Column Width",
+            "default": 40,
+			"unit": "%"
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+ 	    {
+			"type": "checkbox",
+			"id": "cwd",
+			"label": "Custom Width?",
+			"default": false
+		  },
+		  {
+			"type": "text",
+			"id": "bxwd",
+			"label": "Box Width",
+			"default": "600"
+		  },
+		  {
+			"type": "select",
+			"id": "mmal",
+			"label": "Box Align",
+			"default": "center",
+			"options": [
+			  { "value": "left", "label": "Left" },
+			  { "value": "center", "label": "Center" },
+			  { "value": "right", "label": "Right" }
+			]
+		  },
+		 {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": false,
+			"info":"Inner content width is equal to the layout width while fullwidth header."
+          }
+        ]
+      },
+	  {
+        "type": "m7",
+        "name": "MM Collections",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link Name"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Menu Link"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu",
+            "info": "Use collection links only for this menu"
+          },
+          {
+            "type": "checkbox",
+            "id": "icn",
+            "label": "Show Icon/image?",
+            "default": true		
+          },
+          {
+            "type": "radio",
+            "id": "icnt",
+            "label": "Image Type",
+            "default": "1",
+            "info":"[How to add by metafield??](https://www.adornthemes.com/knowledge-base/icon-image-for-collection/)",
+            "options": [
+              {
+                "value": "1",
+                "label": "Collection Image"
+              },
+              {
+                "value": "2",
+                "label": "Image added by Metafield"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "icnsz",
+            "min": 20,
+            "max": 300,
+            "step": 5,
+            "label": "Image Size",
+            "default": 200
+          },
+          {
+            "type": "range",
+            "id": "icnbr",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Border Radius",
+            "default": 0
+          },
+          {
+            "type": "radio",
+            "id": "tps",
+            "label": "Link Position",
+            "default": "2",
+            "options": [
+              {
+                "value": "1",
+                "label": "Left of Image"
+              },
+              {
+                "value": "2",
+                "label": "Bottom of Image"
+              }
+            ]
+          },
+          {
+            "type": "range",
+            "id": "fs",
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "label": "Font Size",
+            "default": 14
+          },
+          {
+            "type": "range",
+            "id": "mcol",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "label": "Select Columns",
+            "default": 5
+          },
+          {
+            "type": "header",
+            "content": "Custom size & Align ==="
+          },
+		 {
+			"type": "checkbox",
+			"id": "cwd",
+			"label": "Custom Width?",
+			"default": false
+		  },
+		  {
+			"type": "text",
+			"id": "bxwd",
+			"label": "Box Width",
+			"default": "600"
+		  },
+		  {
+			"type": "select",
+			"id": "mmal",
+			"label": "Box Align",
+			"default": "center",
+			"options": [
+			  { "value": "left", "label": "Left" },
+			  { "value": "center", "label": "Center" },
+			  { "value": "right", "label": "Right" }
+			]
+		  },
+		  {
+            "type": "checkbox",
+            "id": "bxsz",
+            "label": "Enable container width?",
+            "default": false,
+			"info":"Inner content width is equal to the layout width while fullwidth header."
+          }
+        ]
+      }        
+    ]
+  }
+
+
+{% endschema %}

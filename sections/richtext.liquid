@@ -1,0 +1,419 @@
+{%- capture richText -%}
+
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}{%  if secSt.ganim %} gr_bg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px;--as:{{ secSt.animsp }}s;">  	
+	
+	<div class="{% if section.settings.sw %}fw-sec{% else %}page-width{% endif %}{% unless section.settings.lefta %} tc{% endunless %}">
+		{% if section.settings.image != blank %}        
+			<span class="imgWrapper of_hidden mb20" style="max-width:{{ section.settings.image.width }}px;">
+				<img loading="lazy" class="imgFl lazyload wow zoomIn" src="{{ section.settings.image | img_url: '50x' }}" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}"
+					data-srcset="{% render 'lazyload', image: section.settings.image, sizes: '180,360,540,720,900' %}" data-sizes="auto" alt="{{ section.settings.image.alt | escape }}">
+			</span>
+		{%- endif -%}
+		<div class="richtext m_auto w_100" style="--mwidth:{{ section.settings.maxwd }}%;">
+			{% for block in section.blocks %}            
+				{% case block.type %}                   
+				{%  when 'text' %}
+					<div class="richttl"  style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fs }}px;--fsm:{{ block.settings.fsm }}px;--fw:{{ block.settings.fw }};--lh:{{ block.settings.lh }};--mb:{{ block.settings.mb }}px;">{{ block.settings.ttl }}</div>
+				{%  when 'button' %}
+					<div class="mb20 fl{% unless section.settings.lefta %} f-jcc{% endunless %}">
+						{% if block.settings.btntxt != blank %}                             
+							<a class="btn {{ block.settings.btn-size }} {{ block.settings.btn-style }}" href="{{ block.settings.url }}">{{ block.settings.btntxt }}</a>
+						{% endif %}
+						{% if block.settings.btntxt1 != blank %}                             
+							<a class="btn ml20 {{ block.settings.btn-size }} {{ block.settings.btn-style1 }}" href="{{ block.settings.url1 }}">{{ block.settings.btntxt1 }}</a>
+						{% endif %}
+					</div>
+				{% endcase %}
+			{% endfor %}  
+		</div>
+	</div> 
+</div>
+
+{%- endcapture -%}
+{{ richText | strip_newlines | remove: '  ' | remove: '	' }}
+{% schema %}
+{
+"name": "Rich Text",
+"disabled_on": {
+    "groups": ["header", "footer"]
+    },
+"settings":[
+	{
+		"type": "image_picker",
+		"id": "image",
+		"label": "Image"
+	},
+	{
+		"type": "range",
+		"id": "maxwd",
+		"label": "Content Width for Desktop",
+		"default": 50,
+		"min": 50,
+		"max": 100,
+		"step": 5,
+		"unit": "%"
+	},
+	{
+		"type": "checkbox",
+		"id": "lefta",
+		"label": "Align Left?",
+		"default":false
+	},
+	{
+		"type": "header",
+		"content": "Section"
+	},
+	{
+		"type": "paragraph",
+		"content": "Spacing ===="
+	},
+	{
+		"type": "range",
+		"id": "sst",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":40
+	},
+	{
+		"type": "range",
+		"id": "ssb",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":40
+	},
+	{
+		"type": "paragraph",
+		"content": "Spacing (mobile) ===="
+	},
+	{
+		"type": "range",
+		"id": "sstm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":20
+	},
+	{
+		"type": "range",
+		"id": "ssbm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":20
+	},
+	{
+		"type": "color",
+		"id": "bg",
+		"label": "Background",
+		"default":"#fafafa"
+	},
+    {
+        "type": "color_background",
+        "id": "bgg",
+        "label": "Gradient Background"
+    },
+    {
+            "type":"checkbox",
+            "id":"ganim",
+            "label":"Gradient animation?",
+            "default": false           
+      },
+    {
+		"type": "range",
+		"id": "animsp",
+		"min": 0,
+		"max": 30,
+		"step": 1,
+		"label": "Animation Speed",
+		"unit": "px",
+		"default":15
+	},
+	{
+		"type":"checkbox",
+		"id":"sw",
+		"label":"Fullwidth?",
+		"default": false
+	},
+	{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	
+],
+"blocks": [
+	{
+		"type": "text",
+		"name": "Text",
+		"settings": [
+			{
+				"type": "richtext",
+				"id": "ttl",
+				"label": "Text",
+				"default": "<p><b>TALK ABOUT YOUR BRANDS</b></p>"
+			},
+			{
+				"type": "range",
+				"id": "fs",
+				"label": "Font Size",
+				"default": 18,
+				"min": 10,
+				"max": 100,
+				"step": 1,
+				"unit": "px"
+			  },
+			  {
+				"type": "range",
+				"id": "fsm",
+				"label": "Font Size (mobile)",
+				"default": 16,
+				"min": 10,
+				"max": 60,
+				"step": 1,
+				"unit": "px"
+			   },
+              {
+                "type": "select",
+                "id": "fw",
+                "label": "Font Weight",
+                "default": "400",
+                "options": [
+                  {
+                    "value": "300",
+                    "label": "Light"
+                  },
+                  {
+                    "value": "400",
+                    "label": "Regular"
+                  },
+                  {
+                    "value": "500",
+                    "label": "Medium"
+                  },
+                  {
+                    "value": "600",
+                    "label": "Semi Bold"
+                  },
+                  {
+                    "value": "700",
+                    "label": "Bold"
+                  }
+                ]
+               },
+               {
+                "type": "range",
+                "id": "lh",
+                "label": "Line Height",
+                "default": 1.6,
+                "min": 1.0,
+                "max": 2.0,
+                "step": 0.1,
+                "info": "Space between text lines."
+               },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Color",
+                    "default": "#000"
+                },
+				 {
+				"type": "range",
+				"id": "mb",
+				"label": "Margin Bottom",
+				"default": 15,
+				"min": 5,
+				"max": 60,
+				"step": 1,
+				"unit": "px"
+			  }
+
+
+		]
+	  },
+	  {
+		"type": "button",
+		"name": "Button",
+		"limit":3,
+		"settings": [
+			{
+				"type": "text",
+				"id": "btntxt",
+				"label": "Button Text",
+				"default": "Button Label"
+			},
+			{
+				"type": "url",
+				"id": "url",
+				"label": "URL",
+				"default": "/"
+			},
+			{
+				"type": "text",
+				"id": "btntxt1",
+				"label": "Button Text 2",
+				"default": "Button Label"
+			},
+			{
+				"type": "url",
+				"id": "url1",
+				"label": "URL",
+				"default": "/"
+			},
+			{
+				"type": "select",
+				"id": "btn-style",
+				"label": "Button 1 Design",
+				"default": "btn1",
+				"options": [
+				  {
+					"label": "Button 1",
+					"value": "btn1"
+				  },
+				  {
+					"label": "Button 2",
+					"value": "btn2"
+				  },
+				  {
+					"label": "Button 3",
+					"value": "btn3"
+				  },
+				  {
+					"label": "Button 4",
+					"value": "btn4"
+				  },
+				  {
+					"label": "Button 5",
+					"value": "btn5"
+				  },
+				  {
+					"label": "Button 6",
+					"value": "btn6"
+				  },
+                 {
+                      "label": "Button 7 Gradient",
+                      "value": "btn7"
+                  },
+                  {
+                      "label": "Button 8 Gradient",
+                      "value": "btn8"
+                  },
+				  {
+					"label": "Link",
+					"value": "btnLink"
+				  }
+				]
+            },
+			{
+				"type": "select",
+				"id": "btn-style1",
+				"label": "Button 2 Design",
+				"default": "btn1",
+				"options": [
+				  {
+					"label": "Button 1",
+					"value": "btn1"
+				  },
+				  {
+					"label": "Button 2",
+					"value": "btn2"
+				  },
+				  {
+					"label": "Button 3",
+					"value": "btn3"
+				  },
+				  {
+					"label": "Button 4",
+					"value": "btn4"
+				  },
+				  {
+					"label": "Button 5",
+					"value": "btn5"
+				  },
+				  {
+					"label": "Button 6",
+					"value": "btn6"
+				  },
+                  {
+                      "label": "Button 7 Gradient",
+                      "value": "btn7"
+                  },
+                  {
+                      "label": "Button 8 Gradient",
+                      "value": "btn8"
+                  },
+				  {
+					"label": "Link",
+					"value": "btnLink"
+				  }
+				]
+            },	
+			{
+				"type": "select",
+				"id": "btn-size",
+				"label": "Button Size",
+				"default": "btn-md",
+				"options": [
+					{
+						"label": "Small",
+						"value": "btn-sm"
+					},
+					{
+						"label": "Medium",
+						"value": "btn-md"
+					},
+					{
+						"label": "Large",
+						"value": "btn-lg"
+					}
+				]
+			}
+		]
+	}
+],
+"presets": [
+	{
+		"name": "Rich Text",
+		"blocks": [
+			{
+				"type": "text",
+				 "settings": {
+                    "ttl": "<p>TALK ABOUT YOUR BRANDS</p>",
+                    "fs": 24,
+                    "fsm":18,
+                    "mb":15
+                }
+			},
+			{
+				"type": "text",
+				"settings": {
+                    "ttl": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+                    "fs": 14,
+                    "fsm":14,
+                    "mb":25
+                }
+			},
+			{
+				"type": "button"
+			}
+		]
+	}
+]
+}
+{% endschema %}

@@ -1,0 +1,81 @@
+<div class="pickup-availability-container">
+    {%- assign pick_up_availabilities = product_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+    {%- if pick_up_availabilities.size > 0 -%}
+        <div class="pickup-availability-information mfp-link fl{% if settings.txt-center %} f-jcc{% endif %}">
+            {%- assign closest_location = pick_up_availabilities.first -%}
+            {%- if closest_location.available -%}<svg class="at-icon mt5 mr5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.985 511.985" xml:space="preserve"><path d="M500.088,83.681c-15.841-15.862-41.564-15.852-57.426,0L184.205,342.148L69.332,227.276    c-15.862-15.862-41.574-15.862-57.436,0c-15.862,15.862-15.862,41.574,0,57.436l143.585,143.585    c7.926,7.926,18.319,11.899,28.713,11.899c10.394,0,20.797-3.963,28.723-11.899l287.171-287.181    C515.95,125.265,515.95,99.542,500.088,83.681z"/></svg>
+			{%- else -%}<svg class="at-icon mt5 mr5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"/></svg>{%- endif -%}
+            <div class="pickup-availability-information-container">
+                {%- if closest_location.available -%}
+                    <p class="mb5">{{ 'products.pickup_availability.pick_up_available_at_html' | t: location_name: closest_location.location.name }}</p>
+                    <p class="small-font mb10">{{ closest_location.pick_up_time }}</p>
+                    <div class="mb25">
+                        <a href="#pickupDrawer" id="ShowPickupAvailabilityDrawer" class="btnLink mfp" data-effect="mfp-zoom-in">
+                            {%- if pick_up_availabilities.size == 1 -%}
+                                {{ 'products.pickup_availability.view_store_info' | t }}
+                            {%- else -%}
+                                {{ 'products.pickup_availability.check_other_stores' | t }}
+                            {%- endif -%}
+                        </a>
+                    </div>
+                {%- else -%}
+                    <div class="pickup-availability-information__title mb10">
+                        {{ 'products.pickup_availability.pick_up_unavailable_at_html' | t: location_name: closest_location.location.name }}
+                    </div>
+                    {%- if pick_up_availabilities.size > 1 -%}
+                        <div class="mb25"><a href="#pickupDrawer" id="ShowPickupAvailabilityDrawer" class="btnLink mfp" data-effect="mfp-zoom-in">{{ 'products.pickup_availability.check_other_stores' | t }}</a></div>
+                    {%- endif -%}
+                {%- endif -%}
+            </div>
+        </div>
+        <div id="pickupDrawer" class="pickup_drawer mfpbox mfp-hide mfp-with-anim" role="dialog" aria-modal="true" aria-labelledby="PickupAvailabilitiesModalProductTitle">
+            <div class="fl f-jcsb mb10">
+                <h2 class="h4 m0">{{ product_variant.product.title | escape }}</h2>
+            </div>
+            {%- unless product_variant.product.has_only_default_variant -%}
+            <p>
+                {%- for product_option in product_variant.product.options_with_values -%}
+                    {%- assign option_index = forloop.index0 -%}
+                    <span class="option{{ option_index | plus: 1 }}">
+                        {{ product_option.name | escape }}:&nbsp;
+                        {%- for value in product_option.values -%}
+                            {%- if product_option.selected_value == value -%}
+                                <span class="slVariant">{{ value | escape }}</span>
+                            {%- endif -%}
+                        {%- endfor -%}
+                        {%- unless forloop.last -%},&nbsp;{%- endunless forloop.last -%}
+                    </span>
+                {%- endfor -%}
+            </p>
+            {%- endunless -%}
+            <hr/>
+            <ul role="list" data-store-availability-drawer-content>
+                {%- for availability in pick_up_availabilities -%}
+                    <li class="mb20">
+                        <h3 class="h5">{{ availability.location.name | escape }}</h3>
+                        {%- if availability.available -%}
+                            <p class="fl"><svg class="at-icon mt5 mr5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.985 511.985" xml:space="preserve"><path d="M500.088,83.681c-15.841-15.862-41.564-15.852-57.426,0L184.205,342.148L69.332,227.276    c-15.862-15.862-41.574-15.862-57.436,0c-15.862,15.862-15.862,41.574,0,57.436l143.585,143.585    c7.926,7.926,18.319,11.899,28.713,11.899c10.394,0,20.797-3.963,28.723-11.899l287.171-287.181    C515.95,125.265,515.95,99.542,500.088,83.681z"/></svg><span>{{ 'products.pickup_availability.pick_up_available' | t }}, {{ availability.pick_up_time | downcase }}</span></p>
+                        {%- endif -%}
+                        {%- assign address = availability.location.address -%}
+                        <address class="ml5">{{ address | format_address }}{%- if address.phone.size > 0 -%}<p>{{ address.phone }}</p>{%- endif -%}</address>
+                    </li>
+                {%- endfor -%}
+            </ul>
+        </div>
+    {%- endif -%}
+</div>
+<style>
+    .pickup-availability-preview .icon-unavailable { height: 1.6rem; margin-top:.1rem}
+    .pickup-availability-info * { margin:0 0 .6rem}
+    .mt2 {margin-top:2px;}
+    ul .at-check-r {margin-right:5px;}
+    @media only screen and (min-width:766px){
+        #pickupDrawer {padding:40px 40px 20px; max-width:500px;}
+    }
+</style>
+{% schema %}
+{
+    "name": {},
+    "settings": []
+}
+{% endschema %}

@@ -1,0 +1,43 @@
+{%  assign collection_image = collection.image | default:block.image %}
+{%- assign aspectratio = block.image.aspect_ratio | default:collection.image.aspect_ratio -%}
+
+{% if masonary %}
+    {%- capture dtlStyle -%}--wd:{{ block.box-width }}%;--pds:{{ block.box-pad }}px;--pd:{{ block.box-pad | minus :5 }}px;{% if block.isbox %}--bg:{{ block.bg }};--br:{{ block.radius }}px;{% else %}--bg:transparent;{% endif %}{% if block.isbox and block.frame %}--fstl:{{ block.fstl }};--frcl:{{ block.fcl }};{% endif %}{% endcapture %}
+    {%- capture ttl -%}--cl:{{ block.cl }};--fs:{{ block.fs }}px;--fsm:{{ block.fsm }}px;--ft:var(--{{ block.ft }});--fw:{{ block.fw }};--lh:{{ block.lh }};--to:{{block.to}};
+	--mb:{{ block.mb }}px;--mbm:{{ block.mbm }}px;{% endcapture %}
+	 {%- capture text -%}--mb1:{{ block.mb1 }}px;--mbm1:{{ block.mbm1 }}px;{% endcapture %}
+{% elsif custom %}
+    {%- capture dtlStyle -%}--bg:rgba({{ block.bg | color_to_rgb | replace:"rgb(","" | replace:")","" }},{{ block.opa }});{% endcapture %}
+    {%- capture ttl -%}--cl:{{ block.cl }};--fs:{{ block.fs }}px;--fsm:{{ block.fsm }}px;--ft:var(--{{ block.ft }});--fw:{{ block.fw }};{% endcapture %}
+{% else %}
+    {%- capture dtlStyle -%}--bg:rgba({{ section.ttlbg | color_to_rgb | replace:"rgb(","" | replace:")","" }},{{ section.ttl_opa }});--tbp:{{ section.tbp }}px{% endcapture %}
+    {%- capture ttl -%}--cl:{{ section.ttl }};--fs:{{ section.fs }}px;--fsm:{{ section.fsm }}px;--ft:var(--{{ section.ft }});--fw:{{ section.fw }};{% endcapture %}
+{% endif %}
+
+<div class="cl_item pr of_hidden cti{{ block.id }}{% if section.zoom %} zoom_hov{% endif%}">
+	<a href="{{ block.url | default:collection.url }}" class="cl_item_link" title="{{ block.title }}">
+      <div class="img pr of_hidden{% if block.isbox == false and block.frame %} frameb{% endif %}" style="--ibr:{{ section.radius }}px;--irad:{{block.brad }}px;{% if block.isbox == false and block.frame %}--fstl:{{ block.fstl }};--frcl:{{ block.fcl }};{% endif %}" >
+         {%- if collection_image != blank -%}
+        	<img loading="lazy" class="imgFl lazyload w_100 db wow zoomIn" src="{{ collection_image | img_url: '50x' }}" data-srcset="{% render 'lazyload', image: collection_image, sizes: '160,360,560,860,1200' %}" data-sizes="auto" width="{{ collection_image.width }}" height="{{ collection_image.height }}" alt="{{ collection_image.alt | escape }}" />
+         {% else %} 
+        	{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}{{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}    
+         {% endif %}
+      </div>      
+     	{% if masonary %}<div class="fl cl_txt_pos {{ block.text_pos }} {{ block.text_posm }}">{% endif %}
+          {%  if block.title != blank or  block.detail != blank or block.btntxt != blank %} 
+            <div class="details {{ block.text-align }}{% if block.isbox and block.frame %} frame{% endif %}" style="{{ dtlStyle }}">     	       
+              {% if block.title != blank %}<div class="cl_ttl{% if collection-grid-item == 'custom' %} {{ block.btn-size}} btn {{ block.btn-style }}{% endif %}" style="{{ ttl }}">{{ block.title | capitalize }}</div>{% endif %}
+              {% render 'icons', icntyp: true, icon: 'arrow-right' %}
+              
+              {% if block.text != blank %}<div class="txt {% if block.hidetm %} hide-sm{% endif %}" style="--cl:{{ block.tcl }};--fs:{{ block.tfs }}px;--fsm:{{ block.tfsm }}px;--lh:{{ block.tlh }};{{ text }}">{{ block.text | capitalize }}</div>{% endif %}
+              {% if section.count and collection.all_products_count != blank %}
+                    <p class="counts mb5" style="--cl:{{ section.ttl }};">{{ 'collections.general.items_with_count' | t: count: collection.all_products_count }}</p>
+              {% endif %}
+              {% if block.btntxt != blank %}
+                    <button class="{% if block.linkst %}btnLink anim{% else %}btn {{ section.btn-size }} {{ section.btn-style }}{% endif %}{% if block.hidebtn %} hide-sm{% endif %}" style="--btncl:{{ block.btn }};--btnclh:{{ block.btnh }};" type="button">{{ block.btntxt }}</button>
+              {% endif %}                  
+            </div>
+          {% endif %}
+        {% if masonary %}</div> {% endif %}
+  </a>
+</div>

@@ -1,0 +1,89 @@
+{%- liquid
+    assign ctopt = blkst.options | replace: ', ', ',' | replace: ' ,', ',' | split: ','
+    assign typeTags = blkst.based | replace: ', ', ',' | replace: ' ,', ',' | split: ','
+    assign visible = false
+    if blkst.visible == 'all'
+        assign visible = true
+    elsif blkst.visible == 'type'
+        if typeTags contains product.type
+          assign visible = true
+        endif
+    elsif blkst.visible == 'tag'
+        assign prtags = product.tags
+        for tag in product.tags
+          if typeTags contains tag
+            assign visible = true
+          endif
+        endfor
+    elsif blkst.visible == 'product'
+        for prlist in blkst.products
+            if prlist == product
+                assign visible = true
+             endif
+        endfor
+    elsif blkst.visible == 'metafield'
+        if blkst.meta == 'true'
+            assign visible = true
+        endif
+    endif
+-%}
+{% if visible %}
+        <div class="dd_wrap w_100 pr_form_item mb{{ blkst.bm }}">
+          {% unless blkst.type == 'checkbox' %}<label class="header" for="ctfield{{ block.id }}">{{ blkst.title }}</label>{% endunless %}
+          {% if blkst.type == 'short' %}
+              <input class="w_100 mb0" id="ctfield{{ block.id }}" type="text" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" form="{{ product_form_id }}" {% if blkst.required %}required{% endif %} />
+          {% elsif blkst.type == 'long' %}
+              <textarea class="w_100 mb0" id="ctfield{{ block.id }}" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" form="{{ product_form_id }}" {% if blkst.required %}required{% endif %}></textarea>
+          {% elsif blkst.type == 'checkbox' %}
+              <input type="hidden" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" value="No" form="{{ product_form_id }}">
+              <label class="mb15 lblin" for="ctfield{{ block.id }}"><input id="ctfield{{ block.id }}" type="checkbox" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" value="Yes" {% if blkst.required %}required{% endif %}> {{ blkst.title }}</label>
+          {% elsif blkst.type == 'radio' %}
+              <div class="fl f-wrap">
+              {% for radio in ctopt %}
+                <label class="mr15 mb10 lblin"><input type="radio" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" value="{{ radio }}" form="{{ product_form_id }}" {% if blkst.required %}required{% endif %}> {{ radio }}</label>
+              {% endfor %}
+              </div>
+          {% elsif blkst.type == 'select' %}
+              <select class="w_100 mb0" id="ctfield{{ block.id }}" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" form="{{ product_form_id }}" {% if blkst.required %}required{% endif %}>
+              <option value="">---</option>
+              {% for radio in ctopt %}
+                <option value="{{ radio }}">{{ radio }}</option>
+              {% endfor %}
+              </select>
+          {% elsif blkst.type == 'checkbox_group' %}
+              <div class="fl f-wrap">
+              {% for radio in ctopt %}
+                <label class="mr15 mb10 lblin">
+                  <input type="checkbox" id="ct{{ radio | handleize }}{{ forloop.index }}" name="{{ blkst.title | handleize }}[]" hidden-data="{{ blkst.title | handleize }}" onchange="fillHidden('{{ blkst.title | handleize }}')" class="hidden_txt" value="{{ radio }}">
+                  <span class="checkbox"></span>{{ radio }}
+                </label>
+              {% endfor %}
+              <input type="text" class="hidden_txt" id="{{ blkst.title | handleize }}" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" form="{{ product_form_id }}" {% if blkst.required %}required{% endif %}>
+              <script>
+                function fillHidden(hiddenname) {
+                var allcheck = document.getElementsByClassName('ck{{ blkst.title | handleize }}');
+                var checkboxes = document.querySelectorAll('[hidden-data="'+hiddenname+'"]');
+                var hiddenfield = document.getElementById(hiddenname);
+                hiddenfield.value = ""
+                var i;
+                for (i = 0; i < checkboxes.length; i++) {
+                  
+                  var x = checkboxes[i];
+                  if(x.checked){
+                    if(hiddenfield.value==""){
+                      hiddenfield.value = x.value;
+                    }else{
+                      hiddenfield.value = hiddenfield.value + ", " + x.value; 
+                      }
+                      allcheck.removeAttribute("required");
+                    }
+                    
+                  }
+                }
+              </script>
+              </div>
+          {% elsif blkst.type == 'file' %}
+              <input class="mb0 w_100" id="ctfield{{ block.id }}" type="file" onchange="updateFilenameT4s(this.value,'label_{{ id_field }}')" data-accept="image/jpg,image/jpeg,image/gif,image/png" autocorrect="off" autocapitalize="off" name="properties[{% unless blkst.show-check %}_{% endunless %}{{ blkst.title }}]" form="{{ product_form_id }}" {% if blkst.required %}required{% endif %}>
+          {% endif %}
+        </div>
+        {% endif %}

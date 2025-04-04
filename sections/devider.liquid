@@ -1,0 +1,166 @@
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}" id="dv{{ section.id }}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">
+    <div class="{% if section.settings.sw %}fw-sec{% if section.settings.npd %} npd{% endif %}{% else %}page-width{% endif %}" data-section-id="{{ section.id }}" data-section-type="devider">
+        {%- if secSt.isbdr -%}<hr style="margin:0;border-bottom:{{ secSt.lht }}px {{ secSt.lns }} {{ secSt.bdr }};">{%- endif -%}
+        {%- if secSt.image != blank -%}
+            <img loading="lazy" class="imgFl lazyload" src="{{ secSt.image | img_url: "100x" }}" width="{{ secSt.image.width }}" height="{{ secSt.image.height }}"
+                data-srcset="{% render 'lazyload', image: secSt.image %}" data-sizes="auto" alt="{{ secSt.image.alt | escape }}">
+        {%- endif -%}
+    </div>
+</div>
+{% schema %}
+  {
+    "name": "Section Divider",   
+    "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+    "settings": [
+        {
+            "type":"header",
+            "content":"Line"
+        },
+		{
+            "type": "checkbox",
+            "id": "isbdr",
+            "label": "Show?",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "lns",
+            "label": "Line Style",
+            "default": "solid",
+            "options": [
+              {
+                "label": "Solid",
+                "value": "solid"
+              },
+              {
+                "label": "Dashed",
+                "value": "dashed"
+              },
+              {
+                "label": "Dotted",
+                "value": "dotted"
+              },
+              {
+                "label": "Double",
+                "value": "double"
+              }
+            ]
+        },
+        {
+            "type": "range",
+            "id": "lht",
+            "label": "Line height",
+            "default": 1,
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "unit": "px"
+        },       
+        {
+            "type": "color",
+            "id": "bdr",
+            "label": "Border Color",
+            "default": "#f5f5f5"
+        },
+        {
+            "type":"header",
+            "content":"Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Devider Image"
+        },
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background"        
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false            
+        },		       
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": false,
+            "info":"Remove left/right padding when fullwidth"
+        },
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide in Mobile?",
+            "default": false
+        }
+    ],
+	 "presets": [
+      {
+        "name": "Devider"
+      }
+    ]
+  }
+{% endschema %}
+

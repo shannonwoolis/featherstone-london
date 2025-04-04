@@ -1,0 +1,24 @@
+{% assign product_box = forloop.index | minus:1 %}
+{% assign delay_time = 50 | times : product_box %}
+{%- liquid
+    assign prUrl = product.url | within: collection
+    if settings.clurl
+        assign prUrl = product.url
+    endif
+-%}
+<div class="pr_list fl f-aic mb15">
+  <div class="pr_list_img">    
+    <a class="db" href="{{ prUrl }}" title="{{ product.title }}">         
+      <div class="grid_img lazyload{% if secondImg and product.images.size > 1 %} primary{% endif %}" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes:'100,200,300' %}" data-sizes="auto" data-parent-fit="contain"></div>
+    </a>   
+  </div>
+  <div class="fl1 pr_list_detail">
+    <a href="{{ prUrl }}" class="pr_list_ttl">{{ product.title }}</a>
+    {% if settings.show_vendor %}<div class="pr_list_vendor">{{ product.vendor }}</div>{% endif %}   	
+    {%- unless settings.hide-price -%}<div class="pr_list_meta mt5 mb5">{% render 'product-price', product: product %}</div>{%- endunless -%}        
+    {% if settings.show_product_review %}<div class="pr_review">{% render 'ratings', product: product %}</div>{% endif %}
+    {%- if showbtn -%}
+      <a class="btn btn-sm btn-options quickShop mt5" href="{{ product.url | split: "?" | first }}?section_id=quick-view" aria-label="{{ 'products.product.quick_shop' | t}}">{{ 'products.product.add_to_cart' | t}}</a>
+    {%- endif -%}
+  </div>
+</div>

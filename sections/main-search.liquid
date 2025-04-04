@@ -1,0 +1,957 @@
+{% assign secSt = section.settings %}
+{% capture seachResult %}
+<style type="text/css">
+  :root {
+    --flbgcl:{{ section.settings.flbgcl }};
+    --flbdr:{{ section.settings.flbdr }};
+    --wdttl:{{ section.settings.bx_ttl }}px;
+    --filterby:{{ section.settings.bx_ttl | minus:1 }}px;
+    --wdtcl:{{ section.settings.bx_ttlc }};
+    --opt:{{ section.settings.opt }}px;
+    --optp:{{ section.settings.opt | plus : 1 }}px;
+    --optcl:{{ section.settings.floptcl }};
+    --actclr:{{ section.settings.actclr }};
+    --actftxt:{{ section.settings.act_fltxt }};
+    --actfbg:{{ section.settings.act_flbg }};
+    --actfbd:{{ section.settings.act_fltxt | color_modify:'alpha', 0.2 }};  
+    --catactl:{{ section.settings.catlinkhv }}; 
+    --pbarbg:{{ section.settings.bar }};
+    --pbarbga:{{ section.settings.bara }};
+    --crsymbol:'{{ cart.currency.symbol }}';
+    --sbgc:{{ section.settings.sbgc }};
+  }
+  
+  {% if section.settings.dis_botbdr %}
+  .flTtl {border-bottom:1px solid {{ section.settings.flbtmbdr }}; padding-bottom:15px; }
+  .filterDD {margin:20px 0 25px 0;}
+  .filterBx {margin-bottom:0;}
+  .sdBlock {margin-bottom:20px }
+  {% endif %}
+  
+  {% if section.settings.tglico %}
+  .sidebar .filterBx .at-icon {display:none;}
+  {% endif %}
+
+  {% if section.settings.sbg and section.settings.sbpos != 'top' %}
+  @media only screen and (min-width:1024px){
+   #main-collection-filters:not(.sb_popup) { padding:25px 30px;  }
+  }
+  #main-collection-filters { background:{{ section.settings.sbgc }}; border:1px solid {{ section.settings.sbgb }};}
+  {% endif %}
+  
+ {% if section.settings.tbg %}
+   .flTop { padding:10px 10px 10px 20px; margin-bottom:10px; background-color:var(--flbgcl); border:1px solid var(--flbdr); }
+ {% endif %}
+  
+  price-range.flList .field:before { content:'{{ cart.currency.symbol }}'; position:absolute; top:5px; left:10px; }
+  
+  @media only screen and (min-width:1024px){
+    .noresult { padding-top:100px; min-height:400px; }
+  }
+    
+</style>
+<div id="{{ section.id }}" data-section-type="collection-template">
+{% paginate search.results by section.settings.products_per_page %}
+	{% unless search.results_count == 0 or search.performed == false %}
+        <h1 class="page-title {{ settings.title_align }}">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}</h1>
+	{% endunless %}
+{%- liquid
+	assign drower = ''
+	assign flclass = 'f-wrap'
+	assign bgttl = ''
+	if section.settings.sbpos == 'left' or section.settings.sbpos == 'right' or section.settings.sbpos == 'popup'
+		assign drower = 'open'
+		assign flclass = 'f-col w_100'
+		assign bgttl = 'hide'
+	endif
+    assign pageurl = content_for_header| split:'"pageurl":"' | last | split:'"' | first | split:'view=' | last
+-%}
+  
+{%- capture filters -%}
+  <form id="CollectionFiltersForm" class="flForm{% unless section.settings.sbpos == 'top' %} fl f-col f-ais f-row-md{% endunless %}{% if section.settings.sbpos == 'popup' %} h_100{% endif %}">
+    <input type="hidden" name="q" value="{{ search.terms }}">
+    <input name="options[prefix]" type="hidden" value="last">
+	{%- assign total_active_values = 0 -%}
+    {%- assign activeDynamicFl = false -%}
+	{% if section.settings.filters %}
+  	<div class="closeFilter{% if section.settings.sbpos != 'popup' %} hide-lg{% endif %}">{% render 'icon-close' %}</div>
+	<div class="filterWrap fl {{ flclass }}" data-url="{{ shop.url }}{{ collection.url | split: "?" | first }}">
+      	{% for block in section.blocks %}
+          {%- assign blkSt = block.settings -%}    
+          {% if block.type == 'categories' and section.settings.sbpos != 'top' %}
+              <div class="filterBx" {{ block.shopify_attributes }}>
+                <div class="flTtl"><span class="fl f-jcsb f-aic {{ section.settings.bx_ttlw }} {{ section.settings.bx_tcase }}">{{ blkSt.title }}</span></div>
+                <ul class="sdCate sdBlock {{ section.settings.optcase }}">
+                  {% for link in linklists[blkSt.side_categories].links %}
+                  	<li class="lvl-1{% if link.active or link.child_active %} active{% endif %}">
+                      <a href="{{ link.url }}">
+                          {{ link.title | split: '[' | first }}
+                          {%- assign className = 'plus' -%}
+                          {% if link.active or link.child_active %}{%- assign className = 'minus' -%}{% endif %}
+                          {%- if link.links != blank -%}{% render 'icon-plus', class: className %}{%- endif -%}
+                        </a>
+                      {%- if link.links != blank -%}
+                      <ul class="subLinks">
+                        {%- for childlink in link.links -%}
+                        <li class="lvl-2{% if childlink.active or childlink.child_active %} active{% endif %}">
+                          <a href="{{ childlink.url }}" class="lvl-2">
+                              {{ childlink.title }}
+                              {%- if childlink.links != blank -%}
+                                  {%- assign className = 'plus' -%}
+                                  {% if childlink.active or childlink.child_active %}{%- assign className = 'minus' -%}{% endif %}
+                                  {%- if link.links != blank -%}{% render 'icon-plus', class: className %}{%- endif -%}
+                              {%- endif -%}
+                          </a>
+                          {%- if childlink.links != blank -%}
+                          <ul class="subLinks">{%- for lvl3link in childlink.links -%}<li class="lvl-3 {% if lvl3link.active %}active{% endif %}"><a href="{{ lvl3link.url }}" class="lvl-3">{{ lvl3link.title }}</a></li>{%- endfor -%}</ul>
+                          {%- endif -%}
+                        </li>
+                        {%- endfor -%}
+                      </ul>
+                      {%- endif -%}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+          {% endif %}
+      
+      	  {% if block.type == 'filter_by' %}
+      		{%- assign activeDynamicFl = true -%}
+      		{% if blkSt.title != blank %}<label class="flby mb20 {{ section.settings.bx_ttlw }}{% if section.settings.sbpos != 'top' %} col-1{% else %} f-asc mr10{% endif %}">{{ blkSt.title }}</label>{% endif %}
+      		{%- for filter in search.filters -%}
+              {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
+              {% case filter.type %}
+                  {% when 'list' %}
+                      <details class="filterBx dyFilters pr js-filter" data-index="{{ forloop.index }}" {{ drower }} {{ block.shopify_attributes }}>
+                          <summary class="flTtl">
+                              <span class="fl f-jcsb f-aic {{ section.settings.bx_ttlw }} {{ section.settings.bx_tcase }}">
+                                {{ filter.label | escape }}
+                                <span class="count-bubble">{% if filter.active_values.size > 0 %}{{ filter.active_values.size }}{% endif %}</span> 
+                                {% render 'icon-plus' %}
+                              </span>
+                          </summary>
+                        
+                          {%- liquid
+                          		assign iscolor = false
+                                assign isSize = false
+                                assign colorOptions = settings.colorOpt | downcase | replace:", ","," | replace:" , ","," | replace:" ,","," | split: ","
+                                assign sizeOptions = section.settings.flcolumn | downcase | replace:", ","," | replace:" , ","," | replace:" ,","," | split: ","
+                                assign fname = filter.label | downcase
+                                if colorOptions contains fname
+                                	assign iscolor = true
+                                endif
+                                if sizeOptions contains fname
+                                    assign isSize = true
+                                endif
+                          -%}
+                          <div class="filterDD{% if iscolor %} filterClr{% endif %}">
+                              <div class="bxTtl fl f-jcsb {{ bgttl }}">
+                                  <span class="facets__selected no-js-hidden">{{ 'collections.general.filters_selected' | t: count: filter.active_values.size }}</span>
+                                  <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link js-facet-remove" >{{ 'collections.general.reset' | t }}</a>
+                              </div>
+                              <ul class="flList {{ section.settings.optcase }}" role="list" {% if isSize %}style="column-count:2"{% endif %}>
+                              {% if iscolor %}
+                                  {%- for value in filter.values -%}
+                                  <li class="color">
+									<label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="m0 fl-checkbox{% if value.count == 0 and value.active == false %} disabled{% endif %}">
+                                    	<input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" id="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="custCheck dyfl"
+                                            {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                                        <span class="swt swt{{ value.value | handleize }}{% if iscolor %} clrbox {{ section.settings.fclr_size }} {{ section.settings.fclr_style }}{% endif %}" style="background-color:{{ value.value|downcase }};"></span>
+                                        <span class="tooltip-label top">{{ value.value }}</span>
+                                  	</label>
+                                  </li>
+                                  {%- endfor -%}
+                              {% else %}
+                                  {%- for value in filter.values -%}
+                                  <li>
+                                  	  <label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="m0 fl-checkbox{% if value.count == 0 and value.active == false %} disabled{% endif %}">
+                                          <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" id="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="custCheck dyfl"
+                                          	{% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                                      	  <span class="checkbox"></span> {{ value.label | escape }}{% if blkSt.flpcnt %}<span class="prcnt">&nbsp;({{ value.count }})</span>{% endif %}
+                                      </label>
+                                  </li>
+                                  {%- endfor -%}
+                              {% endif %}
+                              </ul>
+                          </div>
+                      </details>
+                  {% when 'price_range' %}
+                      {% liquid
+                          assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+                          assign uses_comma_decimals = false
+                          if currencies_using_comma_decimals contains cart.currency.iso_code
+                              assign uses_comma_decimals = true
+                          endif
+                      %}
+                      <details class="filterBx dyFilters pr{% if section.settings.flbg and section.settings.optbg %} bxBg{% endif %}" data-index="{{ forloop.index }}" {{ drower }}>
+                          <summary class="flTtl">
+                              <span class="fl f-jcsb f-aic {{ section.settings.bx_ttlw }} {{ section.settings.bx_tcase }}">
+                                  {{ filter.label | escape }}
+                                  <span class="count-bubble{% if filter.min_value.value or filter.max_value.value %}{{ filter.active_values.size }} count-bubble--dot{% endif %}"></span>
+                                  {% render 'icon-plus' %}
+                              </span>
+                          </summary>
+                          <div class="filterDD prsld pr">
+                            <div class="bxTtl fl f-jcsb {{ bgttl }}">
+								{%- assign max_price_amount = filter.range_max | money -%}
+								<span class="facets__selected">{{ "collections.general.max_price_html" | t: price: max_price_amount }}</span>
+								<a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link js-facet-remove" >{{ 'collections.general.reset' | t }}</a>
+							</div>
+                            <price-range class="fl f-jcsb f-aic flList mb20 {{ section.settings.optcase }}">
+                              <div class="field pr">                               
+                                <input class="prRange w_100 tr" name="{{ filter.min_value.param_name }}" id="Filter-{{ filter.label | escape }}-GTE" type="number" placeholder="0" min="0"
+                                    {%- if filter.min_value.value -%}
+                                        {%- if uses_comma_decimals -%}
+                                            value="{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' | round }}"
+                                            {%- assign minPrice = filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' | round -%}
+                                        {%- else -%}
+                                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' | round }}"
+                                            {%- assign minPrice = filter.min_value.value | money_without_currency | replace: ',', '' | round -%}
+                                        {% endif %}
+                                    {%- else -%}
+                                      {%- assign minPrice = 0 -%}
+                                    {%- endif -%}
+                                    max="{{ filter.range_max | money_without_currency | replace: ',', '' | round }}" />                                   
+                              </div>
+                              <span class="ml20 mr20"> - </span>
+                              <div class="field pr">                               
+                                <input class="prRange w_100 tr" name="{{ filter.max_value.param_name }}" id="Filter-{{ filter.label | escape }}-LTE" type="number" placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}" min="0"
+                                    {%- if filter.max_value.value -%}
+                                        {%- if uses_comma_decimals -%}
+                                            value="{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' | round }}"
+                                            {%- assign maxPrice = filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' | round -%}
+                                        {%- else -%}
+                                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '.' | round }}"
+                                            {%- assign maxPrice = filter.max_value.value | money_without_currency | replace: ',', '.' | round -%}
+                                        {% endif %}
+                                    {%- else -%}
+                                      {%- if uses_comma_decimals -%}
+                                          {%- assign maxPrice = filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' | round -%}
+                                      {%- else -%}
+                                          {%- assign maxPrice = filter.range_max | money_without_currency | replace: ',', '' | round -%}
+                                      {%- endif -%}
+                                    {%- endif -%}
+                                    max="{{ filter.range_max | money_without_currency | replace: ',', '' | round }}" />
+                              </div>
+                            </price-range>
+                            <input class="range-slider" data-symbol="{{ cart.currency.symbol }}" type="hidden" value="{{ minPrice }},{{ maxPrice }}" />
+                         </div>
+                      </details>
+                  {% endcase %}
+              {%- endfor -%}
+      	  {% endif %}
+      		
+      	  {% comment %} *** Product Slider *** {% endcomment %}
+          {% if block.type == 'products' and section.settings.sbpos != 'top' %}
+          <div class="filterBx hide-sm hide-md" {{ block.shopify_attributes }}>
+                <div class="flTtl"><span class="fl f-jcsb f-aic {{ section.settings.bx_ttlw }} {{ section.settings.bx_tcase }}">{{ blkSt.title }}</span></div>
+            <div class="sdBlock">
+              {% if blkSt.sd_prod != blank %}
+                  {% for product in collections[blkSt.sd_prod].products limit:blkSt.num_pr %}
+                    {% render 'product-card-columns', product: product, block: block.settings, section: section.settings, sizes: image_size %}
+                  {% endfor %}
+              
+                {% if blkSt.prbtn %}<div class="text-center"><a href="{{ blkSt.sd_prod }}" class="btn">{{ blkSt.btn_txt }}</a></div>{% endif %}
+              {% else %}
+              <p>Please select collection from store admin > customize > Collection page > sidebar</p>
+              {% endif %} 
+            </div>
+          </div>
+          {% endif %}
+
+          {% comment %} *** Image Banner *** {% endcomment %}
+          {% if block.type == 'image_bnr' and section.settings.sbpos != 'top' %}
+      	  <div class="filterBx hide-sm hide-md" {{ block.shopify_attributes }}>
+            {% if blkSt.link != blank %}<a href="{{ blkSt.link }}">{% endif %}
+            {% if blkSt.img != blank %}
+            <img loading="lazy" class="imgFl lazyload wow zoomIn mb30" src="{{ blkSt.img | img_url: '50x' }}" 	data-srcset="{% render 'lazyload', image:  blkSt.img, sizes: '180,360' %}" data-sizes="auto" alt="{{ blkSt.img.alt | escape }}">                     
+            {% else %}
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+            {% if blkSt.link != blank %}</a>{% endif %}
+          </div>
+          {% endif %}
+
+          {% comment %} *** Static Text Block *** {% endcomment %}
+          {% if block.type == 'static_text' and section.settings.sbpos != 'top' %}
+          <div class="filterBx hide-sm hide-md" {{ block.shopify_attributes }}>
+            <div class="flTtl"><span class="fl f-jcsb f-aic {{ section.settings.bx_ttlw }} {{ section.settings.bx_tcase }}">{{ blkSt.title }}</span></div>
+            <div class="sdBlock">
+              {% if blkSt.text != blank %}
+              {{ blkSt.text }}
+              {% else %}
+              <p>Please select collection from store admin > customize > Collection page > sidebar</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+      	{% endfor %}
+  	  </div>
+	{% endif %}
+    <div class="hide">
+      <noscript><button type="submit" class="button button--small">{{ 'collections.general.sort_button' | t }}</button></noscript>
+    </div>
+  </form>
+{%- endcapture -%}
+{%- capture activefiltersDs -%}
+	<div class="active-facets active-facets-desktop fl f-wrap mb10">
+		<a href="{{ routes.search_url }}?sort_by={{ search.sort_by }}&q={{ search.terms }}" class="active-fl removefl">{{ 'collections.general.clear_all' | t }}</a>
+		{%- for filter in search.filters -%}
+			{%- for value in filter.active_values -%}
+				<a class="active-fl removefl" href="{{ value.url_to_remove }}">{{ value.label | escape }} {% render 'icon-close' %}</a>
+			{%- endfor -%}
+			{% if filter.type == "price_range" %}
+				{%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+					<a class="aactive-fl removefl" href="{{ filter.url_to_remove }}">
+						{%- if filter.min_value.value -%}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{%- endif -%}-{%- if filter.max_value.value -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
+						{% render 'icon-close'%}
+					</a>
+				{%- endif -%}
+			{% endif %}
+		{%- endfor -%}
+	</div>
+{%- endcapture -%}
+
+{% capture productcount %}
+	{% if section.settings.dis_prod_cnt %}
+    <div class="tlbr_item tlbr_item_cnt">
+      <span class="tlbr_pr_cnt collection-product-count light" role="status">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}</span>
+    </div>
+    {% endif %}
+{%- endcapture -%}
+
+{% capture productList %}
+	{% if search.performed  %}
+		<div class="collection">
+			<div id="collectionPr" data-id="{{ section.id }}" class="grid rwcols-{{ section.settings.gridmb }} rwcols-md-{{ section.settings.gridtb }} rwcols-lg-{{ section.settings.grid }} grid-products">
+            	{% for item in search.results %}
+                    <div class="gitem">
+                      {%- case item.object_type -%}
+                        {%- when 'product' -%}
+                          {% render 'product-card-grid', product: item, block: block.settings, section: section.settings, sizes: image_size %}
+                        {%- when 'article' -%}
+                          {%- assign article = item -%}
+                          <div class="grid_bx">
+                            <div class="grid_img_wr mb15">
+                              <a class="grid_lnk" href="{{ item.url }}">
+                                {% if article.image %}
+                                  <div class="grid_img lazyload" data-bgset="{% render 'prgrid-img', image: article.image, sizes: sizes %}" data-sizes="auto" data-parent-fit="contain"><span class="pageLbl">{{ 'general.search.article_label' | t }}</span></div>
+                                {% else %}
+                                  <div class="grid_img lazyload" data-bgset="https://dummyimage.com/600x600/f4f4f4/cccccc.png&text=+++{{ 'general.search.article_label' | t }}+++" data-sizes="auto" data-parent-fit="contain"></div>
+                                {% endif %}
+                              </a>
+                            </div>
+                            <div class="details">
+                              <div class="grid_title"><a href="{{ item.url }}">{{ item.title }}</a></div>
+                            </div>
+                          </div>
+                      {%- when 'page' -%}
+                        <div class="grid_bx {{ boxstyle }}{% unless product.available %} sold-out{% endunless %}">
+                          <div class="grid_img_wr mb15">
+                            <a class="grid_lnk" href="{{ item.url }}">
+                              <div class="grid_img lazyload" data-bgset="https://dummyimage.com/600x600/f4f4f4/cccccc.png&text=+++{{ item.title | replace: " ", "%20"  }}+++" data-sizes="auto" data-parent-fit="contain"><span class="pageLbl">{{ 'general.search.page_label' | t }}</span></div>
+                            </a>
+                          </div>
+                          <div class="details"><div class="grid_title"><a href="{{ item.url }}">{{ item.title }}</a></div></div>
+                        </div>
+                        {%- endcase -%}
+                    </div>
+                {% endfor %}
+			</div>
+		</div>
+  		{%- if paginate.pages > 1 -%}
+			{% if section.settings.pagination == "infinite" or section.settings.pagination == "button" %}
+				{% if paginate.next %}
+					<div class="infinitpaginOuter" data-type="{{ section.settings.pagination }}">
+						<div class="infinitpagin tc">
+							{% if section.settings.pagination == "infinite" %}
+								<a href="{{ paginate.next.url }}" data-url="{{ paginate.next.url }}" class="infinite"><img src="{{ 'ajax-loader.gif' | asset_url }}" alt="{{ 'general.pagination.loading' | t }}" /><p>{{ 'general.pagination.loading' | t }}</p></a>
+							{% else %}
+								<a href="{{ paginate.next.url }}" class="btn loadMore">{{ 'general.pagination.loadmore' | t }}</a>
+							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+			{% else %}
+				{% render 'pagination', paginate: paginate %}
+			{% endif %}
+		{%- endif -%}
+	{% endif %}
+{% endcapture %}
+  
+	<collection-filters-form class="facets db {% if section.settings.sw %}fw-sec{% else %}page-width{% endif %}" id="Collection">
+      	{%- if search.performed and search.results.size > 0 -%}
+            <div class="{% unless section.settings.sbpos == 'top' %}fl f-col f-ais f-row-md{% endunless %}">
+                {% if section.settings.filters and section.settings.sbpos != 'top' %}
+                    <div class="sidebar sb_filter anim collection-filters{% if section.settings.addbg %} {{ section.settings.filter_bg }}{% endif %}{% if section.settings.sbpos == 'popup' %} sb_popup{% endif %}{% if section.settings.sbpos == 'right' %} order2 sb_right{% endif %}" id="main-collection-filters" data-id="{{ section.id }}">{{ filters }}</div>
+                {% endif %}
+
+              <div class="main-col fl1 w_100" id="CollectionProductGrid">
+
+                    {% if section.settings.filters and section.settings.sbpos == 'top' %}
+                        <div class="anim fl flTop sb_filter{% if section.settings.filter_shadow %} ddshadow{% endif %}" id="main-collection-filters" data-id="{{ section.id }}">{{ filters }}{{ shorting }}</div>
+                    {% endif %}
+
+                    {{ activefiltersDs }}
+
+                    <div class="tlbr fl f-jcsb f-aic mb15">
+                       {% if section.settings.filters %}
+                        <button type="button" class="mr15 btn-filter{% if section.settings.sbpos != 'popup' %} hide-lg{% endif %}" area-label="{{ 'collections.general.filter_button' | t }}">
+                      <svg class="at-icon mr5" fill="none" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m3 6.25c-.41421 0-.75.33579-.75.75s.33579.75.75.75zm0 10c-.41421 0-.75.3358-.75.75s.33579.75.75.75zm6 1.5c.41421 0 .75-.3358.75-.75s-.33579-.75-.75-.75zm12 0c.4142 0 .75-.3358.75-.75s-.3358-.75-.75-.75zm-6-11.5c-.4142 0-.75.33579-.75.75s.3358.75.75.75zm6 1.5c.4142 0 .75-.33579.75-.75s-.3358-.75-.75-.75zm-18 0h3v-1.5h-3zm0 10h6v-1.5h-6zm15 0h3v-1.5h-3zm-3-10h6v-1.5h-6zm2.25 9.25c0 1.2426-1.0074 2.25-2.25 2.25v1.5c2.0711 0 3.75-1.6789 3.75-3.75zm-2.25 2.25c-1.2426 0-2.25-1.0074-2.25-2.25h-1.5c0 2.0711 1.6789 3.75 3.75 3.75zm-2.25-2.25c0-1.2426 1.0074-2.25 2.25-2.25v-1.5c-2.0711 0-3.75 1.6789-3.75 3.75zm2.25-2.25c1.2426 0 2.25 1.0074 2.25 2.25h1.5c0-2.0711-1.6789-3.75-3.75-3.75zm-3.75-7.75c0 1.24264-1.0074 2.25-2.25 2.25v1.5c2.0711 0 3.75-1.67893 3.75-3.75zm-2.25 2.25c-1.24264 0-2.25-1.00736-2.25-2.25h-1.5c0 2.07107 1.67893 3.75 3.75 3.75zm-2.25-2.25c0-1.24264 1.00736-2.25 2.25-2.25v-1.5c-2.07107 0-3.75 1.67893-3.75 3.75zm2.25-2.25c1.2426 0 2.25 1.00736 2.25 2.25h1.5c0-2.07107-1.6789-3.75-3.75-3.75z" fill="#28303f"/></svg>
+                       {{ 'collections.general.filter_button' | t }}
+                    </button>
+                       {% endif %}
+                       {{ productcount }}
+                    </div>            
+                    {{ productList }}
+                    <br/>
+                </div>          
+            </div>
+      	{%- else -%}
+            <div class="noresult">
+                <h1 class="page-title {{ settings.title_align }}">{{ 'general.search.title' | t }}</h1>
+                <p class="tc">{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+                <form action="{{ routes.search_url }}" method="get" class="search pr searchInPage wd50-md m_auto" role="search" style="box-shadow:0 0 25px 5px {{ settings.bodycl | color_modify:'alpha', 0.1 }};border-radius:{{ settings.search_rad }}px;">
+                    <div class="ad_inputs fl">
+                        <input class="s_input w_100" type="search" name="q" placeholder="{{ settings.search_ph }}" value="{{ search.terms | escape }}" autocomplete="off" />
+                        <button class="btn s_submit" type="submit">{% render 'icon-search' %} <span class="fallback_txt">{{ 'general.search.submit' | t }}</span></button>
+                    </div>
+                </form>
+            </div>
+      		<p>&nbsp;</p><p>&nbsp;</p>
+      	{%- endif -%}
+      	
+ 	</collection-filters-form>
+{%- endpaginate -%}
+</div>
+{%- for filter in search.filters -%}
+    {% if filter.type == 'price_range' %}
+	<script src="{{ 'jquery.range-min.js' | asset_url }}" defer="defer"></script>
+	<script type="text/javascript">
+    	window.addEventListener('DOMContentLoaded',function(){
+			priceSlider = function(){
+      			var minPrice = $('input[name="filter.v.price.gte"]').val(),
+            		maxPrice = $('input[name="filter.v.price.lte"]').val();
+    			$('.range-slider').jRange({
+                	from: 0,
+                    {%- if uses_comma_decimals -%}
+                        to: '{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' | round }}',
+                    {%- else -%}
+                        to: '{{ filter.range_max | money_without_currency | replace: ',', '' | round }}',
+                    {%- endif -%}
+                    step: 1,
+                  	format: '{{ cart.currency.symbol }}%s',
+                    width: 235,
+                    showLabels: true,
+                    isRange : true,
+                    ondragend: function(value){
+						var values = value.split(',');
+                      	if(minPrice != values[0]){
+                        	$('input[name="filter.v.price.gte"]').val(values[0]).trigger('change');
+                        }
+                      	if(maxPrice != values[1]){
+                        	$('input[name="filter.v.price.lte"]').val(values[1]).trigger('change');
+                        }
+                    }
+				});
+  			};
+            priceSlider();
+        });
+	</script>
+	{% endif %}
+{%- endfor -%}
+{% endcapture %}
+<div class="sec_cov" style="--sbg:{{ secSt.bg }};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px"> 
+{{ seachResult | strip_newlines | remove:"	" }}
+</div>
+{% schema %}
+{
+	"name": "Search Page",
+	"class": "collectionPage",
+	"settings": [		
+		{
+			"type": "paragraph",
+			"content": "Products per row (grid view)"
+		},
+		{
+			"type": "range",
+			"id": "grid",
+			"label": "Desktop",
+			"default": 4,
+			"min": 2,
+			"max": 7,
+			"step": 1
+		},
+		{
+			"type": "range",
+			"id": "gridtb",
+			"label": "Tablet",
+			"default": 3,
+			"min": 2,
+			"max": 5,
+			"step": 1
+		},
+		{
+			"type": "range",
+			"id": "gridmb",
+			"label": "Mobile",
+			"default": 2,
+			"min": 1,
+			"max": 3,
+			"step": 1
+		},
+		{
+			"type": "range",
+			"id": "products_per_page",
+			"min": 4,
+			"max": 50,
+			"step": 1,
+			"default": 12,
+			"label": "Products per page"
+		},
+		{
+			"type": "select",
+			"id": "pagination",
+			"label": "Pagination type",
+			"default": "button",
+			"options": [
+				{ "value": "default", "label": "Classic" },
+				{ "value": "infinite", "label": "Infinite Scroll" },
+				{ "value": "button", "label": "Load more button" }
+			]
+		},	
+		{
+			"type": "header",
+			"content": "Filters and Sidebar"
+		},	
+		{
+			"type": "checkbox",
+			"id": "filters",
+			"default": true,
+			"label": "Enable Sidebar"
+		}, 	
+		{
+			"type": "select",
+			"id": "sbpos",
+			"label": "Position",
+			"default": "left",			
+			"options": [
+				{ "value": "top", "label": "Top Filter" },
+				{ "value": "left", "label": "Left Sidebar" },
+				{ "value": "right", "label": "Right Sidebar" },
+				{ "value": "popup", "label": "Popup Box(sidebar)" }
+			],
+			"info":"Top Position will display product filters only."
+		},	
+        {
+			"type": "paragraph",
+			"content": "Top Filter ===="
+		},	
+        {
+            "type":"checkbox",
+            "id":"tbg",
+            "label":"Add Background & Border for Bar?",
+            "default": false           
+        }, 
+        {
+          "type": "color",
+          "id": "flbgcl",
+          "label": "Background",
+          "default": "#fff"		  
+        },		       
+        {
+          "type": "color",
+          "id": "flbdr",
+          "label": "Border",
+          "default": "#eee"         
+        },		
+		{
+			"type": "checkbox",
+			"id": "flshadow",
+			"label": "Enable dropdown shadow",
+			"default": true			
+		},
+        {
+			"type": "paragraph",
+			"content": "Sidebar ===="
+		},	
+        {
+            "type":"checkbox",
+            "id":"sbg",
+            "label":"Add Background & Border?",
+            "default": false           
+        }, 
+        {
+            "type":"color",
+            "id":"sbgc",
+            "label":"Background",
+            "default": "#fff"   
+        },
+        {
+            "type":"color",
+            "id":"sbgb",
+            "label":"Border",
+            "default": "#eee"  
+        }, 
+		{
+          "type": "paragraph",      
+          "content": "Filter Block Title ==="
+		},
+        {
+          "type": "range",
+          "id": "bx_ttl",
+          "label": "Font size",
+          "default": 14,
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "bx_ttlw",
+          "label": "Font Weight",
+          "default": "fwb",
+          "options": [
+            { "value": "fwl", "label": "Light" },
+            { "value": "fwr", "label": "Regular" },
+            { "value": "fwm", "label": "Medium" },
+            { "value": "fwsb", "label": "Semi Bold" },
+            { "value": "fwb", "label": "Bold" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "bx_tcase",
+          "label": "Text Case",
+          "default": "ttu",
+          "options": [
+            { "value": "ttu", "label": "Uppercase" },
+            { "value": "ttc", "label": "Capitalize" },
+			{ "value": "ttn", "label": "Default" }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "bx_ttlc",
+          "label": "Text Color",
+          "default": "#000"
+        },
+	  {
+          "type": "checkbox",
+          "id": "dis_botbdr",
+          "label": "Show Bottom Border",
+          "default": false
+        },	  
+ 	   {
+          "type": "color",
+          "id": "flbtmbdr",
+          "label": "Border Color",
+          "default": "#eee",
+		  "info":"for left and right sidebar"
+        },
+ 		{
+          "type": "checkbox",
+          "id": "tglico",
+          "label": "Hide Toggle Icon",
+          "default": true,
+		  "info":"From left and right sidebar"
+        },
+		{
+          "type": "paragraph",      
+          "content": "Filters and Links ==="
+		},
+        {
+          "type": "range",
+          "id": "opt",
+          "label": "Font Size",
+          "default": 13,
+          "min": 10,
+          "max": 25,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "optcase",
+          "label": "Text Case",
+          "default": "ttc",
+          "options": [
+            { "value": "ttu", "label": "Uppercase" },
+            { "value": "ttc", "label": "Capitalize" },
+			{ "value": "ttn", "label": "Default" }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "floptcl",
+          "label": "Text Color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "catlinkhv",
+          "label": "Active Link Color",
+          "default": "#fe877b"
+        },       	
+		{
+          "type": "paragraph",      
+          "content": "Filters By Colors ==="
+		},
+        {
+          "type": "select",
+          "id": "fclr_size",
+          "label": "Color Swatch Size",
+          "default": "small",
+          "options": [
+            { "value": "small", "label": "Small" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "large", "label": "Large" } 
+          ]
+       },
+	   {
+          "type": "select",
+          "id": "fclr_style",
+          "label": "Color Swatch Style",
+          "default": "rounded_rectangle",
+          "options": [
+            { "value": "rounded", "label": "Rounded" },
+            { "value": "rectangle", "label": "Square" },
+            { "value": "l_rectangle", "label": "Rectangle Small Size" },
+            { "value": "rounded_rectangle", "label": "Rounded Rectangle" }
+           ]
+      	},
+        {
+          "type": "color",
+          "id": "actclr",
+          "label": "Active filter Border",
+          "default": "#000"
+        },		
+		{
+          "type": "paragraph",      
+          "content": "Filters in two column ==="
+		},		
+        {
+        	"type": "textarea",
+            "id": "flcolumn",
+            "label": "Add Filter title names need to show in two column.",
+            "default": "Size",
+            "info": "Eg: Size, Product type, Brand ..."
+        },
+		{
+          "type": "paragraph",
+          "content": "Active Filter Labels"
+		},
+        {
+          "type": "color",
+          "id": "act_fltxt",
+          "label": "Text Color",
+          "default": "#000"
+        },
+        {
+          "type": "color",
+          "id": "act_flbg",
+          "label": "Background",
+          "default": "#fff"
+        },
+		{
+          "type": "paragraph",      
+          "content": "Price Slider ==="
+		},
+	    {
+          "type": "color",
+          "id": "bar",
+          "label": "Slider Bar",
+          "default": "#eee"
+        },
+	    {
+          "type": "color",
+          "id": "bara",
+          "label": "Active Slider Bar",
+          "default": "#333"
+        },
+       {
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "info":"select light color"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false           
+        } 
+	],
+	"blocks": [
+      {
+        "type": "categories",
+        "name": "Categories",        
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Categories",
+              "default":"Categories"
+          	},
+            {
+              "type": "link_list",
+              "id": "side_categories",
+              "label": "Select Categories",
+              "default": "main-menu"
+            }
+        ]
+     },
+	 {
+        "type": "filter_by",
+        "name": "Dynamic Filters",		
+		"limit": 1,
+        "settings": [
+			 {
+                "type": "paragraph",                
+				"content": "[How to Set Products Filters?](https://www.adornthemes.com/documentation/optimal/#ProductsFiltering)"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Filter By Label",
+				"default": "Filter By"
+            },
+			{
+                "type": "paragraph",                
+				"content": "[Manage Filters](\/admin\/menus)"
+            },
+            {
+                "type": "checkbox",
+                "id": "flpcnt",
+                "label": "Show Products Count?",
+                "default": false               
+            }
+       ]
+     },
+     {
+        "type": "products",
+        "name": "Products",
+		"limit": 1,
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Title Text",
+              "default":"Popular Products"
+          	},
+            {
+              "type": "collection",
+              "id": "sd_prod",
+              "label": "Select Collection"
+            },
+            {
+              "type": "text",
+              "id": "num_pr",
+              "label": "Number of products to show",
+              "default": "3"
+            },
+			{
+              "type": "checkbox",
+              "id": "prbtn",
+              "label": "View all products button",
+              "default": false
+            },
+			{
+              "type": "text",
+              "id": "btn_txt",
+              "label": "Button Text",
+              "default": "View All"
+            }
+        ]
+      },
+	  {
+        "type": "image_bnr",
+        "name": "Image Banner",
+        "settings": [
+            {
+              "type": "image_picker",
+              "id": "img",
+              "label": "Banner Image"
+            },
+            {
+              "type": "url",
+              "id": "link",
+              "label": "Banner"
+            }
+      	]
+      },
+	  {
+        "type": "static_text",
+        "name": "Static Text",
+        "settings": [
+            { 
+              "type":"text",
+              "id":"title",
+              "label":"Title Text",
+              "default":"Static Block Title"
+          	},
+            {
+              "type": "richtext",
+              "id": "text",
+              "label": "Text",
+              "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            }
+      	]
+      }
+   ]
+}
+{% endschema %}

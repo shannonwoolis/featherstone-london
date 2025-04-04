@@ -1,0 +1,324 @@
+{%- capture pageBanner -%}
+        <div class="fl hero pr" style="background:{% if  section.settings.bgg != blank %} {{ section.settings.bgg }}{% else %}{{ section.settings.bg  }}{% endif %};">
+            {% if section.settings.image != blank %}
+                <div class="heroImg bgImg lazyload{% if section.settings.mb_image != blank %} hide-sm{% endif %}"
+                    data-bgset="{% render 'bgset', image: section.settings.image %}" data-sizes="auto" data-parent-fit="contain"
+                    style="background-image: url('{{ section.settings.image | img_url: '100x' }}'); background-position:center {{ section.settings.alignment }};"></div>
+            {% endif %}
+            {% if section.settings.mb_image != blank %}
+                <div class="heroImg bgImg hide-md hide-lg lazyload" data-bgset="{% render 'bgset', image: section.settings.mb_image %}" data-sizes="auto" data-parent-fit="contain"
+                    style="background-image:url('{{ section.settings.mb_image | img_url: '100x' }}'); background-position:center {{ section.settings.alignment }};"></div>
+            {% endif %}
+
+            {%  if  section.blocks.size > 0 %}
+                <div class="hero_wrap fl f-jcc f-aic m_auto" style="--mht:{{ section.settings.hit }}px;--mhtt:{{ section.settings.hitt }}px;--mhtm:{{ section.settings.hitm }}px;--mwd:{{ section.settings.cntwd }}px;--brad:{{ section.settings.brad }}px;--bpd:{{ section.settings.bpd | minus:10 }}px;--bpds:{{ section.settings.bpd }}px;--bpdm:{{ section.settings.bpdm | minus:10 }}px;--bpdsm:{{ section.settings.bpdm }}px;">
+                    <div class="hero_cap pr{% if section.settings.text-align %} tc{% endif %}" style="background-color:rgba({{ section.settings.tbg | color_to_rgb | remove:'rgb(' | remove: ')' }},{{ section.settings.opt }});">
+                        {% for block in section.blocks %}
+                            {% if block.type == 'title' %}
+                                <h2 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--fw:{{ block.settings.fw }};--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.ftsm }}px;" {{ block.shopify_attributes }}>{{ page.title }}</h2>
+                            {% elsif block.type == 'text' %}
+                                <div class="heroTxt mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if section.settings.hidemb %} hide-sm{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fs }}px;--fsm:{{ block.settings.fsm }}px;--lh:{{ block.settings.lh }};" {{ block.shopify_attributes }}>{{ block.settings.title }}</div>
+                            {% endif %}
+                        {% endfor %}          
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+{%- endcapture -%}
+
+{{ pageBanner | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+    "name": "Page Banner",
+    "class": "index-section",
+    "settings": [       
+         {
+            "type": "paragraph",
+            "content": "[How do I set page banners?](https://www.adornthemes.com/knowledge-base/page-banner/)"
+        },
+        {
+            "type":"paragraph",
+            "content":"Height ==="
+        },
+        {
+            "type": "range",
+            "id": "hit",
+            "label": "Desktop",
+            "default": 220,
+            "min": 100,
+            "max": 900,
+            "step": 10
+        },
+        {
+            "type": "range",
+            "id": "hitt",
+            "label": "Tablet",
+            "default": 160,
+            "min": 100,
+            "max": 900,
+            "step": 10
+        },  
+        {
+            "type": "range",
+            "id": "hitm",
+            "label": "Mobile",
+            "default": 100,
+            "min": 100,
+            "max": 900,
+            "step": 10
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background Color",
+            "default": "#f5f5f5"
+        },
+         {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Recommended width 2000px and height as per above desktop height"
+        },
+        {
+            "type": "image_picker",
+            "id": "mb_image",
+            "label": "Mobile Image",
+            "info": "Recommended width 750 and height as per above mobile height. If mobile image is blank, dekstop image will be used."
+        },	 	        
+        {
+            "type": "header",        
+            "content": "Banner Text" 			
+        },
+        {
+            "type": "range",
+            "id": "cntwd",
+            "min": 600,
+            "max": 1600,
+            "step": 10,
+            "label": "Container Max Width (desktop)",
+            "unit": "px",
+            "default": 1000
+        },
+        {
+            "type": "checkbox",
+            "id": "text-align",
+            "label": "Text Align Center?",
+            "default": true
+        }, 	            
+        {
+            "type": "color",
+            "id": "tbg",
+            "label": "Box Background"          
+        },
+        {
+            "type": "range",
+            "id": "opt",
+            "min": 0,
+            "max": 1,
+            "step": 0.1,
+            "label": "Box Background Opacity",
+            "unit": "%",
+            "default": 0.9
+        },
+		{
+            "type": "range",
+            "id": "bpd",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "label": "Box Padding",
+            "unit": "px",
+            "default":30
+        },
+		{
+            "type": "range",
+            "id": "bpdm",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+			"label": "Box Padding(mobile)",
+            "unit": "px",
+            "default":20
+        },
+		{
+            "type": "range",
+            "id": "brad",
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "label": "Box Radius",
+            "unit": "px",
+            "default":0
+        }
+    ],
+    "blocks": [
+        {
+            "type": "title",
+            "name": "Title",
+            "limit":1,
+            "settings": [
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fts",
+                    "label": "Font Size",
+                    "default": 22,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                }, 
+                {
+                    "type": "range",
+                    "id": "ftsm",
+                    "label": "Font Size (mobile)",
+                    "default": 20,
+                    "min": 10,
+                    "max": 60,
+                    "step": 1,
+                    "unit": "px"
+                }, 
+               {
+                  "type": "select",
+                  "id": "fw",
+                  "label": "Font Weight",
+                  "default": "600",
+                  "options": [
+                    {
+                      "value": "300",
+                      "label": "Light"
+                    },
+                    {
+                      "value": "400",
+                      "label": "Regular"
+                    },
+                    {
+                      "value": "500",
+                      "label": "Medium"
+                    },
+                    {
+                      "value": "600",
+                      "label": "Semi Bold"
+                    },
+                    {
+                      "value": "700",
+                      "label": "Bold"
+                    }
+                  ]
+                }, 
+                {
+                    "type": "checkbox",
+                    "id": "tuu",
+                    "label": "Use Uppercase?",
+                    "default": false			
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 5,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },			          
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 5,
+                    "min":0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Text",
+            "limit":5,
+            "settings":[
+                {
+                    "type": "richtext",
+                    "id": "title",
+                    "label": "Text",                  
+					"info": "Use dynamic source to show different text for each page banner.[How to set?](https://www.adornthemes.com/knowledge-base/page-banner/)"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hidemb",
+                    "label": "Hide in mobile?",
+                    "default": true			
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 14,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 14,
+                    "min": 10,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "lh",
+                    "label": "Line Height",
+                    "default": 1.5,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.6"
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 30,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 20,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }      
+            ]
+        }   
+    ]
+}
+{% endschema %}

@@ -1,0 +1,275 @@
+{%- assign secSt = section.settings -%}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">   
+{% if template == "cart" %}
+    {%- for item in cart.items -%}
+        {%- assign product_rec = item.product -%}
+    {%- endfor -%}
+{%- else -%}
+    {%- assign product_rec = product -%}
+{%- endif -%}
+<product-recommendations class="complementary-products" data-id="recomSlider" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product_rec.id }}&limit={{ secSt.limit }}">
+    <div class="{% if secSt.sw %}fw-sec{% else %}page-width{% endif %}">
+        {% render 'sec-title' %}
+        {% if secSt.carousel %}<div class="arwOut pr">{% endif %}
+        <div class="grid recomPr rwcols-{{ secSt.gridmb }} rwcols-md-{{ secSt.gridtb }} rwcols-lg-{{ secSt.grid }} grid-products{% if secSt.carousel %} swiper{% endif %}" {% if secSt.carousel %}id="recomSlider"{% endif %}>
+            {% if secSt.carousel %}<div class="swiper-wrapper">{% endif %}
+            {% for recommendation in recommendations.products %}
+                <div class="{% if secSt.carousel %}swiper-slide {% endif %}gitem">{% render 'product-card-grid', product: recommendation, block: block.settings, section: section.settings, sizes: image_size %}</div>
+            {%- endfor -%}
+        </div>
+            {% if secSt.carousel %}
+                    </div>
+                    <div class="swarw nrecomSlider swiper-button-next{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swarw precomSlider swiper-button-prev{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swiper-pagination pgrecomSlider{% unless secSt.dotm %} hide-sm{% endunless %}{% unless secSt.dot %} hide-md hide-lg{% endunless %}"></div>
+                </div>
+            {% endif %}
+    </div>
+</product-recommendations>
+</div>
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+    class ProductRecommendations extends HTMLElement {
+    constructor(){super();}
+    connectedCallback() {
+      const handleIntersection = (entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        observer.unobserve(this);
+      
+        const secId = this.dataset.id;
+        fetch(this.dataset.url).then(response => response.text()).then(text => {
+            const html = document.createElement('div');
+            html.innerHTML = text;
+            const recommendations = html.querySelector('product-recommendations');
+  
+            if (recommendations && recommendations.innerHTML.trim().length) {
+              this.innerHTML = recommendations.innerHTML;
+            }
+  
+            if (html.querySelector('.gitem')) {
+              this.classList.add('product-recommendations--loaded');
+              var Recomswiper = new Swiper('#'+secId, {
+                loop: false,
+                slidesPerView: 'auto',
+                autoplay: {% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %},
+                pagination: {
+                  el: '.pg'+secId,
+                  clickable: true,
+                },
+                navigation: {
+                  nextEl: '.n'+secId,
+                  prevEl: '.p'+secId,
+                },
+              });
+              theme.countdown();shopreviews();
+            }
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      }
+      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 400px 0px'}).observe(this);
+    }
+  }
+  customElements.define('product-recommendations', ProductRecommendations);
+});
+</script>
+{% schema %}
+{
+    "name": "Recommended Products",    
+    "settings": [
+        {          
+            "type": "paragraph", 
+            "content":"Dynamic recommendations products change and improve with time. [Learn more](https://help.shopify.com/en/themes/development/recommended-products)"     
+        },	 
+ 	  {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "Recommended Products"
+      },
+ 	  {
+        "id": "subtitle",
+        "type": "textarea",
+        "label": "Sub title"      
+      },
+        {
+            "type": "paragraph",
+            "content": "Products Per Row"
+        },
+        {
+            "type": "range",
+            "id": "grid",
+            "label": "Desktop",
+            "default": 4,
+            "min": 2,
+            "max": 7,
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "gridtb",
+            "label": "Tablet",
+            "default": 3,
+            "min": 2,
+            "max": 5,
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "gridmb",
+            "label": "Mobile",
+            "default": 2,
+            "min": 1,
+            "max": 3,
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "limit",
+            "label": "Number of Products to Show",
+            "default":5,
+            "min": 1,
+            "max": 15,
+            "step": 1
+        },
+		{
+            "type": "header",
+            "content": "Slider Settings ===="
+        },
+		{
+            "type":"checkbox",
+            "id":"carousel",
+            "label":"Enable Carousel",
+            "default": true
+        },
+ 		{
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate List",
+            "default": false			
+        },
+        {
+            "type": "range",
+            "id": "speed",
+            "label": "Change Grid Every",
+            "default": 5,
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "unit": "Sec"			
+        },
+		{
+            "type": "paragraph",
+            "content": "Arrows ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "arrow",
+            "label": "Show on Desktop?",
+            "default": true			
+        },
+		{
+            "type": "checkbox",
+            "id": "arrowm",
+            "label": "Show on Mobile?",
+            "default": true			
+        },
+		{
+            "type": "paragraph",
+            "content": "Dot Navigation ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "dot",
+            "label": "Show on Desktop?",
+            "default": false			
+        },
+		{
+            "type": "checkbox",
+            "id": "dotm",
+            "label": "Show on Mobile?",
+            "default": false			
+        },
+		{
+		"type":"paragraph",
+		"content":"Manage grid style from Theme Settings -> Products Grid"
+	   },
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background"        
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },		               
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide in Mobile?",
+            "default": false
+        }
+    ]
+}
+{% endschema %}

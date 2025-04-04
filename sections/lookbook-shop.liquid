@@ -1,0 +1,502 @@
+{%- capture lookbookSec -%}
+
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px" id="{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="masonary">       
+       <div class="{% if section.settings.sw %}fw-sec{% if section.settings.npd %} npd{% endif %}{% else %}page-width{% endif %}">  			
+           
+           {% render 'sec-title' %}		
+
+            <div class="fl f-wrap lookbook grid-masonary gspace shop pr"  style="--grsp:0 -{{ section.settings.gspace | divided_by: 2.0 }}px;--grspi:0 {{ section.settings.gspace | divided_by: 2.0 }}px {{ section.settings.gspace }}px;--grspm:0 -{{ section.settings.gspacem | divided_by: 2.0 }}px;--grspim:0 {{ section.settings.gspacem | divided_by: 2.0 }}px {{ section.settings.gspacem }}px;--popbg:{{ section.settings.popbg }};--poptxt:{{ section.settings.poptxt }}">
+                <div class="grid-sizer-{{ section.id }} col-{{ section.settings.col }} pa"></div>
+                {% for block in section.blocks limit: section.blocks.size %}
+                    {% assign blkSt = block.settings %}
+                    {% if blkSt.image!= blank %}
+                        <div class="msitem gitem lkbk {{ blkSt.width }}" {{ block.shopify_attributes }}>
+                           <div class="pr w_100 of_hidden brad" style="--brad:{{ secSt.sbrad  }}px;">
+                               <img loading="lazy" class="imgFl lazyload wow zoomIn" src="{{ blkSt.image | img_url: '50x' }}" width="{{ blkSt.image.width }}" height="{{ blkSt.image.height }}"
+                                data-srcset="{% render 'lazyload', image: blkSt.image %}" data-sizes="auto" alt="{{ blkSt.image.alt | escape }}" /></div>
+                            {% comment %} *** Lookbook Shop *** {% endcomment %}
+                            {% if blkSt.pr1 != blank %}
+                                <div class="products pa" style="top:{{ blkSt.p1_top }}%;left:{{ blkSt.p1_left }}%;">
+                                    <span class="btn-shop fl f-aic f-jcc">{%- render 'icon-plus' -%}</span>
+                                    {% render 'product-card-lookbook', product: all_products[blkSt.pr1], postion: blkSt.pstn1,secSt:secSt %}
+                                </div>
+                            {% endif %}
+                            {% if blkSt.pr2 != blank %}
+                                <div class="products pa" style="top:{{ blkSt.p2_top }}%;left:{{ blkSt.p2_left }}%;">
+                                    <span class="btn-shop fl f-aic f-jcc">{%- render 'icon-plus' -%}</span>
+                                    {% render 'product-card-lookbook',product: all_products[blkSt.pr2], postion: blkSt.pstn2,secSt:secSt %}
+                                </div>
+                            {% endif %}
+                            {% if blkSt.pr3 != blank %}
+                                <div class="products pa" style="top:{{ blkSt.p3_top }}%;left:{{ blkSt.p3_left }}%;">
+                                    <span class="btn-shop fl f-aic f-jcc">{%- render 'icon-plus' -%}</span>
+                                    {% render 'product-card-lookbook',product: all_products[blkSt.pr3], postion: blkSt.pstn3,secSt:secSt %}
+                                </div>
+                            {% endif %}
+                            {% if blkSt.pr4 != blank %}
+                                <div class="products pa" style="top:{{ blkSt.p4_top }}%;left:{{ blkSt.p4_left }}%;">
+                                    <span class="btn-shop fl f-aic f-jcc">{%- render 'icon-plus' -%}</span>
+                                    {% render 'product-card-lookbook',product: all_products[blkSt.pr4], postion: blkSt.pstn4,secSt:secSt %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="gitem lkbk msitem {{ blkSt.width }}" {{ block.shopify_attributes }}>
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}      
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>    
+</div>
+{%- endcapture -%}
+{{ lookbookSec | strip_newlines | remove: '  ' | remove: '	' }}
+{% schema %}
+ {
+   "name": "Lookbook Shop",
+   "class":"index-section",
+   "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+   "max_blocks":50,
+   "settings": [
+   {
+       "type": "text",
+       "id": "title",
+       "label": "Heading",
+       "default": "Lookbook Shop"
+     },
+	  {
+       "type": "textarea",
+       "id": "subtitle",
+       "label": "Sub Heading",
+       "default": "Describe your products, collection etc..."
+     },
+    {
+	 "type": "paragraph",
+	 "content":"[grid style reference](https://www.adornthemes.com/different-collection-banner-style/)"
+    },
+  {
+       "type": "header",
+       "content": "Grid Appearance ==="
+     },
+  {
+       "type": "range",
+       "id": "gspace",
+       "label": "Grid Spacing",
+       "default": 30,
+       "min": 0,
+       "max": 50,
+       "step": 1,
+	"unit":"px"
+
+     },
+    {
+       "type": "range",
+       "id": "gspacem",
+       "label": "Grid Spacing (mobile)",
+       "default": 15,
+       "min": 0,
+       "max": 15,
+       "step": 1,
+	"unit":"px"
+     },
+  {
+       "type": "range",
+       "id": "col",
+       "label": "Select Column",
+       "default": 2,
+       "min": 2,
+       "max": 5,
+       "step": 1,
+	  "info":"[Column Selection guide](https://www.adornthemes.com/masonry-column-selection/)"
+ },
+ {
+                "type": "range",
+                "id": "sbrad",
+                "label": "Image Border Radius",
+                "default": 0,
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit":"px"		
+ },	 
+ {
+       "type": "header",
+       "content": "Products ==="
+     },
+     {
+      "type": "range",
+      "id": "brad",
+      "label": "Popup Rounded Corner",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit":"px"		
+ },	 
+ {
+       "type": "color",
+       "id": "popbg",
+       "label": "Popup Background",
+	"default":"#fff"
+  },
+ {
+       "type": "color",
+       "id": "poptxt",
+       "label": "Text",
+	"default":"#222"
+  },
+ {
+           "type": "select",
+           "id": "btn-style",
+           "label": "Button Design",
+           "default": "btn1",
+           "options": [
+               {
+                   "label": "Button 1",
+                   "value": "btn1"
+               },
+               {
+                   "label": "Button 2",
+                   "value": "btn2"
+               },
+               {
+                   "label": "Button 3",
+                   "value": "btn3"
+               },
+               {
+                   "label": "Button 4",
+                   "value": "btn4"
+               },
+               {
+                   "label": "Button 5",
+                   "value": "btn5"
+               },
+			   {
+                "label": "Button 6",
+                "value": "btn6"
+		       },
+               {
+                  "label": "Button 7 Gradient",
+                  "value": "btn7"
+              },
+              {
+                  "label": "Button 8 Gradient",
+                  "value": "btn8"
+              },
+              {
+                "label": "Link",
+                "value": "btnLink"
+              }
+           ]
+       },
+ {
+           "type": "header",
+           "content": "Section"
+       },
+	{
+           "type": "paragraph",
+           "content": "Spacing ===="
+       },
+	{
+		"type": "range",
+		"id": "sst",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":30
+       },
+	{
+		"type": "range",
+		"id": "ssb",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":30
+       },
+	{
+           "type": "paragraph",
+           "content": "Spacing (mobile) ===="
+       },
+	{
+		"type": "range",
+		"id": "sstm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":15
+       },
+	{
+		"type": "range",
+		"id": "ssbm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":15
+       },
+       {
+           "type": "color",
+           "id": "bg",
+           "label": "Background"
+       },
+       {
+           "type": "color_background",
+           "id": "bgg",
+           "label": "Gradient Background"
+       },
+       {
+           "type":"checkbox",
+           "id":"sw",
+           "label":"Fullwidth?",
+           "default": false,
+           "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+       },
+      {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": true,
+            "info":"Remove left/right padding when fullwidth"
+    },
+   {
+        "type": "checkbox",
+        "id": "hidem",
+        "label": "Hide on Mobile?",
+        "default": false
+    },
+    {
+        "type": "checkbox",
+        "id": "hided",
+        "label": "Hide on Desktop?",
+        "default": false
+    } 	
+ ],
+"blocks":[
+	{
+		"name":"Lookbook",
+		"type":"lookbook",
+	 	"settings":[
+		{
+		"type":"image_picker",
+		"id":"image",
+	     "label":"Add Image"
+	    },
+               {
+                   "type": "select",
+                   "id": "width",
+                   "label": "Column width",
+                   "default": "wd50",
+                   "info":"Total width of all block should be 100%",
+                   "options": [
+                       { "value": "wd20", "label": "20%" },
+                       { "value": "wd25", "label": "25%" },
+                       { "value": "wd33", "label": "33%" },
+                       { "value": "wd40", "label": "40%" },
+                       { "value": "wd50", "label": "50%" },
+                       { "value": "wd60", "label": "60%" },
+                       { "value": "wd66", "label": "66%" },
+                       { "value": "wd75", "label": "75%" },
+                       { "value": "wd80", "label": "80%" },
+                       { "value": "w_100", "label": "100%" }
+                   ]
+               },
+	  {
+           "type":"header",
+           "content":"Add Products"
+          },
+	  {
+           "type": "product",
+           "id": "pr1",
+           "label": "Product 1"
+         },
+          {
+           "type": "range",
+           "id": "p1_top",
+           "label": "Top Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	  {
+           "type": "range",
+           "id": "p1_left",
+           "label": "Left Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	 {
+           "type": "select",
+           "id": "pstn1",
+           "label": "Display From",
+           "default": "left",
+		"info":"show product box from the left or the right",
+           "options": [
+		 {
+               "value": "left",
+               "label": "Left"
+             },
+             {
+               "value": "right",
+               "label": "Right"
+             }
+		]
+	},
+	 {
+           "type": "product",
+           "id": "pr2",
+           "label": "Product 2"
+         },
+	 {
+           "type": "range",
+           "id": "p2_top",
+           "label": "Top Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	  {
+           "type": "range",
+           "id": "p2_left",
+           "label": "Left Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	{
+           "type": "select",
+           "id": "pstn2",
+           "label": "Display From",
+           "default": "left",
+		"info":"show product box from the left or the right",
+           "options": [
+		 {
+               "value": "left",
+               "label": "Left"
+             },
+             {
+               "value": "right",
+               "label": "Right"
+             }
+		]
+	},
+	{
+           "type": "product",
+           "id": "pr3",
+           "label": "Product 3"
+         },
+	 {
+           "type": "range",
+           "id": "p3_top",
+           "label": "Top Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	  {
+           "type": "range",
+           "id": "p3_left",
+           "label": "Left Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	{
+           "type": "select",
+           "id": "pstn3",
+           "label": "Display From",
+           "default": "left",
+		"info":"show product box from the left or the right",
+           "options": [
+		 {
+               "value": "left",
+               "label": "Left"
+             },
+             {
+               "value": "right",
+               "label": "Right"
+             }
+		]
+	},
+	{
+           "type": "product",
+           "id": "pr4",
+           "label": "Product 4"
+         },
+	 {
+           "type": "range",
+           "id": "p4_top",
+           "label": "Top Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	  {
+           "type": "range",
+           "id": "p4_left",
+           "label": "Left Position",
+           "default": 1,
+           "min": 1,
+           "max": 90,
+           "step": 1,
+           "unit": "%"
+         },
+	  {
+           "type": "select",
+           "id": "pstn4",
+           "label": "Display From",
+           "default": "left",
+		"info":"show product box from the left or the right",
+           "options": [
+		 {
+               "value": "left",
+               "label": "Left"
+             },
+             {
+               "value": "right",
+               "label": "Right"
+             }
+		]
+	}
+	 ]
+   }
+    ],
+"presets": [
+     {
+       "name": "Lookbook Shop",
+	"blocks": [
+         {
+           "type": "lookbook"
+         },
+         {
+           "type": "lookbook"
+         }
+       ]
+     }
+   ]
+ }
+{% endschema %}

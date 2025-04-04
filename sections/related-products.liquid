@@ -1,0 +1,312 @@
+{%- capture relatedProducts -%}
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px"> 
+		<div class="related-product" id="{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="carousel">
+  <div class="{% if secSt.sw %}fw-sec{% else %}page-width{% endif %}" >
+    {% assign cProduct = product %}
+    {% if secSt.type == '1' %}
+		{%- liquid
+        	assign number_of_rows = secSt.limit | plus:1
+		  	assign exclusions = 'frontpage,all' | split: ','
+			assign found_a_collection = false
+            assign same_vendor = false
+			assign same_type = false
+    		
+            if collection and collection.all_products_count > 1
+        		unless exclusions contains collection.handle
+        			assign found_a_collection = true
+        		endunless
+      		endif
+      		unless found_a_collection
+        		for c in product.collections limit: number_of_rows
+          			unless exclusions contains c.handle or c.all_products_count < 2
+                      assign found_a_collection = true
+                      assign collection = c
+                      break
+          			endunless
+        		endfor
+      		endunless
+		-%}
+
+        {% if found_a_collection %}
+          {%- capture related_items -%}
+                {% for product in collection.products limit : number_of_rows %}
+                  {% unless product.handle == cProduct.handle %}
+                      {% unless same_vendor and current_product.vendor != product.vendor %}
+                      	  {% unless same_type and current_product.type != product.type %}
+                              <div class="{% if secSt.carousel %}swiper-slide {% endif %}gitem">{% render 'product-card-grid', product: product, block: block.settings, section: section.settings, sizes: image_size %}</div>
+                          {% endunless %}
+                      {% endunless %}
+                  {% endunless %}
+                {% endfor %}
+          {%- endcapture -%}
+        {% endif %}
+    {% elsif secSt.type == '2' %}
+      {%- capture related_items -%}
+      {% for product in product.metafields.custom.related_products.value %}
+        <div class="{% if secSt.carousel %}swiper-slide {% endif %}gitem">{% render 'product-card-grid', product: product, block: block.settings, section: section.settings, sizes: image_size %}</div>
+      {% endfor %}
+      {%- endcapture -%}
+    {% elsif secSt.type == '3' %}
+    	{% assign number_of_rows = secSt.limit | plus:0 %}
+    	{% assign prCount = 0 %}
+        {% paginate collections.all.products by 1000 %}
+    	  {%- capture related_items -%}
+                {% for product in collections.all.products %}
+                  	{% if product.handle != cProduct.handle and product.type == cProduct.type %}
+    					<div class="{% if secSt.carousel %}swiper-slide {% endif %}gitem">{% render 'product-card-grid', product: product, block: block.settings, section: section.settings, sizes: image_size %}</div>
+                  		{% assign prCount = prCount | plus: 1 %}
+                  	{% endif %}
+                  	{% if prCount == number_of_rows %}{% break %}{% endif %}
+                  {% endfor %}
+    		{%- endcapture -%}
+        {% endpaginate %}
+    {% elsif secSt.type == '4' %}
+    	{% assign number_of_rows = secSt.limit | plus:0 %}
+    	{% assign prCount = 0 %}
+        {% paginate collections.all.products by 1000 %}
+    	  {%- capture related_items -%}
+                {% for product in collections.all.products %}
+                  	{% if product.handle != cProduct.handle and product.vendor == cProduct.vendor %}
+    					<div class="{% if secSt.carousel %}swiper-slide {% endif %}gitem">{% render 'product-card-grid', product: product, block: block.settings, section: section.settings, sizes: image_size %}</div>
+                  		{% assign prCount = prCount | plus: 1 %}
+                  	{% endif %}
+                  	{% if prCount == number_of_rows %}{% break %}{% endif %}
+                  {% endfor %}
+    		{%- endcapture -%}
+        {% endpaginate %}
+    {% endif %}
+    
+    {% assign related_items = related_items | trim %}
+    {% unless related_items == blank %}
+        {% render 'sec-title' %}
+		<div id="products-{{ section.id }}">
+          {% if secSt.carousel %}<div class="arwOut pr">{% endif %}
+          <div class="grid rwcols-{{ secSt.gridmb }} rwcols-md-{{ secSt.gridtb }} rwcols-lg-{{ secSt.grid }} grid-products{% if secSt.carousel %} swiper{% endif %}"
+              {% if secSt.carousel %}id="swp{{ section.id }}" data-slider-options='{ "slidesPerView":"auto", "loop":true, {% if secSt.autoplay %}"autoplay":{ "delay":"{{ secSt.speed | times: 1000 }}" },{% endif %} "navigation":{ "nextEl":".swn{{ section.id }}","prevEl":".swp{{ section.id }}" },"pagination":{ "el":".swpg{{ section.id }}","clickable":true }}'{% endif %}>
+              {% if secSt.carousel %}<div class="swiper-wrapper">{% endif %}
+              {{ related_items }}
+            </div>
+            {% if secSt.carousel %}
+                    </div>
+                    <div class="swarw swn{{ section.id }} swiper-button-next{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swarw swp{{ section.id }} swiper-button-prev{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swiper-pagination swpg{{ section.id }}{% unless secSt.dotm %} hide-sm{% endunless %}{% unless secSt.dot %} hide-md hide-lg{% endunless %}"></div>
+                </div>
+            {% endif %}
+        </div>
+	{% endunless %}
+  </div>
+</div>
+</div>
+{%- endcapture -%}
+{{ relatedProducts | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+  {
+    "name": "Related Products",
+    "settings": [		
+ 	 {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "Related Products"
+      },
+ 	  {
+        "id": "subtitle",
+        "type": "textarea",
+        "label": "Sub title"       
+      },
+	  {
+        "type": "select",
+        "id": "type",
+        "label": "Show Products",
+        "options": [
+          { "value":"1", "label": "By Collection" },
+          { "value":"2", "label": "By Metafields" },
+          { "value":"3", "label": "By Product Type" },
+          { "value":"4", "label": "By Product Vendor" }
+        ],
+        "default": "1",
+		"info": "[How this work?](https://www.adornthemes.com/knowledge-base/related-products-shopify/)"
+      },
+      {
+        "type": "paragraph",
+        "content": "Products Per Row"
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": "Desktop",
+        "default": 4,
+        "min": 2,
+        "max": 7,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridtb",
+        "label": "Tablet",
+        "default": 3,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridmb",
+        "label": "Mobile",
+        "default": 2,
+        "min": 1,
+        "max": 3,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "limit",
+        "label": "Number of Products to show",
+        "default":5,
+        "min": 1,
+        "max": 15,
+        "step": 1
+      },	
+	 {
+		"type":"paragraph",
+		"content":"Manage grid style from Theme Settings -> Products Grid"
+	  },
+		{
+            "type": "header",
+            "content": "Slider Settings ===="
+        },
+		{
+            "type":"checkbox",
+            "id":"carousel",
+            "label":"Enable Carousel",
+            "default": true
+        },
+ 		{
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate List",
+            "default": false			
+        },
+        {
+            "type": "range",
+            "id": "speed",
+            "label": "Change Grid Every",
+            "default": 5,
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "unit": "Sec"			
+        },
+		{
+            "type": "paragraph",
+            "content": "Arrows ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "arrow",
+            "label": "Show on Desktop?",
+            "default": true			
+        },
+		{
+            "type": "checkbox",
+            "id": "arrowm",
+            "label": "Show on Mobile?",
+            "default": true			
+        },
+		{
+            "type": "paragraph",
+            "content": "Dot Navigation ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "dot",
+            "label": "Show on Desktop?",
+            "default": false			
+        },
+		{
+            "type": "checkbox",
+            "id": "dotm",
+            "label": "Show on Mobile?",
+            "default": false			
+        },
+	 {
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fff"	         
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },		               
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide in Mobile?",
+            "default": false
+        }
+	]
+  }
+{% endschema %}

@@ -1,0 +1,72 @@
+<product-complementary class="complementary-products" data-id="compSlider" data-url="{{ routes.product_recommendations_url }}?section_id={{ sectionId }}&product_id={{ product.id }}&limit={{ block.limit }}&intent=complementary">
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <aside aria-label="{{ 'accessibility.complementary_products' | t }}" {{ block.shopify_attributes }} class="mb{{ block.bm }}">
+        <h2 class="ttlTxt tc" style="--ttcl:{{ block.cl }};--ttfs:{{ block.fs }}px;--ttfsm:{{ block.fsm }}px;--ttfw:{{ block.fw }}">{{ block.title }}</h2>
+        <div class="arwOut pr">
+            <div class="grid gspace recomPr rwcols-{{ block.gridmb }} rwcols-md-{{ block.gridtb }} rwcols-lg-{{ block.grid }} recomprSlider swiper" role="list" id="compSlider"
+                 style="--grsp:0 -7px;--grspi:0 7px;--grspm:0 -5px;--grspim:0 5px;">
+                <div class="swiper-wrapper">
+                {%- for product in recommendations.products limit: block.settings.products_per_page offset: continue -%}
+                    <div class="swiper-slide gitem tc">
+                        <div class="grid_bx">
+                        <a class="grid_lnk" href="{{ product.url | within: collection }}">
+                            <div class="grid_img mb15 lazyload{% if secondImg and product.images.size > 1 %} primary{% endif %}" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes: sizes %}" data-sizes="auto" data-parent-fit="contain"></div>
+                        </a>
+                        <div class="grid_title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+                        {% unless settings.catalogmode %}<div class="grid_meta">{% render 'product-price', product: product %}</div>{% endunless %}
+                        </div>
+                    </div>
+                {%- endfor -%}
+                </div>
+            </div>
+            <div class="swarw ncompSlider swiper-button-next"></div>
+                <div class="swarw pcompSlider swiper-button-prev"></div>
+        </div>
+    </aside>
+    {%- endif -%}
+</product-complementary>
+<script>
+  class ProductComplementary extends HTMLElement {
+  constructor(){super();}
+  connectedCallback() {
+    const handleIntersection = (entries, observer) => {
+      if (!entries[0].isIntersecting) return;
+      observer.unobserve(this);
+    
+      const secId = this.dataset.id;
+      fetch(this.dataset.url).then(response => response.text()).then(text => {
+          const html = document.createElement('div');
+          html.innerHTML = text;
+          const recommendations = html.querySelector('product-complementary');
+
+          if (recommendations && recommendations.innerHTML.trim().length) {
+            this.innerHTML = recommendations.innerHTML;
+          }
+
+          if (html.querySelector('.gitem')) {
+            this.classList.add('product-recommendations--loaded');
+            var Recomswiper = new Swiper('#'+secId, {
+              loop: false,
+              slidesPerView: 'auto',
+              autoplay: {% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %},
+              pagination: {
+                el: '.pg'+secId,
+                clickable: true,
+              },
+              navigation: {
+                nextEl: '.n'+secId,
+                prevEl: '.p'+secId,
+              },
+            });
+            theme.countdown();shopreviews();
+          }
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    }
+    new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 400px 0px'}).observe(this);
+  }
+}
+customElements.define('product-complementary', ProductComplementary);
+</script>

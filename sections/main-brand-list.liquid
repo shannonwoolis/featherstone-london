@@ -1,0 +1,161 @@
+{% assign secSt = section.settings %}
+<div class="sec_cov" style="--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">   
+{%- capture logobar -%}
+    {%- if section.settings.navigation -%}
+        {% assign array = "A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z" | split: "|" %}
+        <div class="filterbrand fl" style="--bdr:{{ secSt.bdr }};">
+            <a href="#all" role="button">All</a>
+            {%- for item in array -%}	
+                <a href="#br{{ item | downcase }}" role="button">{{ item }}</a>
+            {%- endfor -%}
+        </div>
+    {%- endif -%}
+
+    {%- for item in array -%}	
+    <div class="brandList fl" id="br{{ item | downcase }}" style="--bdr:{{ secSt.bdr }};">
+        <div class="ttl" style="color:{{ secSt.alpha }};background-color:{{ secSt.alphabg }};">{{ item }}</div>				
+        <ul class="list fl1">
+            {% for vendor in shop.vendors %}
+                {% assign aName = item | downcase %}
+                {% assign vName = vendor | split: "" | first | downcase %}
+                {% if vName == aName %}
+                    {% assign its_a_match = false %}
+                    {% capture my_collection_handle %}{{ vendor | handleize | strip | escape }}{% endcapture %}
+                    {% assign my_collection_handle_stripped = my_collection_handle | strip | escape %}
+                    {% for collection in collections %}
+                        {% if my_collection_handle_stripped == collection.handle %}
+                            {% assign its_a_match = true %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if its_a_match %}
+                        <li class="vendor"><a href="{{ routes.collections_url }}{{ vendor | handleize }}">{{ vendor }}</a></li>
+                    {% else %}
+                        <li class="vendor">{{ vendor | link_to_vendor }}</li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {%- endfor -%}	  	       
+{%- endcapture -%}
+
+ <div class="{% if section.settings.sw %}fw-sec{% else %}page-width{% endif %}">
+  {% if section.settings.pgttl %}<h1 class="page-title {{ settings.title_align }}">{{ page.title }}</h1>{% endif %}
+  <div class="rte">{{ page.content }}</div>
+  {{ logobar | strip_newlines | remove: "  " | remove: "	" }}
+</div>
+</div>
+{% if settings.show_sticky_header %}
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+    $('.filterbrand a').on('click', function(e){
+      e.preventDefault();
+      var targetTab = $(this).attr('href');
+        if(targetTab == '#all'){
+            $('.brandList').show();
+        } else {
+            $('.brandList').hide();
+            $(targetTab).show();
+        }
+    });
+});
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Brands List Page",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "pgttl",
+        "label": "Show Page Title?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "navigation",
+        "label": "Show Navigation?",
+        "default": true
+      },
+     {
+        "type": "color",
+        "id": "alpha",
+        "label": "Alphabet",
+        "default": "#111"
+     },
+     {
+        "type": "color",
+        "id": "alphabg",
+        "label": "Alphabet Background",
+        "default": "#f3f3f3"
+     },
+     {
+        "type": "color",
+        "id": "bdr",
+        "label": "Border",
+        "default": "#ccc"
+     },
+	{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },      
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false           
+        }  
+    ]
+  }
+{% endschema %}

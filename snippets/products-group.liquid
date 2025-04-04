@@ -1,0 +1,54 @@
+{% capture upsellBundel %}
+<product-group style="--btnfsize :{{ blkst.btns_font }}px; --btncase:{{ blkst.btns_case }};--btnwidth:{{ blkst.btns_width }};">
+    {%- assign product_form_id = 'product-upsell-' | append: section.id -%}
+    {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+            {% for product in product.metafields.custom.product_group.value %}
+                {%- assign current_variant = product.selected_or_first_available_variant -%}
+                {%- assign price = price | plus: current_variant.price -%}
+                <div class="group-prod fl">
+                    <a class="pimg wd20 mr20" href="{{ product.url }}">
+                        <div class="grid_img lazyload" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes: '100,200' %}" data-sizes="auto" data-parent-fit="contain"></div>
+                    </a>
+                    <div class="details fl1">
+                        <div class="fl f-jcsb">
+                            <p class="mb10 grid_title"><a href="{{ product.url }}">{{ product.title }}</a></p>
+                            <div class="price fwb mb15">{{ current_variant.price | money }}</div>
+                        </div>
+                        <div class="fl f-jcsb">
+                            <select name="items[][id]" id="PrSelect-{{ product.id }}" class="mb0 mr10 grpVr{% if product.variants[0].title == 'Default Title'  %} hide{% endif %}{%- unless current_variant.available -%} disable{% endunless %}">
+                                {%- for variant in product.variants -%}
+                                    {%- if variant.available -%}<option{% if variant == current_variant %} selected="selected"{% endif %} value="{{ variant.id }}" {%- if variant.image -%}data-img="{{ variant.image | default:pr.featured_image | img_url:'350x' }}"{% endif %} data-price="{{ variant.price }}">{{ variant.title }}</option>{%- endif -%}
+                                {%- endfor -%}
+                            </select>
+                            <quantity-input class="qtyField" title="{{ 'products.product.quantity' | t }}">
+                                <a class="qtyBtn minus" name="minus" href="javascript:void(0);" aria-hidden="true">{% render 'icon-minus' %}</a>
+                                <input type="number" id="quantity{{ forloop.index }}" name="items[][quantity]" value="1" min="0" class="pr_input qty" />
+                                <a class="qtyBtn plus" name="plus" href="javascript:void(0);" aria-hidden="true">{% render 'icon-plus' %}</a>
+                            </quantity-input>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="mb20">
+                <hr />
+                <p class="fl f-aic f-jcc mb20 priceSingle gttl" style="--fs:24px; --fsm:20px;">
+                    <span class="mr10" style="font-size:20px;">{{ 'products.upsell.total' | t }}:</span> <span class="pr_price orpr sale gPrice" data-total="{{ price }}" data-pr="{{ price }}">{{ price | money }}</span>
+                </p>
+                <div class="pform-error-wrap errors" role="alert" hidden>{% render 'icon-error' %}<span class="ml5 pform-error-msg"></span></div>
+                <p>
+                    <button type="submit" name="add" id="AddToCart-{{ section.id }}" class="btn w_100 pr_btn product-form__submit">
+                        <span class="txt">{{ 'products.upsell.button' | t }}</span>
+                        <div class="loading-overlay__spinner hidden">{% render 'icon-loading' %}</div>
+                    </button>
+                </p>
+            </div>
+    {%- endform -%}
+</product-group>
+<style>
+    .priceSingle:not(.gttl) { display:none; }
+    .group-prod { padding:15px 0; border-top:1px solid {{ settings.color_borders }}; }
+    .group-prod .pimg { width:70px; }
+</style>
+<script src="{{ 'product-group.js' | asset_url }}" defer="defer"></script>
+{% endcapture %}
+{{ upsellBundel | strip_newlines | remove: "  " | remove: "	" }}

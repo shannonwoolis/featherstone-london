@@ -1,0 +1,258 @@
+{%- capture newsletter -%}
+
+{% assign secSt = section.settings %}
+<div id="{{ section.id }}" class="lazyload sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px;background-position:center; background-size: cover;"  {% if section.settings.image != blank and section.settings.style != "3" %}data-bgset="{% render 'bgset', image: section.settings.image %}" data-sizes="auto" data-parent-fit="contain"{% endif %}>  
+	
+	 <div class="nwsec stl{{ section.settings.style }}{% if section.settings.sw %} fw-sec{% if section.settings.npd %} npd{% endif %}{% else %} page-width{% endif %}" style="--bg:{{ secSt.bg }}; --cl:{{ secSt.cl }};--fs:{{ secSt.fs }}px;--fsm:{{ secSt.fsm }}px;--fstm:{{ secSt.fstm }}px;--bgi:{{ secSt.bgi }}; --txti:{{ secSt.txti }};--btnbg:{{ secSt.btnbg }}; --btncl:{{ secSt.btncl }};--btnh:{{ secSt.btnbgh }}; --btnht:{{ section.settings.btnclh }};">   			                
+          
+                <div class="fl f-aic f-col f-row-md">
+					{% if section.settings.style == "3" %}
+                    <div class="fl1">
+                        {% if section.settings.image == blank %}            	
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}        
+                        {% else %}
+                            <div class="imgWrapper" style="max-width:{{ section.settings.image.width }}px;">
+                                <div class="bgImg lazyload wow zoomIn" data-bgset="{% render 'prgrid-img', image: section.settings.image, sizes: '380,550,750,980,1200' %}" data-sizes="auto" data-parent-fit="contain" style="padding-bottom:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"></div>
+                            </div>
+                        {% endif %}
+                    </div>
+					{% endif %}
+                    <div class="fl1">         
+						<div class="newsl">
+							{%- if section.settings.title != blank  or section.settings.subtitle != blank -%}
+								<div class="sec-ttl {{ settings.title_align }} pd0{% if section.settings.style == "2" %} mr30{% endif %}">
+									<h3 class="h3">{{ section.settings.title }}</h3>     
+									{%- if section.settings.subtitle != blank -%}<p>{{ section.settings.subtitle }}</p>{%- endif -%}
+								</div>
+							{% endif %}
+							{% render 'newsletter-form' %}      
+						</div>						
+					</div>
+		 
+ 	 		</div>
+     </div>     
+</div>
+{%- endcapture -%}
+{{ newsletter | strip_newlines | remove: '  ' | remove: '	' }}
+{% schema %}
+{
+    "name": "Newsletter",
+    "class": "index-section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default":"Newsletter"
+        },
+        {
+            "type": "textarea",
+            "id": "subtitle",
+            "label":"Subheading",
+            "default":"Sign up to stay in the loop. Receive updates,<br/> access to exclusive deals, and more."
+        },
+        {
+            "type": "paragraph",
+            "content":"Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background Image",
+            "info": "Recommended image width : 1920px for style 1 and style 2, 960px for style 3"
+        },
+        {
+            "type": "select",
+            "id": "style",
+            "label": "Select Style",
+            "default": "1",
+            "options": [
+                { "value": "1", "label": "Style 1" },
+                { "value": "2", "label": "Style 2" },
+                { "value": "3", "label": "Style 3" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Appearance Text ==="
+        },
+        {
+            "type": "range",
+            "id": "fs",
+            "label": "Heading Font",
+            "default": 22,
+            "min": 10,
+            "max": 50,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "fsm",
+            "label": "Heading Font(mobile)",
+            "default": 18,
+            "min": 10,
+            "max": 50,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "fst",
+            "label": "Subheading Font",
+            "default": 14,
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "fstm",
+            "label": "Subheading Font(mobile)",
+            "default": 13,
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "color",
+            "id": "cl",
+            "label": "Headings",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "bgi",
+            "label": "Textfield Background",
+            "default": "#fff"
+        },
+ 		{
+            "type": "color",
+            "id": "txti",
+            "label": "Textfield Text",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "btncl",
+            "label": "Button Text",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "btnbg",
+            "label": "Button Background",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "btnclh",
+            "label": "Button Hover Text",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "btnbgh",
+            "label": "Button Hover Background",
+            "default": "#86BBBF"
+        },
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fafafa"	,
+            "info":"select light color"
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": false,
+            "info":"Remove left/right padding when fullwidth"
+        },
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide in Mobile?",
+            "default": false
+        },
+       {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 
+    ],
+    "presets": [
+        {
+            "name":"Newsletter"
+        }
+    ]
+}
+{% endschema %}

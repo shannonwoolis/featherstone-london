@@ -1,0 +1,197 @@
+{%- capture topInfoBar -%} 
+{%- assign secSt = section.settings -%}
+{%- if section.blocks.size > 0 -%}
+<style>
+    .top-bar { background-color:{{ secSt.bg }}; color:{{ secSt.cl }}; font-size:{{ secSt.fs }}px; }
+    .top-bar a { color:{{ secSt.cl }}; font-size:var(--fs);}
+    .wr-info-text { padding:8px 0; }
+    @media screen and (min-width: 1024px) {
+        .top-bar .gitem+.gitem { border-left:1px solid {{ secSt.br }}; }
+    }
+    {% if secSt.m_text %}
+      .marquee-text { box-sizing: border-box; overflow:hidden; }
+      .marquee-text .wr-info-text { padding-left:30px; padding-right:30px; }
+      .top-bar a {white-space:nowrap;}
+      .top-info-bar { width:200%; animation:marquee {{ secSt.m_speedm }}s linear infinite running;} 
+      .top-info-bar:hover { animation-play-state: paused; }
+      @keyframes marquee{0%{transform:translateX(0)}100%{transform:translate(-50%) }}   
+      @media only screen and (min-width:766px){
+           .top-info-bar { animation:marquee {{ secSt.m_speed }}s linear infinite running; }
+      }
+    {%- endif -%}
+</style>
+<div class="top-bar tc{% if secSt.hidem %} hide-sm{% endif %}">
+    <div class="{% if secSt.sw %} fw-sec{% else %} page-width{% endif %}" id="carousel-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="carousel1">
+    {% if secSt.m_text %}
+        <div class="marquee-text">
+            <div class="top-info-bar fl">
+                {% for block in section.blocks limit: section.blocks.size %}
+                    {% if block.settings.title %}
+                      <div class="fl1 {{ block.settings.align_text }}" id="{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="wr-info-text"><a href="{{ block.settings.url }}">{{ block.settings.title }}</a></div>
+                      </div>
+                      <div class="fl1 {{ block.settings.align_text }}" id="{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="wr-info-text"><a href="{{ block.settings.url }}">{{ block.settings.title }}</a></div>
+                      </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="top-info-bar grid flslieds{% unless secSt.m_text %} swiper{% endunless %}" id="topinfobar">
+            <div class="swiper-wrapper">
+          {% for block in section.blocks limit: section.blocks.size %}
+            {% if block.settings.title %}
+              <div class="swiper-slide gitem fckSl col-lg-{{ secSt.grid }} {{ block.settings.align_text }}" id="{{ block.id }}" {{ block.shopify_attributes }}>
+                <div class="wr-info-text"><a href="{{ block.settings.url }}">{{ block.settings.title }}</a></div>
+              </div>
+            {% endif %}
+          {% endfor %}
+           </div>
+        </div>
+    {% endif %}
+  </div>
+</div>
+{% unless secSt.m_text %}
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+    var swiper = new Swiper('#topinfobar', {
+      loop: true,
+      slidesPerView: 1,
+       autoplay: { "delay":"{{ 4 | times: 1000 }}" },
+      watchOverflow: true,
+      breakpoints: {
+          767: {
+                slidesPerView: {{ secSt.grid }},
+                loop: false
+            }
+        }
+    });
+});
+</script>
+{% endunless %}
+{%- endif -%}
+{%- endcapture -%}
+{{ topInfoBar | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+  {
+    "name": "Top Information Bar",
+    "class": "index-section",   
+	"max_blocks": 3,
+	"settings":[	
+		{
+          "type": "paragraph",         
+          "content": "This will not work on transparent header. Manage position from Theme Settings -> Header"
+		},
+		{
+          "type": "checkbox",
+          "id": "sw",
+          "label": "Fullwidth?",
+          "default": false
+        },
+		{ 
+          "type":"checkbox",
+          "id":"hidem",
+          "label":"Hide in Mobile?",
+          "default":true     
+	    },
+		{
+          "type": "color",
+          "id": "bg",
+          "label": "Background",
+          "default": "#111"
+        },
+		{
+          "type": "color",
+          "id": "cl",
+          "label": "Text",
+          "default": "#fff"
+        },
+		{
+          "type": "color",
+          "id": "br",
+          "label": "Text Separation",
+          "default": "#fff"
+        },
+		{
+        "type": "range",
+        "id": "grid",
+        "label": "Number of column to display",
+        "default": 3,
+        "min": 1,
+        "max": 3,
+        "step": 1
+        },
+		  {
+        "type": "range",
+        "id": "fs",
+        "label": "Font size",
+        "default": 13,
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px"
+      },
+	  {
+          "type": "checkbox",
+          "id": "m_text",
+          "label": "Enable marquee text",		
+          "default": false,
+		  "info":"We have used pure css for this effect so there will be little jerk once text line start to repeat in loop. hover effect will not work on touch device"
+      },
+	  {
+        "type": "range",
+        "id": "m_speed",
+        "label": "Text scrolling speed",
+        "default": 12,
+        "min": 5,
+        "max": 25,
+        "step": 1,
+		"info":"Recommended speed 12"
+      },
+	  {
+        "type": "range",
+        "id": "m_speedm",
+        "label": "Text scrolling speed(mobile)",
+        "default": 5,
+        "min": 5,
+        "max": 10,
+        "step": 1,
+		"info":"Recommended speed 5"
+      }
+	],
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Column",
+        "settings": [                  	 
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Heading",
+            "default": "CASH ON DELIVERY AVAILABLE",
+		 	"info":"use <strong>for bold </strong>text"
+          },
+		  {
+            "type": "select",
+            "id": "align_text",
+            "label": "Text Align",
+            "default": "tc-lg",
+            "options": [
+              {"value": "tl-lg", "label": "Left"},
+              {"value": "tc-lg", "label": "Center"},
+              {"value": "tr-lg", "label": "Right"}
+            ]
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "URL"           
+          }         
+         
+        ]
+      }
+    ]    
+  }
+{% endschema %} 
+

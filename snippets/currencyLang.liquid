@@ -1,0 +1,71 @@
+{% if settings.mlLang %}
+    {% if ismobile %}<p class="crlnTtl">{{ 'sections.navigation.language' | t }}</p>{% endif %}
+    {% if settings.langOpt == "1" %}
+        {%- form 'localization', id: 'LanguageForm', class: 'language-picker pr' -%}
+            <a href="{{ routes.root_url }}" class="sl-lang crlgTtl fl f-aic{% if ismobile %} hide{% endif %}" title="{{ 'sections.navigation.language' | t }}">
+                {%- assign clflagSvg = localization.language.iso_code | append:'.svg' | file_url -%}
+                {% if settings.mlLangfl and clflagSvg contains '?v=' %}
+                    <img src="{{ clflagSvg }}" class="mr5" width="18" height="14" alt="{{ language.endonym_name | capitalize }}">
+                {% endif %}
+                {{ localization.language.endonym_name | capitalize }}
+            </a>
+            <ul id="language" role="list" class="{% if ismobile %}cnrListmb fl f-wrap{% else %}cnrList tl{% endif %}">
+              {%- for language in localization.available_languages -%}
+                <li class="clOtp fl f-aic{% if language.iso_code == localization.language.iso_code %} selected{% endif %}" data-value="{{ language.iso_code }}" hreflang="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} aria-current="true"{% endif %} tabindex="-1">
+                    {%- assign lflagSvg = language.iso_code | append:'.svg' | file_url -%}
+                    {% if settings.mlLangfl and lflagSvg contains '?v=' %}
+                        <img src="{{ lflagSvg }}" class="mr5" width="18" height="14" alt="{{ 'sections.navigation.language' | t }} {{ language.endonym_name | capitalize }}">
+                    {% endif %}
+                    {{ language.endonym_name | capitalize }}
+                </li>
+              {%- endfor -%}
+            </ul>
+            <input type="hidden" class="slcrlg" name="locale_code" value="{{ localization.language.iso_code }}">
+        {%- endform -%}
+    {% else %}
+        <div id="weglotLang"></div>
+    {% endif %}
+{% endif %}
+{% if settings.mlcurrency %}
+    {% if ismobile %}<p class="crlnTtl">{{ 'sections.navigation.currency' | t }}</p>{% endif %}
+  	{% if settings.curOpt == 'shopify' %}
+        {%- form 'localization', id: 'currencyForm', class: 'selectors-form' -%}
+              {%- if shop.enabled_currencies.size > 1 -%}
+              <div class="currency-picker pr tc">
+                <a href="#" class="selected-currency crlgTtl fl f-aic{% if ismobile %} hide{% endif %}" title="{{ 'sections.navigation.currency' | t }}">
+                    {%- assign cflagSvg = form.current_currency.iso_code | downcase | append:'.svg' | file_url -%}
+                    {% if settings.curfl and cflagSvg contains '?v=' %}
+                        <img src="{{ cflagSvg }}" class="mr5" width="18" height="14" alt="{{ form.current_currency.iso_code }}">
+                    {% endif %}
+                    {{ form.current_currency.iso_code }} {{ form.current_currency.symbol }}
+                </a>
+                <ul id="currencies" class="{% if ismobile %}cnrListmb fl f-wrap{% else %}cnrList tl{% endif %}" data-disclosure-list>
+                    {% for currency in form.available_currencies %}
+                        <li class="clOtp fl f-aic{% if currency.iso_code == form.current_currency.iso_code %} selected{% endif %}" data-value="{{ currency.iso_code }}" {% if currency.iso_code == form.current_currency.iso_code %}aria-current="true"{% endif %}>
+                            {%- assign flagSvg = currency.iso_code | downcase | append:'.svg' | file_url -%}
+                            {% if settings.curfl and cflagSvg contains '?v=' %}
+                                <img class="mr5" src="{{ flagSvg }}" width="18" height="14" alt="{{ currency.iso_code }}">
+                            {% endif %}
+                            {{ currency.iso_code }} {%- if currency.symbol -%}{{ currency.symbol }}{%- endif -%}
+                        </li>
+                    {%- endfor -%}
+                </ul>
+                <input type="hidden" class="slcrlg" name="currency_code" id="CurrencySelector" value="{{ form.current_currency.iso_code }}" data-disclosure-input/>
+              </div>
+          {% endif %}
+        {%- endform -%}
+    {% else %}
+      <div class="currency-picker pr tc">
+        {% assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ',' %}
+        {% assign supported_codes = settings.spcurrencies | split: ' ' %}
+        <a href="#" class="selected-currency crlgTtl fl f-aic{% if ismobile %} hide{% endif %}">{{ shop.currency }}</a>
+        <ul id="currencies" class="{% if ismobile %}cnrListmb fl f-wrap{% else %}cnrList{% endif %}">
+          {% for code in supported_codes %}
+          	{% if codes contains code %}
+	          <li class="clOtp" data-currency="{{ code }}" class="{% if shop.currency == code %}selected{% endif %}">{{ code }}</li>
+          	{% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+  	{% endif %}
+{% endif %}

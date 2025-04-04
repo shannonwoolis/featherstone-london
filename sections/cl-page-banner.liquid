@@ -1,0 +1,436 @@
+{%- capture pageBanner -%}
+    <div class="fw-sec npd">
+        <div class="hero pr" style="background:{% if  section.settings.bgg != blank %} {{ section.settings.bgg }}{% else %}{{ section.settings.bg  }}{% endif %};">
+            {% if section.settings.image != blank %}
+                <div class="heroImg bgImg lazyload{% if section.settings.mb_image != blank %} hide-sm{% endif %}"
+                    data-bgset="{% render 'bgset', image: section.settings.image %}" data-sizes="auto" data-parent-fit="contain"
+                    style="background-image: url('{{ section.settings.image | img_url: '100x' }}'); background-position:center {{ section.settings.alignment }};"></div>
+            {% endif %}
+            {% if section.settings.mb_image != blank %}
+                <div class="heroImg bgImg hide-md hide-lg lazyload" data-bgset="{% render 'bgset', image: section.settings.mb_image %}" data-sizes="auto" data-parent-fit="contain"
+                    style="background-image:url('{{ section.settings.mb_image | img_url: '100x' }}'); background-position:center {{ section.settings.alignment }};"></div>
+            {% endif %}
+
+            {%  if  section.blocks.size > 0 %}
+                <div class="hero_wrap fl{% if section.settings.text-align %} f-jcc tc{% endif %} f-aic m_auto" style="--mht:{{ section.settings.hit }}px;--mhtt:{{ section.settings.hitt }}px;--mhtm:{{ section.settings.hitm }}px;--mwd:{{ section.settings.cntwd }}px; --brad:{{ section.settings.brad }}px;--bpd:{{ section.settings.bpd | minus:10 }}px;--bpds:{{ section.settings.bpd }}px;--bpdm:{{ section.settings.bpdm | minus:10 }}px;--bpdsm:{{ section.settings.bpdm }}px;">
+                    <div class="hero_cap pr" style="background-color:rgba({{ section.settings.tbg | color_to_rgb | remove:'rgb(' | remove: ')' }},{{ section.settings.opt }});">
+                        {% for block in section.blocks %}
+                            {% if block.type == 'title' %}
+                                <h2 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.fsm }}px;--fw:{{ block.settings.hfw }};" {{ block.shopify_attributes }}>{{ collection.title }}</h2>
+                            {% elsif block.type == 'countdown' %}
+                                <div class="atCounter fl{% if section.settings.text-align %} f-jcc{% endif %} tc mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md ttu" data-date="{{ block.settings.date }}"
+                                     style="--cl:{{ block.settings.cl }};--bg:{{ block.settings.bg }};--bd:{{ block.settings.bdr }};--br:{{ block.settings.radius }}px;--fs:{{ block.settings.fs }}px;--fsl:{{ block.settings.fsl }}px;" {{ block.shopify_attributes }}>
+                                    <span><span class="tm fwb days">00</span>{{ 'date_formats.days' | t }}</span>
+                                    <span><span class="tm fwb hours">00</span>{{ 'date_formats.hours' | t }}</span>
+                                    <span><span class="tm fwb minutes">00</span>{{ 'date_formats.minuts' | t }}</span>
+                                    <span><span class="tm fwb seconds">00</span>{{ 'date_formats.seconds' | t }}</span>
+                                </div>
+                            {% elsif block.type == 'text' %}
+                                <div class="heroTxt mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if section.settings.hidemb %} hide-sm{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fs }}px;--fsm:{{ block.settings.fsm }}px;--lh:{{ block.settings.lh }};" {{ block.shopify_attributes }}>{{ block.settings.title }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{%- endcapture -%}
+{{ pageBanner | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+    "name": "Collection Banner",
+    "class": "pgbnr",
+    "settings": [               
+       {
+            "type": "paragraph",
+            "content": "[How do I set different banner for each collection?](https://www.adornthemes.com/knowledge-base/collection-banner/)"
+        },
+        {
+            "type":"paragraph",
+            "content":"Height ==="
+        },
+        {
+            "type": "range",
+            "id": "hit",
+            "label": "Desktop",
+            "default": 220,
+            "min": 100,
+            "max": 900,
+            "step": 10
+        },
+        {
+            "type": "range",
+            "id": "hitt",
+            "label": "Tablet",
+            "default": 160,
+            "min": 100,
+            "max": 900,
+            "step": 10
+        },  
+        {
+            "type": "range",
+            "id": "hitm",
+            "label": "Mobile",
+            "default": 100,
+            "min": 50,
+            "max": 900,
+            "step": 10
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background Color",
+            "default": "#f5f5f5"
+        },
+         {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Recommended width 2000px and height as per above desktop height"
+        },
+        {
+            "type": "image_picker",
+            "id": "mb_image",
+            "label": "Mobile Image",
+            "info": "Recommended width 750 and height as per above mobile height. If mobile image is blank, dekstop image will be used."
+        },
+        {
+            "type": "select",
+            "id": "alignment",
+            "label": "Image Alignment",
+            "default": "center",
+            "options": [
+                {
+                    "value": "top",
+                    "label": "Top"
+                },
+                {
+                    "value": "center",
+                    "label": "Middle"
+                },
+                {
+                    "value": "bottom",
+                    "label": "Bottom"
+                }
+            ]
+        },
+        {
+            "type": "header",        
+            "content": "Banner Caption" 			
+        },
+        {
+            "type": "range",
+            "id": "cntwd",
+            "min": 600,
+            "max": 1600,
+            "step": 10,
+            "label": "Container Max Width (desktop)",
+            "unit": "px",
+            "default": 1000
+        },
+        {
+            "type": "checkbox",
+            "id": "text-align",
+            "label": "Text Align Center?",
+            "default": true
+        }, 	          
+        {
+            "type": "color",
+            "id": "tbg",
+            "label": "Box Background",
+            "default": "#fff"
+        },
+        {
+            "type": "range",
+            "id": "opt",
+            "min": 0,
+            "max": 1,
+            "step": 0.1,
+            "label": "Box Background Opacity",
+            "unit": "%",
+            "default": 0.9
+        },
+		{
+            "type": "range",
+            "id": "bpd",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "label": "Box Padding",
+            "unit": "px",
+            "default":30
+        },
+		{
+            "type": "range",
+            "id": "bpdm",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+			"label": "Box Padding(mobile)",
+            "unit": "px",
+            "default":20
+        },
+		{
+            "type": "range",
+            "id": "brad",
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "label": "Box Radius",
+            "unit": "px",
+            "default":0
+        }
+    ],
+    "blocks": [
+        {
+            "type": "title",
+            "name": "Collection Title",
+            "limit":1,
+            "settings": [
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fts",
+                    "label": "Font Size",
+                    "default": 22,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                }, 
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 20,
+                    "min": 10,
+                    "max": 60,
+                    "step": 1,
+                    "unit": "px"
+                }, 	
+                 {
+                  "type": "select",
+                  "id": "hfw",
+                  "label": "Font Weight",
+                  "default": "600",
+                  "options": [
+                    {
+                      "value": "300",
+                      "label": "Light"
+                    },
+                    {
+                      "value": "400",
+                      "label": "Regular"
+                    },
+                    {
+                      "value": "500",
+                      "label": "Medium"
+                    },
+                    {
+                      "value": "600",
+                      "label": "Semi Bold"
+                    },
+                    {
+                      "value": "700",
+                      "label": "Bold"
+                    }
+                  ]
+                }, 
+                {
+                    "type": "checkbox",
+                    "id": "tuu",
+                    "label": "Use Uppercase?",
+                    "default": false			
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 5,
+                    "min": 5,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },			          
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 5,
+                    "min": 5,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Text",  
+            "limit":2,    
+            "settings":[
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Text",
+                    "default": "Banner short description",
+                    "info": "Use dynamic source to show different text for each collection page."
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hidemb",
+                    "label": "Hide in mobile?",
+                    "default": true			
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 14,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 14,
+                    "min": 10,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "lh",
+                    "label": "Line Height",
+                    "default": 1.5,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.6"
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 5,
+                    "min": 5,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 5,
+                    "min": 5,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }      
+            ]
+        },
+        {      
+            "type": "countdown",
+            "name": "Countdown Timer",  
+            "limit":1,    
+            "settings":[
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "Enter Date",
+                    "info": "Create Date metafield and select by dynamic source button."
+                },
+                {
+                    "type": "color",
+                    "id": "bg",
+                    "label": "Background",
+                    "default": "#000"
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text",
+                    "default": "#eee"
+                },
+                {
+                    "type": "color",
+                    "id": "bdr",
+                    "label": "Border",
+                    "default": "#000"
+                },
+               {
+                    "type": "range",
+                    "id": "fs",
+                    "min": 10,
+                    "max": 30,
+                    "step": 1,
+                    "label": "Font Size Digit",
+                    "unit": "px",
+                    "default": 15
+                },
+               {
+                    "type": "range",
+                    "id": "fsl",
+                    "min": 10,
+                    "max": 20,
+                    "step": 1,
+                    "label": "Font Size Label",
+                    "unit": "px",
+                    "default": 15
+                },
+                {
+                    "type": "range",
+                    "id": "radius",
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "label": "Border Radius",
+                    "unit": "px",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 30,
+                    "min": 5,
+                    "max": 50,
+                    "step": 5,
+                    "unit": "px"
+                },				            
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 20,
+                    "min": 5,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }      
+            ]
+        }   
+    ]
+}
+{% endschema %}

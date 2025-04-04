@@ -1,0 +1,371 @@
+{%- capture pageBanner -%}
+      <div class="fw-sec npd">    
+        <div class="fl hero pr">
+            {%- if article.image != blank -%}
+                <div class="heroImg bgImg pgbnrImg lazyload" data-sizes="auto" data-parent-fit="contain"
+                    data-bgset="{{ article.image | img_url: '500x' }} 500w,
+                                {{ article.image | img_url: '760x' }} 760w,
+                                {{ article.image | img_url: '1000x' }} 1000w,
+                                {{ article.image | img_url: '1500x' }} 1500w,
+                                {{ article.image | img_url: '2000x' }} 2000w"></div>
+            {%- endif -%}
+
+            {%- if section.blocks.size > 0 -%}
+                <div class="hero_wrap fl f-jcc f-aic m_auto" style="--mht:{{ section.settings.hit }}px;--mhtt:{{ section.settings.hitt }}px;--mhtm:{{ section.settings.hitm }}px;--mwd:{{ section.settings.cntwd }}px;--brad:{{ section.settings.brad }}px;--bpd:{{ section.settings.bpd | minus:10 }}px;--bpds:{{ section.settings.bpd }}px;--bpdm:{{ section.settings.bpdm | minus:10 }}px;--bpdsm:{{ section.settings.bpdm }}px;">
+                    <div class="hero_cap pr tc" style="background-color:rgba({{ section.settings.tbg | color_to_rgb | remove:'rgb(' | remove: ')' }},{{ section.settings.opt }});">
+                        {%- for block in section.blocks -%}
+                            {% assign blkSt = block.settings %}
+                            {% if block.type == 'title' %}
+                                <h2 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.ftsm }}px;--fw:{{ block.settings.fw }};" {{ block.shopify_attributes }}>{{ article.title }}</h2>
+                            {% elsif block.type == 'detail' %}
+                                {% if blkSt.date or blkSt.author or blog.comments_enabled? %}
+                                    <ul class="fl f-jcc artDet mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md" style="--adcl:{{ blkSt.cl }};--adfs:{{ blkSt.fs }}px;--adfsm:{{ blkSt.fsm }}px;" {{ block.shopify_attributes }}>
+                                      {% if blkSt.date %}
+                                          <li class="mr20"><time class="fl f-aic" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{% render 'icon-date' %} {{ article.published_at | date: format: 'month_day_year' }}</time></li>
+                                      {% endif %}
+                                      {% if blkSt.author %}
+                                          <li class="mr20">{% render 'icon-user' %}<span class="ml5">{{ 'blogs.article.by_author' | t }} <span class="clr_body">{{ article.author }}</span></span></li>
+                                      {% endif %}
+                                      {% if blog.comments_enabled? and article.comments_count > 0 %}
+                                      <li class="cmnt mr20">
+                                          <a href="{{ article.url }}#comments">{% render 'icon-comment' %}{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}</a></li>
+                                      </li>
+                                      {% endif %}
+                                    </ul>
+                                {% endif %}
+                            {% elsif block.type == 'tags' %}
+                                {% if article.tags.size > 0 %}
+                                <ul class="blogTags fl f-aic f-jcc f-wrap mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md" style="--tgcl:{{ blkSt.tgcl }};--tgclh:{{ blkSt.tgclh }};--bdr:{{ blkSt.bdr }};--bdrh:{{ blkSt.bdrh }};" {{ block.shopify_attributes }}>
+                                    {% for tag in article.tags %}
+                                    <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            {% endif %}
+                            {% if block.type == 'title' or block.type == 'detail' %}
+                            <style>
+                                {% if block.type == 'title' %}.blog_listview .blogTtl{display:none}{% endif %}
+                                {% if block.type == 'detail' %}.blog_listview .artDet{display:none}{% endif %}
+                            </style>
+                            {% endif %}
+                        {%- endfor -%}          
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+{%- endcapture -%}
+{{ pageBanner | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+    "name": "Article Banner",
+    "class": "index-section",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Banner"
+        },
+        {
+            "type":"paragraph",
+            "content":"Height ==="
+        },
+        {
+            "type": "range",
+            "id": "hit",
+            "label": "Desktop",
+            "default": 220,
+            "min": 80,
+            "max": 900,
+            "step": 10
+        },
+        {
+            "type": "range",
+            "id": "hitt",
+            "label": "Tablet",
+            "default": 160,
+            "min": 80,
+            "max": 900,
+            "step": 10
+        },  
+        {
+            "type": "range",
+            "id": "hitm",
+            "label": "Mobile",
+            "default": 100,
+            "min": 30,
+            "max": 900,
+            "step": 10
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background Color",
+            "default": "#f4f4f4"
+        },       
+        {
+            "type": "header",        
+            "content": "Caption" 			
+        },
+        {
+            "type": "range",
+            "id": "cntwd",
+            "min": 300,
+            "max": 800,
+            "step": 10,
+            "label": "Caption Max Width (desktop)",
+            "unit": "px",
+            "default": 800
+        },
+        {
+            "type": "color",
+            "id": "tbg",
+            "label": "Box Background"           
+        },
+        {
+            "type": "range",
+            "id": "opt",
+            "min": 0,
+            "max": 1,
+            "step": 0.1,
+            "label": "Box Background Opacity",
+            "unit": "%",
+            "default": 0.9
+        },
+		{
+            "type": "range",
+            "id": "bpd",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "label": "Box Padding",
+            "unit": "px",
+            "default":30
+        },
+		{
+            "type": "range",
+            "id": "bpdm",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+			"label": "Box Padding(mobile)",
+            "unit": "px",
+            "default":20
+        },
+		{
+            "type": "range",
+            "id": "brad",
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "label": "Box Radius",
+            "unit": "px",
+            "default":0
+        }
+    ],
+    "blocks": [
+        {
+            "type": "title",
+            "name": "Blog Title",
+            "limit":1,
+            "settings": [
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fts",
+                    "label": "Font Size",
+                    "default": 22,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "ftsm",
+                    "label": "Font Size (mobile)",
+                    "default": 20,
+                    "min": 10,
+                    "max": 60,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                  "type": "select",
+                  "id": "fw",
+                  "label": "Font Weight",
+                  "default": "500",
+                  "options": [
+                    {
+                      "value": "300",
+                      "label": "Light"
+                    },
+                    {
+                      "value": "400",
+                      "label": "Regular"
+                    },
+                    {
+                      "value": "500",
+                      "label": "Medium"
+                    },
+                    {
+                      "value": "600",
+                      "label": "Semi Bold"
+                    },
+                    {
+                      "value": "700",
+                      "label": "Bold"
+                    }
+                  ]
+                },  
+                {
+                    "type": "checkbox",
+                    "id": "tuu",
+                    "label": "Use Uppercase?",
+                    "default": false			
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 5,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },			          
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 5,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }
+            ]
+        },
+        {
+            "type": "detail",
+            "name": "Post Publish Detail",
+            "limit":1,
+            "settings":[
+                  {
+                    "type": "checkbox",
+                    "id": "author",
+                    "label": "Show Author",
+                    "default": true
+                  },
+                  {
+                    "type": "checkbox",
+                    "id": "date",
+                    "label": "Show Date",
+                    "default": true
+                  },
+                  {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text",
+                    "default": "#777"
+                  },
+                  {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 12,
+                    "min": 10,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                  },
+                  {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 11,
+                    "min": 8,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                  },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 20,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },			          
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 20,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }
+            ]
+        },
+        {
+            "type": "tags",
+            "name": "Post Tags",
+            "limit":1,
+            "settings":[
+                  {
+                    "type": "color",
+                    "id": "tgcl",
+                    "label": "Text",
+                    "default": "#666"
+                  },
+                  {
+                    "type": "color",
+                    "id": "bdr",
+                    "label": "Border",
+                    "default": "#ddd"
+                  },
+                  {
+                    "type": "color",
+                    "id": "tgclh",
+                    "label": "Text Hover",
+                    "default": "#86BBBF"
+                  },
+                  {
+                    "type": "color",
+                    "id": "bdrh",
+                    "label": "Border Hover",
+                    "default": "#86BBBF"
+                  },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 20,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },			          
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 20,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }
+            ]
+        }   
+    ]
+}
+{% endschema %}

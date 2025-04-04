@@ -1,0 +1,208 @@
+{%- capture siteHeader -%}
+{%- assign secSt = section.settings -%}
+{%- liquid
+    assign logo = settings.logo
+-%}
+{%- capture logo -%}
+<div class="header-logo">
+  <a href="{{ routes.root_url }}" itemprop="url" class="hdr_logo_lnk">
+    {%- capture logoWidth -%}{{ settings.logo_width }}x{%- endcapture -%}
+    {%- if logo != blank -%}
+        <img loading="lazy" src="{{ logo | img_url: logoWidth }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | floor }}" alt="{{ settings.logo.alt | default: shop.name }}" srcset="{{ settings.logo | img_url: logoWidth, scale: 2 }} 1x, {{ settings.logo | img_url: logoWidth, scale: 4 }} 1.1x" class="stlogo">
+    {%- else -%}
+        {{ shop.name }}
+    {%- endif -%}
+    <span class="hidden_txt">{{ shop.name }}</span>
+  </a>
+  </div>
+{%- endcapture -%}
+
+{%- capture promo -%}
+    {%- if section.settings.protxt != blank -%}
+        <div class="fl f-aic promo_txt hide-sm hide-md{% if secSt.hdrStyle == '2' %} big{% endif %}">
+            {%- if secSt.prico != blank -%}
+              <img class="at-icon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ secSt.prico | img_url: iconsz }}" width="30" height="30" alt="{{ secSt.prico.alt }}" />
+            {%- endif -%}
+            <div style="color:{{ section.settings.ptxtcl }}">{{ section.settings.protxt }}</div>
+        </div>
+    {%- endif -%}
+{%- endcapture -%}
+
+<header id="header" class="fl f-aic pr main_hdr{% if settings.headerfw or settings.layout_style == 'fullwidth' %} fw-sec{% else %} page-width{% endif %}{% if secSt.stype == "1" %} f-wrap{% endif %}" data-section-id="header" data-section-type="header" style="--hdspac:{{ secSt.head_space }}px;">
+    <div class="fl1 fl f-aic mbnavCol hide-lg{% if secSt.cntlogo %} cnt{% endif %}">
+        <a href="#" class="hdicon navToggle" role="button" title="{{ 'sections.navigation.menu' | t }}"><svg class="at-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 464.205 464.205"><path d="m435.192 406.18h-406.179c-16.024 0-29.013-12.99-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.99 29.013 29.013-.001 16.023-12.99 29.013-29.014 29.013z"/><path d="m435.192 261.115h-406.179c-16.024 0-29.013-12.989-29.013-29.012s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.012-29.014 29.012z"/><path d="m435.192 116.051h-406.179c-16.024 0-29.013-12.989-29.013-29.013s12.989-29.013 29.013-29.013h406.18c16.023 0 29.013 12.989 29.013 29.013s-12.99 29.013-29.014 29.013z"/></svg></a>
+        {% if settings.enable_search and secSt.cntlogo %}
+          <a class="hdicon searchIcn" href="{{ routes.search_url }}" title="{{ 'sections.header.search' | t }}">{% render 'icon-search' %}</a>
+        {% endif %}
+    </div>
+    {{ logo }}
+    {% if secSt.hdrStyle == '1' %}
+        <div class="icons-col{% if secSt.cntlogo %} lgcnt{% endif %}">
+            <div class="fl f-jce f-aic mb10 hide-sm hide-md">
+                {% if secSt.promo %}{{ promo }}{% endif %}
+                {% if settings.mlcurrency or settings.mlLang %}{% render 'currencyLang' %}{% endif %}
+            </div>
+            <div class="fl f-jce f-aic f-jce icol">
+                <div class="fl fl1 hide-sm hide-md searchinline">{% render 'search-form' %}</div>
+                {% if settings.enable_search %}
+                    <a class="hdicon fl f-aic searchIcn hide-lg{% if secSt.cntlogo %} hide{% endif %}" href="{{ routes.search_url }}" title="{{ 'sections.header.search' | t }}">
+                        {% render 'icon-search', icntyp: secSt.icntyp %}
+                        <p class="m0 hide-sm hide-md">{{ 'sections.header.search' | t }}</p>
+                    </a>
+                {% endif %}
+                {% if shop.customer_accounts_enabled %}
+                    <a class="hdicon fl f-aic user-menu" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" title="{{ 'sections.header.account' | t }}">
+                        {% render 'icon-account', icntyp: secSt.icntyp %}
+                        <p class="m0 hide-sm hide-md">{{ 'sections.header.account' | t }}</p>
+                    </a>
+                {% endif %}
+
+                {% if settings.wishlist %}
+                    <a class="hdicon fl f-aic" href="{{ pages[settings.wishlist_page].url }}" title="{{ 'sections.header.wishlist' | t }}">
+                        {% render 'icon-wishlist', icntyp: secSt.icntyp %}
+                        <p class="m0 hide-sm hide-md">{{ 'sections.header.wishlist' | t }}</p>
+                    </a>
+                {% endif %}
+
+                {%- unless settings.catalog-mode -%}						
+                    <a href="{{ routes.cart_url }}" class="hdicon fl f-aic" id="cartLink" title="{{ 'sections.header.cart' | t }}">
+                        {% render 'icon-cart', icntyp: secSt.icntyp %}
+                        <p class="m0 hide-sm hide-md">{{ 'sections.header.cart' | t }}<b id="cart-icon-bubble" class="cartCount pp">{{ cart.item_count }}</b></p>
+                    </a>
+                {%- endunless -%}
+            </div>
+        </div>
+    {%- else -%}
+        {% if secSt.promo %}{{ promo }}{% endif %}
+        {% if settings.enable_search %}<div class="fl fl1 main-search{% if secSt.stype == "2" %} hide-sm hide-md{% endif %}">{% render 'search-form', frmClas: 'hdSearch' %}</div>{% endif %}
+        <div class="fl f-aic f-jce icons-col{% if secSt.cntlogo %} lgcnt{% endif %}">
+                {% if settings.enable_search and secSt.stype == "2" and secSt.cntlogo == false %}
+                        <a class="hdicon searchIcn hide-lg" href="{{ routes.search_url }}" title="{{ 'sections.header.search' | t }}">
+                            {% render 'icon-search', icntyp: secSt.icntyp %}
+                            <p class="m0 hide-sm hide-md pdt5">{{ 'sections.header.search' | t }}</p>
+                        </a>
+                {% endif %}
+                {% if shop.customer_accounts_enabled %}
+                    <a class="hdicon user-menu" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" title="{{ 'sections.header.account' | t }}">
+                        {% render 'icon-account', icntyp: secSt.icntyp %}
+                        <p class="m0 hide-sm hide-md pdt5">{{ 'sections.header.account' | t }}</p>
+                    </a>
+                {% endif %}
+
+                {% if settings.wishlist %}
+                    <a class="hdicon" href="{{ pages[settings.wishlist_page].url }}" title="{{ 'sections.header.wishlist' | t }}">
+                        {% render 'icon-wishlist', icntyp: secSt.icntyp %}
+                        <p class="m0 hide-sm hide-md pdt5">{{ 'sections.header.wishlist' | t }}</p>
+                    </a>
+                {% endif %}
+
+                {%- unless settings.catalog-mode -%}						
+                    <a class="hdicon" href="{{ routes.cart_url }}" id="cartLink" title="{{ 'sections.header.cart' | t }}">
+                        {% render 'icon-cart', icntyp: secSt.icntyp %}
+                        <b id="cart-icon-bubble" class="cartCount pp">{{ cart.item_count }}</b>
+                        <p class="m0 hide-sm hide-md pdt5">{{ 'sections.header.cart' | t }}</p>
+                    </a>
+                {%- endunless -%}
+        </div>
+    {%- endif -%}
+</header>
+{%- endcapture -%}
+{{ siteHeader | strip_newlines | remove: "  " | remove: "	" }}
+{%  if section.settings.hdrStyle == '1' %}
+  <style>
+    .promo_txt br {display:none;}
+    .s_res {width:450px !important; border-radius: 0;}
+    @media only screen and (max-width:1025px){
+      .s_res { width: 350px !important;}
+    }
+  </style>
+{%  endif %}
+{% schema %}
+ {
+    "name": "Header - Categories",
+    "settings": [
+        {
+            "type": "select",
+            "id": "hdrStyle",
+            "label": "Header Style",
+            "default": "2",
+            "options": [
+               {
+                "label": "Large Search",
+                "value": "2"
+              },
+              {
+                "label": "Search, Currency & Language",
+                "value": "1"
+              }                   
+            ]
+        },
+       {
+        "type": "range",
+        "id": "head_space",
+        "min": 25,
+        "max": 100,
+        "step": 1,
+        "label": "Margin between blocks.i.e,logo, promo, search..",
+        "unit": "px",
+        "default": 30
+      },
+	  {
+        "type": "header",
+        "content": "Promo Text ====="
+     },
+     {
+        "type": "checkbox",
+        "id": "promo",
+        "label": "Show?",
+        "default": true,
+        "info": "Only for desktop and ipad view"
+      },
+      {
+          "type": "image_picker",
+          "id": "prico",
+          "label": "Image or Svg Icon",
+          "info":"[Available SVG icons.](https://adornthemes.com/documentation/vogal/svg-icons.html)"
+      },
+      {
+        "type": "textarea",
+        "id": "protxt",
+        "label": "Promo Text",
+        "default": "Expert Support Available 24\/7 via chat"
+      },
+	  {
+        "type": "color",
+        "id": "ptxtcl",
+        "label": "Promo Text",
+        "default": "#111"
+      },
+	  {
+        "type": "header",
+        "content": "Mobile Site"
+      },
+      {
+        "type": "checkbox",
+        "id": "cntlogo",
+        "label": "Logo Center?",
+        "default": false
+      },
+      {
+        "type": "radio",
+        "id": "stype",
+        "label": "Search Option",
+        "default": "1",
+        "options": [
+          {
+            "value": "1",
+            "label": "Show Bar in Header"
+          },
+          {
+            "value": "2",
+            "label": "Show Icon with Drawer"
+          }
+        ],
+        "info": "Work only for Large Search header style"
+      }
+	]
+  }
+{% endschema %}

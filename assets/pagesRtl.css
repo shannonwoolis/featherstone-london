@@ -1,0 +1,100 @@
+/* <style> */
+
+.filterbrand { overflow:auto; padding-bottom:10px; margin-bottom:10px; }
+.filterbrand a { padding:5px 13px; flex:1; text-align:center; border:1px solid var(--bdr); }
+    .filterbrand a+a { border-left:0 none; }
+.brandList { margin-bottom:20px; border:1px solid var(--bdr); }
+.brandList .ttl { font-size:18px; font-weight:700; width:auto; padding:10px; text-transform:uppercase; }
+.brandList ul { padding:15px; column-count:2; }
+.brandList ul a { display:inline-block; padding:5px; }
+
+@media only screen and (min-width:766px) {
+  .brandList .ttl { font-size:22px; padding:20px; }
+  .brandList ul { column-count:3; padding:20px; }
+}
+@media only screen and (min-width:1024px) {
+  .brandList ul { column-count:4; }
+}
+
+
+.infinitpagin { clear:both; padding-top:15px; text-align:center; }
+.pagination li a { display:block; text-align:center; font-size:12px; #666666; height:35px; width:35px; line-height:32px; border:2px solid #eeeeee; margin:0 2px; }
+.pagination li.active a { border:2px solid #e1e1e1; color:#333333; }
+
+.sb_widget { margin-bottom:35px; }
+.widget_ttl { color:var(--wdTtlcl); font-family:var(--wdTtlft); font-size:var(--wdTtl); font-weight:var(--wdTtlwt); text-transform:var(--wdTtlcase); padding-bottom: 15px; }
+.wbdr { border-bottom: 1px solid var(--ttlbdr);}
+.widget_con { color:var(--slinks); }
+.sb_widget a { font-size:var(--linkf); color:var(--slinks); }
+.sb_widget a:hover { color:var(--slinkshov);}
+.sb_widget .post_date { font-size:var(--datef); opacity: .7;}
+.sb_widget hr { border-bottom:1px solid var(--wddvbd); margin:15px 0; }    
+.sb_widget .pr_list {border:0;} 
+.sdCate a { color:var(--slinks); display:flex; line-height:28px; padding: 2px 0; }
+.sdCate .at-icon { width:30px; height:30px; padding:10px; margin-left:auto; }
+.sdCate ul { display:none; }
+.sdCate .lvl-2 a { padding:7px 0 7px 15px; }
+.sdCate .active > a { color:var(--slinkshov); }
+.sdCate .active > ul { display:block; }
+
+.searchBk input, .searchBk .btn { border:0 none; }
+.searchBk input { border-top-right-radius: 0; border-bottom-right-radius: 0; background: none;}
+.searchBk .btn { border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 0 15px;}
+
+#blogNw .ad_inputs { border: 1px solid var(--fieldbdr); background:var(--fieldbg); flex-direction: row !important;}
+#blogNw .newsl_btn { color:var(--field); border-right:1px solid var(--fieldbdr) !important; }
+
+.post_name { line-height:1.3; display:block; margin-bottom:5px; }
+.post_date { display:block; color:#666666; margin:0; }
+
+.article_comment .at-icon { font-size:14px; vertical-align:initial;}
+
+.blog_listview { max-width:900px; margin:0 auto }
+.blog_listview .article { margin-bottom:40px }
+
+.recentPost .article-img {width: 70px;}
+
+@media only screen and (max-width:766px) {
+  .article_grid_img { margin-bottom:15px; }
+  .blog_listview .article { margin-bottom:20px }
+  .sidebar {margin: 0 !important; order:2;}
+}
+.blog-nav a { color:#333333; }
+
+#comment_form { padding:50px 50px 40px; background-color:var(--cmntBg); }
+#comment_form .h3, #comment_form label, #comment_form p {color:var(--cmntCl);}
+
+#comments .comment__meta { font-size:12px; }
+#comments time { color:#666666; }
+.comment:last-child { margin-bottom:0; }
+.comment__meta-item { margin-right:10px; font-size:1.07692em; }
+
+.atg2 .blogInr { position:absolute; left:0; bottom:0; width:100%; padding:20px; line-height:1.2; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 70%); }
+.atg2 .blogInr *:not(.blogTags a) { color:#fff; }
+    
+@media only screen and (min-width:767px){
+    .atl1 .articleImg,
+    .atl2 .articleImg { margin-left:50px; }
+    .atl2:nth-child(2n) .articleImg { order:2; margin:0 30px 0 0; }
+	.sidebar { width:300px;}
+}
+
+.articleImg a { overflow:hidden; }
+    
+.newsbox  .newsl_btn { border:1px solid #eee; border-left:0; }
+   
+ 
+.login-register .wrap { height:100%; border:1px solid #eeeeee; padding:7%; }
+.address { margin-bottom:15px }
+
+.light-bg { border-radius:3px; background:#fafafa; }	
+	
+ 
+.account-links { font-size:var(--fsm); background:var(--bg); padding:30px; margin-bottom:20px; }
+.account-links a { color:var(--cl); padding:10px 0; display: block; }
+.account-links a:hover { color:var(--clh); }
+.account-links li + li {border-top: 1px solid var(--bdr);}
+
+@media only screen and (min-width:768px){
+  .account-links { font-size:var(--fs); position:sticky; top:100px; }
+}

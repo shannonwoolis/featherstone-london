@@ -1,0 +1,355 @@
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">     
+	<div class="{% if section.settings.sw %}fw-sec{% else %}page-width{% endif %}">
+		{% render 'sec-title' %} 
+
+		<div id="faq" class="{% if section.settings.accor %}accor{% else %}no-accor{% endif %}{% if section.settings.narrow %} narrow m_auto{% endif %}"
+			 style="--bdr:{{ section.settings.bdr }};">     
+			{% for block in section.blocks limit: section.blocks.size%}     
+				{% if block.type == 'faqsection' %}                   
+					{% if block.settings.title != blank %}<h3 class="{{ section.settings.tw }}"  style="--fs:{{ block.settings.fs }}px;--fsm:{{ block.settings.fsm }}px;--cl:{{ block.settings.ttlcl }};--bg:{{ block.settings.ttlbg }};" {{ block.shopify_attributes }}>{{ block.settings.title }}</h3>{% endif %}         
+				{% endif %}
+				{% if block.type == 'faqs' %} 
+					<{% if section.settings.accor %}details{% else %}div{% endif %} class="faq-body" {{ block.shopify_attributes }}>
+						<summary class="p_ttl m0 {{ section.settings.tw }} fl f-jcsb f-aic" style="font-weight:{{ section.settings.fw }};--fs:{{ section.settings.fs }}px;--fsm:{{ section.settings.fsm }}px;--cl:{{ section.settings.questions }};">
+                            {{ block.settings.title }}
+                            {% if section.settings.accor %}
+                                {%- if secSt.acc_style == '1' -%}
+                                    {%- render 'icon-plus', class: 'ml10' -%}
+                                {%- else -%}
+                                    <svg class="at-icon arw ml10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 451.847 451.847"><path d="M225.92,321.73c-6.02,0-12.05-2.3-16.64-6.89L64.74,170.3c-9.19-9.19-9.19-24.1,0-33.29c9.19-9.19,24.1-9.19,33.29,0 l127.89,127.9l127.89-127.89c9.19-9.19,24.1-9.19,33.29,0c9.2,9.19,9.2,24.1,0,33.29L242.56,314.84 C237.97,319.44,231.95,321.73,225.92,321.73z"/></svg>
+                                {%- endif -%}
+                            {% endif %}
+                        </summary>
+						<div class="p_con" style="font-weight:{{ section.settings.qw }};--fs:{{ section.settings.fst }}px;--fsm:{{ section.settings.fsmt }}px;--cl:{{ section.settings.answers }};">{{ block.settings.answer }}</div>
+					</{% if section.settings.accor %}details{% else %}div{% endif %}>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>  
+</div>
+{% schema %}
+  {
+    "name": "FAQ",
+     "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+    "settings": [
+	 {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Heading"
+      },
+ 	  {
+        "type": "textarea",
+        "id": "subtitle",
+        "label": "Sub Heading",
+        "default": "Provides answers to a list of typical questions that users might ask"
+      },	 
+ 	 {	
+        "type": "checkbox",
+        "id": "accor",
+        "label": "Enable Accordion?",
+        "default": false
+      },
+	 {
+		"type": "select",
+		"id": "acc_style",
+		"label": "Icons",
+		"default": "1",
+		"options": [
+		  {
+			"value": "1",
+			"label": "Plus/Minus"
+		  },
+		  {
+			"value": "2",
+			"label": "Up/Down Arrows"
+		  }
+		]
+       },	
+       {	
+        "type": "checkbox",
+        "id": "narrow",
+        "label": "Narrow width?",
+        "default": true
+      },	       
+ 		{
+        "type": "color",
+        "id": "questions",
+        "label": "Questions",
+        "default": "#444"
+      },
+      {
+			"type": "range",
+			"id": "fs",
+			"min": 10,
+			"max": 40,
+			"step": 1,
+			"label": "Font Size",
+			"unit": "px",
+			"default":14
+         },
+        {
+			"type": "range",
+			"id": "fsm",
+			"min": 10,
+			"max": 40,
+			"step": 1,
+			"label": "Font Size(mobile)",
+			"unit": "px",
+			"default":14
+         },        
+       {
+        "type": "select",
+        "id": "fw",
+        "label": "Font Weight",
+        "default": "600",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+	 {
+        "type": "color",
+        "id": "answers",
+        "label": "Answers",
+        "default": "#444"
+      },
+       {
+			"type": "range",
+			"id": "fst",
+			"min": 10,
+			"max": 40,
+			"step": 1,
+			"label": "Font Size",
+			"unit": "px",
+			"default":13
+         },
+        {
+			"type": "range",
+			"id": "fsmt",
+			"min": 10,
+			"max": 40,
+			"step": 1,
+			"label": "Font Size(mobile)",
+			"unit": "px",
+			"default":13
+         },      
+       {
+        "type": "select",
+        "id": "qw",
+        "label": "Font Weight",
+        "default": "400",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+       {
+        "type": "color",
+        "id": "bdr",
+        "label": "Borders",
+        "default": "#eee"
+      },  
+	  {
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "info":"select light color"
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },		              
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 
+	],
+   "blocks":[
+     {
+        "type": "faqsection",
+        "name": "Section Title",
+		"settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+			"type": "range",
+			"id": "fs",
+			"min": 10,
+			"max": 40,
+			"step": 1,
+			"label": "Font Size",
+			"unit": "px",
+			"default":15
+         },
+        {
+			"type": "range",
+			"id": "fsm",
+			"min": 10,
+			"max": 40,
+			"step": 1,
+			"label": "Font Size(mobile)",
+			"unit": "px",
+			"default":15
+         },
+          {
+        "type": "color",
+        "id": "ttlcl",
+        "label": "Title",
+        "default": "#111"
+        },
+		{
+        "type": "color",
+        "id": "ttlbg",
+        "label": "Background",
+        "default": "#EEE"
+      }
+		]
+      },
+	  {
+	    "type":"faqs",
+		"name":"FAQs",
+		"settings":[			
+			{
+			"type":"textarea",
+			"id":"title",
+			"label":"Question",
+			"default":"Is Vogal compatible with Shopify Online Store 2.0?"
+			},
+			{
+			"type":"richtext",
+			"id":"answer",
+			"label":"Answer",
+			"default":"<p>Yes, Our theme is fully compatible and supports Sections on every page.</p>"		
+			}        
+	    ]
+      }
+	],
+   "presets": [
+      {
+        "name": "FAQs",            
+        "blocks": [
+          {
+            "type": "faqs"
+          },
+          {
+            "type": "faqs"
+          },
+		  {
+            "type": "faqs"
+          } 
+        ]
+      }
+    ]
+ }
+{% endschema %}

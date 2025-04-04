@@ -1,0 +1,28 @@
+<style data-shopify>
+
+:root {
+
+{% if settings.fonts == '1' %}
+    --ft1:{{ settings.font1.family }},{{ settings.font1.fallback_families }};
+    --ft2:{{ settings.font2.family | default:settings.font1.family }},{{ settings.font2.fallback_families }};
+	--ft3:{{ settings.font3.family | default:settings.font1.family }},{{ settings.font3.fallback_families }};
+{% else %}
+	--ft1:{{ settings.gfont1 | strip }};
+    --ft2:{{ settings.gfont2 | strip | default:settings.gfont1 | strip }};
+	--ft3:{{ settings.gfont3 | strip | default:settings.gfont1 | strip }};
+{% endif %}
+
+    --site_gutter: 15px;
+    --grid_gutter:30px;
+    --grid_gutter_sm:15px; 
+
+    --input_height:38px;
+    --input_height_sm:32px;
+    --error: #d20000;      
+}
+
+@media (prefers-reduced-motion:no-preference){
+      :root { scroll-behavior:smooth; }
+}
+
+</style>

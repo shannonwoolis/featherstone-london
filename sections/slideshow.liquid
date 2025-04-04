@@ -1,0 +1,1687 @@
+{%- capture slideShowSec -%}
+{% assign secSt = section.settings %}
+ {% capture navstl %}
+		--arw: {{ secSt.arrowc }};
+        --arwbg: {{ secSt.arrowbg}};
+		--dotsa: {{ secSt.dots }};
+		--dots: {{ secSt.dots |   color_modify:'alpha', 0.5 }};
+ {% endcapture %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}"  style="--sbg:{{ secSt.bg }};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px" data-section-id="{{ section.id }}" data-section-type="slideshow"> 
+    {% if section.blocks.size > 0 %}
+        <div class="oss_wrap{% if section.settings.section_width %} page-width{% endif %}" style="{{ navstl }}{% if section.settings.section_width %}max-width:{{ section.settings.box-width }}px; margin:0 auto{% endif %}">
+            {%- capture height -%}
+                {% if section.settings.ht == '1' %}
+                    {% for block in section.blocks %}
+                        {% assign blkSt = block.settings %}
+                        {% if blkSt.image != blank %}
+                            --slht:{{ 1 | divided_by: blkSt.image.aspect_ratio | times: 100 }}%;
+                            {% if blkSt.imagem != blank %}
+                                --slhtm:{{ 1 | divided_by: blkSt.imagem.aspect_ratio | times: 100 }}%;
+                            {% else %}
+                                --slhtm:{{ 1 | divided_by: blkSt.image.aspect_ratio | times: 100 }}%;
+                            {% endif %}
+                            {% break %}
+                        {% else %}
+                            --slht:40%;--slhtm:40%;
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    --slht:{{ section.settings.htd }}px;--slhtt:{{ section.settings.htt }}px;--slhtm:{{ section.settings.htm }}px;
+                {% endif %}
+            {%- endcapture -%}
+            <div class="slideshow pr of_hidden ctStyle brad" id="ss{{ section.id }}" style="{{ height }}--brad:{{ secSt.sbrad  }}px;"
+                 data-effect="{% if secSt.fade %}fade{% else %}slide{% endif %}"
+                 data-autoplay='{% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %}'
+                 data-loop="{% if section.blocks.size > 1 %}true{% else %}false{% endif %}">
+                <div class="swiper-wrapper">
+                {% for block in section.blocks %}
+                    {%- liquid
+                        assign blkSt = block.settings
+                        if blkSt.video_url.type == "youtube"
+                            assign videotype = "youtube"
+                        elsif blkSt.video_url.type == "vimeo"
+                            assign videotype = "vimeo"
+                        else
+                            assign videotype = "video"
+                        endif
+
+                        assign imgPos = "center center"
+                        if blkSt.image.presentation.focal_point != blank
+                           assign imgPos = blkSt.image.presentation.focal_point
+                        endif
+                        assign img2Pos = "center center"
+                        if blkSt.imagem != blank and blkSt.imagem.presentation.focal_point != blank
+                           assign img2Pos = blkSt.imagem.presentation.focal_point
+                        endif
+                    %}
+                    <div class="swiper-slide sslide{% if section.settings.ht == '1' %} im{% else %} ct{% endif %} w_100 of_hidden" data-type="{{ block.type }}" {% if block.type == 'video' %} data-video="{{ videotype }}"{% endif %} id="{{ block.id }}" {{ block.shopify_attributes }}>
+                        {% if blkSt.display_btn != true and blkSt.link != blank and block.type != 'video' %}<a href="{{ blkSt.link }}" class="ss_link">{% endif %}
+                        {% if block.type == 'image' and blkSt.image != blank %}
+                            <img loading="lazy" class="ssimg imgFt lazyload swiper-lazy{% if blkSt.imagem != blank %} hide-sm{% endif %}{% if section.settings.imganim %} anim{% endif %}" src="{{ blkSt.image | img_url: "100x" }}" width="{{ blkSt.image.width }}" height="{{ blkSt.image.height }}"
+                                 data-srcset="{% render 'lazyload', image: blkSt.image, sizes: '400,700,1000,1200,1600,2000' %}" data-sizes="auto" alt="{{ blkSt.image.alt | escape }}" style="--ipos:{{ imgPos }};">
+                            {% if blkSt.imagem != blank %}
+                                <img class="ssimg imgFt hide-md hide-lg lazyload{% if forloop.first %} lazypreload{% else %} swiper-lazy{% endif %}" {% if forloop.first %}src="{{ blkSt.imagem | img_url: "700x" }}" fetchpriority="high"{% endif %} width="{{ blkSt.imagem.width }}" height="{{ blkSt.imagem.height }}"
+                                 data-srcset="{% render 'lazyload', image: blkSt.imagem, sizes: '400,700,1000,1400' %}" data-sizes="auto" alt="{{ blkSt.imagem.alt | escape }}" style="--ipos:{{ img2Pos }};">
+                            {% endif %}
+                            <div class="swiper-lazy-preloader"></div>
+                        {% elsif block.type == 'video' and blkSt.video_url != blank %}
+                            {% if blkSt.video_url.type == "youtube" %}
+                                <iframe class="embed-player slide-media" width="980" height="520" src="https://www.youtube.com/embed/{{ blkSt.video_url.id }}?enablejsapi=1&controls=0&fs=0&iv_load_policy=3&rel=0&showinfo=0&loop=1&playlist={{ blkSt.video_url.id }}&playsinline=1&autoplay=1&mute=1" allow="autoplay" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            {% elsif blkSt.video_url.type == "vimeo" %}
+                                <iframe class="embed-player slide-media" src="https://player.vimeo.com/video/{{ blkSt.video_url.id }}?api=1&byline=0&portrait=0&title=0&background=1&mute=1&loop=1&autoplay=0&id={{ blkSt.video_url.id }}" width="980" height="520" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            {% endif %}
+                        {% elsif block.type == 'video' and blkSt.video != blank %}
+                            {{ blkSt.video | video_tag: image_size:"2000x", loop:true, controls:false, muted:true, autoplay:true, playsinline: true, preload:metadata }}
+                        {% else %}
+                            <div class="ss_img js">
+                                <div class="ph_bg">{% capture current %}{% cycle 1, 2 %}{% endcapture %}{{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}</div>
+                            </div>
+                        {% endif %}
+                        {%- capture bxStyle -%}
+                            {% if blkSt.isbox %}
+                                --bg:{{ blkSt.tbg | color_modify: 'alpha', blkSt.opt }};--pd:50px;
+                                {% if blkSt.frame %}--frm:1px {{ blkSt.fstl }} {{ blkSt.fcl }};{% endif %}
+                            {% else %}
+                                --bg:transparent;--pd:0;--frm:none;
+                            {% endif %}
+                            {% if blkSt.isboxm %}
+                                --bgm:{{ blkSt.tbg | color_modify: 'alpha', blkSt.opt }};--pdm:20px;
+                                {% if blkSt.frame %}--frmm:1px {{ blkSt.fstl }} {{ blkSt.fcl }};{% endif %}
+                            {% else %}
+                                --bgm:transparent;--pdm:0;--frcl:transparent;--frmm:none;
+                            {% endif %}                            
+                        {%- endcapture -%}
+                        <div class="ss_txt-wrap w_100 h_100" style="--ibg:{{ blkSt.ovr | color_modify: 'alpha', blkSt.ovropt }};--brad:{{ blkSt.brad }}px;--twd:{{blkSt.twd}}px">
+                            <div class="page-width fl h_100 {{ blkSt.txtpos }} {{ blkSt.txtposm }}" style="max-width:{{ blkSt.contwd }}px;{{ bxStyle }}">
+                                <div class="ss_txt{% if blkSt.text-left %} tl-md{% else %} tc{% endif %}{% if section.settings.txtanimation %} anim {{ section.settings.animation-style }}{% endif %}">
+                                    {% if blkSt.hd1 != blank %}
+                                        <p class="stxt hd1 mb{{ blkSt.pmbm }} mb{{ blkSt.pmb }}-md {{ blkSt.pff }}" style="--cl:{{ blkSt.pcl }};--fs:{{ blkSt.pfs }}px;--fsm:{{ blkSt.pfsm }}px;--lh:{{ blkSt.plh }};--tfw:{{ blkSt.pfw }}">{{ blkSt.hd1 }}</p>
+                                    {% endif %}
+                                    {% if blkSt.title != blank %}
+                                        <h3 class="stxt hd2 {{ blkSt.tff }} mb{{ blkSt.tmbm }} mb{{ blkSt.tmb }}-md" style="--cl:{{ blkSt.tcl }};--fs:{{ blkSt.tfs }}px;--fsm:{{ blkSt.tfsm }}px;--lh:{{ blkSt.tlh }};--tfw:{{ blkSt.tfw }};--to:{{blkSt.to}};">{{ blkSt.title }}</h3>
+                                    {% endif %}
+                                    {% if blkSt.hd3 != blank %}
+                                        <div class="stxt hd3 {{ blkSt.ff }} mb{{ blkSt.mbm }} mb{{ blkSt.mb }}-md{% if blkSt.hideh3 %} hide-sm{% endif %}" style="--cl:{{ blkSt.cl }};--fs:{{ blkSt.fs }}px;--fsm:{{ blkSt.fsm }}px;--lh:{{ blkSt.lh }};--tfw:{{ blkSt.fw }};">{{ blkSt.hd3 }}</div>
+                                    {% endif %}
+                                    {% if blkSt.display_btn %}
+                                        <div class="btnWrap">
+                                            <a class="btn {{ blkSt.btn-size }} {{ blkSt.btn-style }}" href="{{ blkSt.link }}">{{ blkSt.btn }}</a>
+                                            <a class="btn {{ blkSt.btn-size1 }} {{ blkSt.btn-style1 }}" href="{{ blkSt.link2 }}">{{ blkSt.btn2 }}</a>
+                                        </div>
+                                    {% elsif block.type == 'video' %}
+                                        {% if blkSt.btn != blank %}<div class="btnWrap"><a class="btn {{ blkSt.btn-size }} {{ blkSt.btn-style }}" href="{{ blkSt.link }}">{{ blkSt.btn }}</a></div>{% endif %}
+                                    {% else %}
+                                        {% if blkSt.btn != blank %}<div class="btnWrap"><span class="btn {{ blkSt.btn-size }} {{ blkSt.btn-style }}" >{{ blkSt.btn }}</span></div>{% endif %}
+                                    {% endif %}            
+                                </div>
+                            </div>
+                        </div>             
+                        {% if blkSt.display_btn != true and blkSt.link != blank and block.type != 'video' %}</a>{% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="swarw swn{{ section.id }} swiper-button-next{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                <div class="swarw swp{{ section.id }} swiper-button-prev{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                <div class="swiper-pagination swpg{{ section.id }}{% unless secSt.dotm %} hide-sm{% endunless %}{% unless secSt.dot %} hide-md hide-lg{% endunless %}"></div>
+            </div>
+        </div>
+    {% endif %}
+    {% if section.blocks.size == 0 %}<div class="placeholder-noblocks">{{ 'homepage.onboarding.no_content' | t }}</div>{% endif %}
+</div>
+{%- endcapture -%}
+{{ slideShowSec | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+    "name": "Slideshow",
+    "class": "index-section",
+    "max_blocks": 8,
+    "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+    "settings": [
+        {
+            "type": "paragraph",      
+            "content": "Use this slideshow when you have image + text to display above image."
+        },	
+		{
+            "type":"header",
+            "content":"Section"
+        },	
+        {
+            "type": "select",
+            "id": "ht",
+            "label": "Height",
+            "default": "2",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Adapt to first image"
+                },
+                {
+                    "value": "2",
+                    "label": "Custom as below"
+                }
+            ]
+        },
+        {
+            "type": "range",
+            "id": "htd",
+            "label": "Desktop",
+            "default": 700,
+            "min": 200,
+            "max": 1000,
+            "step": 10
+        },
+        {
+            "type": "range",
+            "id": "htt",
+            "label": "Tablet",
+            "default": 450,
+            "min": 200,
+            "max": 1000,
+            "step": 10
+        },
+        {
+            "type": "range",
+            "id": "htm",
+            "label": "Mobile",
+            "default": 350,
+            "min": 100,
+            "max": 800,
+            "step": 10
+        },  
+		 {
+            "type":"checkbox",
+            "id":"section_width",
+            "label":"Box Width?",
+            "default": false	
+        },
+        {
+            "type": "range",
+            "id": "box-width",
+            "label":"Set Box Width",
+            "default": 1500,
+            "min": 1200,
+            "max": 2200,
+            "step": 100,
+            "unit": "px"
+        },  
+        {
+                  "type": "range",
+                  "id": "sbrad",
+                  "label": "Image Border Radius",
+                  "default": 0,
+                  "min": 0,
+                  "max": 100,
+                  "step": 1,
+                  "unit":"px"		
+         },	 
+        {
+            "type":"header",
+            "content":"Slider Settings"	
+        },
+        {
+            "type": "checkbox",
+            "id": "fade",
+            "label": "Slide Fade Effect",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate slides",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "speed",
+            "label": "Change Slides Every",
+            "default": 5,
+            "min": 1,
+            "max": 60,
+            "step": 1,
+            "unit": "sec"
+        },
+       {
+            "type": "paragraph",
+            "content": "Arrows ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "arrow",
+            "label": "Show on Desktop?",
+            "default": true			
+        },
+		{
+            "type": "checkbox",
+            "id": "arrowm",
+            "label": "Show on Mobile?",
+            "default": false			
+        },
+		 {
+        "type": "color",
+        "id": "arrowc",
+        "label": "Arrows",
+        "default": "#000"
+      },
+       {
+        "type": "color",
+        "id": "arrowbg",
+        "label": "Background",
+        "default": "#fff"
+       },	
+		{
+            "type": "paragraph",
+            "content": "Dot Navigation ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "dot",
+            "label": "Show on Desktop?",
+            "default": false			
+        },
+		{
+            "type": "checkbox",
+            "id": "dotm",
+            "label": "Show on Mobile?",
+            "default": true			
+        },
+		 {
+        "type": "color",
+        "id": "dots",
+        "label": "Dots",
+        "default": "#ddd"
+      },
+        {
+            "type": "checkbox",
+            "id": "imganim",
+            "label": "Enable Image Animation",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "txtanimation",
+            "label": "Enable Text Animation",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "animation-style",
+            "label": "Text Animation Style",
+            "default": "st1",
+            "options": [
+                {
+                    "label": "Zoom in",
+                    "value": "st1"
+                },
+                {
+                    "label": "Fade up down",
+                    "value": "st2"
+                },
+                {
+                    "label": "Fade in up",
+                    "value": "st3"
+                },
+                {
+                    "label": "Zoom out",
+                    "value": "st4"
+                } 
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":0
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":0
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },  
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	 
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Desktop Image",
+                    "info": "Recommended width 2000px and height as per section height if selected custom height."
+                },
+                {
+                    "type": "image_picker",
+                    "id": "imagem",
+                    "label": "Mobile Image",
+                    "info": "Recommended width 780px and height as per section height if selected custom height. If mobile image is blank, dekstop image will be show."
+                },
+                {
+                    "type": "color",
+                    "id": "ovr",
+                    "label": "Image Overlay",
+                    "default": "#3d4246"
+                },
+                {
+                    "type": "range",
+                    "id": "ovropt",
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1,
+                    "label": "Overlay Opacity",
+                    "unit": "%",
+                    "default": 0
+                },
+                {
+                    "type":"header",
+                    "content":"Pre Heading"	
+                },
+                {
+                    "type": "text",
+                    "id": "hd1",
+                    "label": "Text",
+                    "default": "MAKING BRAND VISIBLE"			
+                },
+                {
+                    "type": "color",
+                    "id": "pcl",
+                    "label": "Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "pfs",
+                    "label": "Font Size",
+                    "default": 14,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "pfsm",
+                    "label": "Font Size (mobile)",
+                    "default": 12,
+                    "min": 10,
+                    "max": 60,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "select",
+                    "id": "pff",
+                    "label": "Font Family",
+                    "default": "ft1",
+                    "options": [
+                        {
+                            "value": "ft1",
+                            "label": "Font 1"
+                        },
+                        {
+                            "value": "ft2",
+                            "label": "Font 2"
+                        },
+                        {
+                            "value": "ft3",
+                            "label": "Font 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "pfw",
+                    "label": "Font Weight",
+                    "default": "400",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 	
+                {
+                    "type": "range",
+                    "id": "plh",
+                    "label": "Line Height",
+                    "default": 1.2,
+                    "min": 0.7,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.3"
+                }, 			  
+                {
+                    "type": "range",
+                    "id": "pmb",
+                    "label": "Margin Bottom",
+                    "default": 5,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                }, 			              
+                {
+                    "type": "range",
+                    "id": "pmbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 5,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type":"header",
+                    "content":"Big Heading"	
+                },
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Text",
+                    "default": "I AM VOGAL",
+					"info":"add <span>BRAND</span> tag for outline text"
+                },                        
+                {
+                    "type": "color",
+                    "id": "tcl",
+                    "label": "Title",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "tfs",
+                    "label": "Font Size",
+                    "default": 60,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "tfsm",
+                    "label": "Font Size (mobile)",
+                    "default": 25,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "select",
+                    "id": "tff",
+                    "label": "Font Family",
+                    "default": "ft1",
+                    "options": [
+                        {
+                            "value": "ft1",
+                            "label": "Font 1"
+                        },
+                        {
+                            "value": "ft2",
+                            "label": "Font 2"
+                        },
+                        {
+                            "value": "ft3",
+                            "label": "Font 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "tfw",
+                    "label": "Font Weight",
+                    "default": "600",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 
+                {
+                    "type": "range",
+                    "id": "to",
+                    "label": "Text Opacity",
+                    "default": 1,
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1
+                },
+                {
+                    "type": "range",
+                    "id": "tlh",
+                    "label": "Line Height",
+                    "default": 1.2,
+                    "min": 0.7,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.2"
+                }, 	
+                {
+                    "type": "range",
+                    "id": "tmb",
+                    "label": "Margin Bottom",
+                    "default": 10,
+                    "min":0,
+                    "max": 50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "tmbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 5,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type":"header",
+                    "content":"Detail"	
+                },
+                {
+                    "type": "textarea",
+                    "id": "hd3",
+                    "label": "Text",
+                    "default": "An Intelligent and beautiful shopify theme"			
+                },                
+                {
+                    "type": "checkbox",
+                    "id": "hideh3",
+                    "label": "Hide in mobile?",
+                    "default": true			
+                },	  
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 16,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 14,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "select",
+                    "id": "ff",
+                    "label": "Font Family",
+                    "default": "ft1",
+                    "options": [
+                        {
+                            "value": "ft1",
+                            "label": "Font 1"
+                        },
+                        {
+                            "value": "ft2",
+                            "label": "Font 2"
+                        },
+                        {
+                            "value": "ft3",
+                            "label": "Font 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "fw",
+                    "label": "Font Weight",
+                    "default": "400",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 	
+                {
+                    "type": "range",
+                    "id": "lh",
+                    "label": "Line Height",
+                    "default": 1.2,
+                    "min": 0.7,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.2"
+                }, 	
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 25,
+                    "min":0,
+                    "max": 50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 15,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type": "header",        
+                    "content": "Slide Buttons" 			
+                },		
+                {
+                    "type": "text",
+                    "id": "btn",
+                    "label": "Button 1 Text",
+                    "default":"Shop now"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Button 1 Link"
+                },
+				{
+				"type": "select",
+				"id": "btn-style",
+				"label": "Select Button",
+				"default": "btn1",
+				"options": [
+				  {
+					"label": "Button 1",
+					"value": "btn1"
+				  },
+				  {
+					"label": "Button 2",
+					"value": "btn2"
+				  },
+				  {
+					"label": "Button 3",
+					"value": "btn3"
+				  },
+				  {
+					"label": "Button 4",
+					"value": "btn4"
+				  },
+				 {
+					"label": "Button 5",
+					"value": "btn5"
+				  },
+                  {
+                      "label": "Button 6",
+                      "value": "btn6"
+                  },
+                    {
+                      "label": "Button 7 Gradient",
+                      "value": "btn7"
+                  },
+                  {
+                      "label": "Button 8 Gradient",
+                      "value": "btn8"
+                  },
+                  {
+                      "label": "Link",
+                      "value": "btnLink"
+                    }  
+				]
+			  },
+                {
+                    "type": "select",
+                    "id": "btn-size",
+                    "label": "Button Size",
+                    "default": "btn-lg",
+                    "options": [
+                        {
+                            "label": "Small",
+                            "value": "btn-sm"
+                        },
+                        {
+                            "label": "Medium",
+                            "value": "btn-md"
+                        },
+                        {
+                            "label": "Large",
+                            "value": "btn-lg"
+                        } 		  
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "id": "display_btn",
+                    "label": "Show 2 Buttons?",
+                    "default":false
+                },
+                {
+                    "type": "text",
+                    "id": "btn2",
+                    "label": "Button 2 Text",
+                    "default":"Shop now"			
+                },
+                {
+                    "type": "url",
+                    "id": "link2",
+                    "label": "Button 2 Link"
+                },
+               {
+				"type": "select",
+				"id": "btn-style1",
+				"label": "Select Button",
+				"default": "btn1",
+				"options": [
+				  {
+					"label": "Button 1",
+					"value": "btn1"
+				  },
+				  {
+					"label": "Button 2",
+					"value": "btn2"
+				  },
+				  {
+					"label": "Button 3",
+					"value": "btn3"
+				  },
+				  {
+					"label": "Button 4",
+					"value": "btn4"
+				  },
+				 {
+					"label": "Button 5",
+					"value": "btn5"
+				  },
+                  {
+                      "label": "Button 6",
+                      "value": "btn6"
+                  },
+                  {
+                      "label": "Button 7 Gradient",
+                      "value": "btn7"
+                  },
+                  {
+                      "label": "Button 8 Gradient",
+                      "value": "btn8"
+                  },
+                  {
+                      "label": "Link",
+                      "value": "btnLink"
+                  }  
+				]
+			  },
+                {
+                    "type": "select",
+                    "id": "btn-size1",
+                    "label": "Button Size",
+                    "default": "btn-lg",
+                    "options": [
+                        {
+                            "label": "Small",
+                            "value": "btn-sm"
+                        },
+                        {
+                            "label": "Medium",
+                            "value": "btn-md"
+                        },
+                        {
+                            "label": "Large",
+                            "value": "btn-lg"
+                        } 		  
+                    ]
+                },
+                {
+                    "type": "header",        
+                    "content": "Slide Caption" 			
+                },
+                {
+                    "type": "range",
+                    "id": "contwd",
+                    "min": 1000,
+                    "max": 2000,
+                    "step": 10,
+                    "label": "Container Max Width (desktop)",
+                    "unit": "px",
+                    "default": 1200
+                },
+                {
+                    "type": "range",
+                    "id": "twd",
+                    "min": 400,
+                    "max": 1000,
+                    "step": 10,
+                    "label": "Text Max Width (desktop)",
+                    "unit": "px",
+                    "default": 500
+                },      
+                {
+                    "type": "checkbox",
+                    "id": "text-left",
+                    "label": "Text Align Left?",
+                    "default":true
+                },
+                {
+                    "type": "select",
+                    "id": "txtpos",
+                    "label": "Position",
+                    "default": "f-aic-md f-jcs-md",			
+                    "options": [
+                        { "label": "Top Left",      "value": "f-ais-md f-jcs-md" },
+                        { "label": "Top Center",    "value": "f-jcc-md f-ais-md" },
+                        { "label": "Top Right",     "value": "f-jce-md f-ais-md" },             
+                        { "label": "Left",  		  "value": "f-aic-md f-jcs-md" },
+                        { "label": "Center", 		  "value": "f-jcc-md f-aic-md" },
+                        { "label": "Right",  		  "value": "f-jce-md f-aic-md" },
+                        { "label": "Bottom Left",   "value": "f-aie-md f-jcs-md" },						 
+                        { "label": "Bottom Center", "value": "f-jcc-md f-aie-md" }, 						 
+                        { "label": "Bottom Right",  "value": "f-jce-md f-aie-md" }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "txtposm",
+                    "label": "Position (mobile)",
+                    "default": "f-aic f-jcs",
+                    "info":"option useful when you set different image for mobile view",
+                    "options": [ 			
+                        { "label": "Top Left", "value": "f-ais f-jcs" },
+                        { "label": "Top Center", "value": "f-jcc f-ais tc" },
+                        { "label": "Top Right", "value": "f-jce f-ais" },             
+                        { "label": "Left", "value": "f-aic f-jcs" },
+                        { "label": "Center", "value": "f-jcc f-aic tc" },
+                        { "label": "Right", "value": "f-jce f-aic" },
+                        { "label": "Bottom Left", "value": "f-aie f-jcs" },						 
+                        { "label": "Bottom Center", "value": "f-jcc f-aie tc" }, 						 
+                        { "label": "Bottom Right", "value": "f-jce f-aie" }			              
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "id": "isbox",
+                    "label": "Add Box?",
+                    "default": false
+                },
+                {
+                    "type": "checkbox",
+                    "id": "isboxm",
+                    "label": "Add Box(mobile) ?",
+                    "default": false
+                },
+                {
+                    "type": "color",
+                    "id": "tbg",
+                    "label": "Box Background",
+                    "default": "#fff"
+                },
+                {
+                    "type": "range",
+                    "id": "opt",
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1,
+                    "label": "Background Opacity",
+                    "unit": "%",
+                    "default": 0.9
+                },
+				{
+                    "type": "range",
+                    "id": "brad",
+                    "label": "Box Radius",
+                    "default": 0,
+                    "min": 0,
+                    "max": 25,
+                    "step": 1,
+                    "unit":"px"		
+                },	 
+				{
+					"type": "checkbox",
+					"id": "frame",
+					"label": "Add Frame?",
+					"default": false
+        		},		
+				{
+					"type": "color",
+					"id": "fcl",
+					"label": "Frame Color",
+					"default": "#000"
+				},
+				{
+					"type": "select",
+					"id": "fstl",
+					"label": "Frame style",
+					"default": "solid",			
+					"options": [ 			
+						{ "label": "Solid", "value": "solid" },
+						{ "label": "Dashed", "value": "dashed" },
+						{ "label": "Dotted", "value": "dotted" }   
+					]
+				}
+            ]
+        },
+        {
+            "type": "video",
+            "name": "Video slide",
+            "settings": [
+                {
+                    "type": "video_url",
+                    "id": "video_url",
+                    "label": "YouTube/Vimeo Video link",
+                    "accept": ["youtube", "vimeo"]                   
+                },		        		
+                {
+                    "type": "video",
+                    "id": "video",
+                    "label": "Mp4 video"
+                },
+                {
+                    "type": "color",
+                    "id": "ovr",
+                    "label": "Image Overlay",
+                    "default": "#3d4246"
+                },
+                {
+                    "type": "range",
+                    "id": "ovropt",
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1,
+                    "label": "Overlay Opacity",
+                    "unit": "%",
+                    "default": 0
+                },
+                {
+                    "type":"header",
+                    "content":"Pre Heading"	
+                },
+                {
+                    "type": "text",
+                    "id": "hd1",
+                    "label": "Text",
+                    "default": "MAKING BRAND VISIBLE"			
+                },
+                {
+                    "type": "color",
+                    "id": "pcl",
+                    "label": "Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "pfs",
+                    "label": "Font Size",
+                    "default": 14,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "pfsm",
+                    "label": "Font Size (mobile)",
+                    "default": 12,
+                    "min": 10,
+                    "max": 60,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "select",
+                    "id": "pff",
+                    "label": "Font Family",
+                    "default": "ft1",
+                    "options": [
+                        {
+                            "value": "ft1",
+                            "label": "Font 1"
+                        },
+                        {
+                            "value": "ft2",
+                            "label": "Font 2"
+                        },
+                        {
+                            "value": "ft3",
+                            "label": "Font 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "pfw",
+                    "label": "Font Weight",
+                    "default": "400",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 	
+                {
+                    "type": "range",
+                    "id": "plh",
+                    "label": "Line Height",
+                    "default": 1.2,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.2"
+                }, 			  
+                {
+                    "type": "range",
+                    "id": "pmb",
+                    "label": "Margin Bottom",
+                    "default": 5,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                }, 			              
+                {
+                    "type": "range",
+                    "id": "pmbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 5,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type":"header",
+                    "content":"Big Heading"	
+                },
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Text",
+                    "default": "I AM VOGAL"			
+                },	  
+                {
+                    "type": "color",
+                    "id": "tcl",
+                    "label": "Title",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "tfs",
+                    "label": "Font Size",
+                    "default": 24,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "tfsm",
+                    "label": "Font Size (mobile)",
+                    "default": 20,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "select",
+                    "id": "tff",
+                    "label": "Font Family",
+                    "default": "ft1",
+                    "options": [
+                        {
+                            "value": "ft1",
+                            "label": "Font 1"
+                        },
+                        {
+                            "value": "ft2",
+                            "label": "Font 2"
+                        },
+                        {
+                            "value": "ft3",
+                            "label": "Font 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "tfw",
+                    "label": "Font Weight",
+                    "default": "400",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 	
+                {
+                    "type": "range",
+                    "id": "tlh",
+                    "label": "Line Height",
+                    "default": 1.2,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.3"
+                }, 	
+                {
+                    "type": "range",
+                    "id": "tmb",
+                    "label": "Margin Bottom",
+                    "default": 5,
+                    "min":0,
+                    "max": 50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "tmbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 15,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type":"header",
+                    "content":"Detail"	
+                },
+                {
+                    "type": "textarea",
+                    "id": "hd3",
+                    "label": "Text",
+                    "default": "An Intelligent and beautiful shopify theme"			
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hideh3",
+                    "label": "Hide in mobile?",
+                    "default": true			
+                },	  
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Title",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 16,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 14,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "select",
+                    "id": "ff",
+                    "label": "Font Family",
+                    "default": "ft1",
+                    "options": [
+                        {
+                            "value": "ft1",
+                            "label": "Font 1"
+                        },
+                        {
+                            "value": "ft2",
+                            "label": "Font 2"
+                        },
+                        {
+                            "value": "ft3",
+                            "label": "Font 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "fw",
+                    "label": "Font Weight",
+                    "default": "400",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 	
+                {
+                    "type": "range",
+                    "id": "lh",
+                    "label": "Line Height",
+                    "default": 1.2,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1,
+                    "info": "Space between text lines. Default is set to 1.3"
+                }, 	
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 25,
+                    "min":0,
+                    "max": 50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 15,
+                    "min":0,
+                    "max":50,
+                    "step":5,
+                    "unit": "px"
+                },
+                {
+                    "type": "header",        
+                    "content": "Slide Buttons" 			
+                },		
+                {
+                    "type": "text",
+                    "id": "btn",
+                    "label": "Button 1 Text",
+                    "default":"Shop now"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Button 1 Link"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "display_btn",
+                    "label": "Show 2 buttons?",
+                    "default":false
+                },
+                {
+                    "type": "text",
+                    "id": "btn2",
+                    "label": "Button 2 Text",
+                    "default":"Shop now"			
+                },
+                {
+                    "type": "url",
+                    "id": "link2",
+                    "label": "Button 2 Link"
+                },
+			   {
+					"type": "select",
+					"id": "btn-style",
+					"label": "Select Button",
+					"default": "btn1",
+					"options": [
+					  {
+						"label": "Button 1",
+						"value": "btn1"
+					  },
+					  {
+						"label": "Button 2",
+						"value": "btn2"
+					  },
+					  {
+						"label": "Button 3",
+						"value": "btn3"
+					  },
+					  {
+						"label": "Button 4",
+						"value": "btn4"
+					  },
+					 {
+						"label": "Button 5",
+						"value": "btn5"
+					  },
+                       {
+                      "label": "Button 6",
+                      "value": "btn6"
+                      },
+                       {
+                      "label": "Button 7 Gradient",
+                      "value": "btn7"
+                  },
+                  {
+                      "label": "Button 8 Gradient",
+                      "value": "btn8"
+                  },
+                      {
+                      "label": "Link",
+                      "value": "btnLink"
+                       }  
+					]
+				  },
+                {
+                    "type": "select",
+                    "id": "btn-size",
+                    "label": "Button Size",
+                    "default": "btn-md",
+                    "options": [
+                        {
+                            "label": "Small",
+                            "value": "btn-sm"
+                        },
+                        {
+                            "label": "Medium",
+                            "value": "btn-md"
+                        },
+                        {
+                            "label": "Large",
+                            "value": "btn-lg"
+                        } 		  
+                    ]
+                },
+                {
+                    "type": "header",        
+                    "content": "Slide Caption" 			
+                },
+                {
+                    "type": "range",
+                    "id": "contwd",
+                    "min": 1000,
+                    "max": 2000,
+                    "step": 10,
+                    "label": "Container Max Width (desktop)",
+                    "unit": "px",
+                    "default": 1200
+                },
+                {
+                    "type": "checkbox",
+                    "id": "text-left",
+                    "label": "Text Align Left?",
+                    "default":true
+                },
+                {
+                    "type": "select",
+                    "id": "txtpos",
+                    "label": "Position",
+                    "default": "f-aic-md f-jcs-md",			
+                    "options": [
+                        { "label": "Top Left",      "value": "f-ais-md f-jcs-md" },
+                        { "label": "Top Center",    "value": "f-jcc-md f-ais-md" },
+                        { "label": "Top Right",     "value": "f-jce-md f-ais-md" },             
+                        { "label": "Left",  		  "value": "f-aic-md f-jcs-md" },
+                        { "label": "Center", 		  "value": "f-jcc-md f-aic-md" },
+                        { "label": "Right",  		  "value": "f-jce-md f-aic-md" },
+                        { "label": "Bottom Left",   "value": "f-aie-md f-jcs-md" },						 
+                        { "label": "Bottom Center", "value": "f-jcc-md f-aie-md" }, 						 
+                        { "label": "Bottom Right",  "value": "f-jce-md f-aie-md" }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "txtposm",
+                    "label": "Position (mobile)",
+                    "default": "f-aic f-jcs",
+                    "info":"This option will be useful when you set different image for mobile view",
+                    "options": [ 			
+                        { "label": "Top Left",     "value": "f-ais f-jcs" },
+                        { "label": "Top Center",    "value": "f-jcc f-ais tc" },
+                        { "label": "Top Right",     "value": "f-jce f-ais" },             
+                        { "label": "Left",  		  "value": "f-aic f-jcs" },
+                        { "label": "Center", 		  "value": "f-jcc f-aic tc" },
+                        { "label": "Right",  		  "value": "f-jce f-aic" },
+                        { "label": "Bottom Left",   "value": "f-aie f-jcs" },						 
+                        { "label": "Bottom Center", "value": "f-jcc f-aie tc" }, 						 
+                        { "label": "Bottom Right",  "value": "f-jce f-aie" }			              
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "id": "isbox",
+                    "label": "Add Box?",
+                    "default": false
+                },
+                {
+                    "type": "checkbox",
+                    "id": "isboxm",
+                    "label": "Add Box(mobile) ?",
+                    "default": false
+                },
+                {
+                    "type": "color",
+                    "id": "tbg",
+                    "label": "Box Background",
+                    "default": "#fff"
+                },
+                {
+                    "type": "range",
+                    "id": "opt",
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1,
+                    "label": "Background Opacity",
+                    "unit": "%",
+                    "default": 0.9
+                },
+				{
+                    "type": "range",
+                    "id": "brad",
+                    "label": "Box Radius",
+                    "default": 0,
+                    "min": 0,
+                    "max": 25,
+                    "step": 1,
+                    "unit":"px"		
+                },	 
+				{
+					"type": "checkbox",
+					"id": "frame",
+					"label": "Add Frame?",
+					"default": false
+        		},		
+				{
+					"type": "color",
+					"id": "fcl",
+					"label": "Frame Color",
+					"default": "#000"
+				},
+				{
+					"type": "select",
+					"id": "fstl",
+					"label": "Frame style",
+					"default": "solid",			
+					"options": [ 			
+						{ "label": "Solid", "value": "solid" },
+						{ "label": "Dashed", "value": "dashed" },
+						{ "label": "Dotted", "value": "dotted" }   
+					]
+				}
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Slideshow",      
+            "settings": {
+            "autoplay": true,
+            "speed": 5
+            },
+            "blocks": [
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,376 @@
+{%- if section.blocks.size != 0 -%}
+{%- assign secSt = section.settings -%}
+<div class="sec_cov" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">
+	<div class="{% if section.settings.sw %}fw-sec{% else %}page-width{% endif %}" id="PrSecTabs" data-section-id="{{ section.id }}" data-section-type="productTabs">		
+        <div style="--tfs:{{ section.settings.tfs }}px;--tfsm:{{ section.settings.tfsm }}px;--tff:var(--{{ section.settings.tff }});--tfw:{{ section.settings.tfw }};--cl:{{ section.settings.cl }};--cla:{{ section.settings.cla }};--tbg:{{ section.settings.tbg }};--tbga:{{ section.settings.tbga }};--bdr:{{ section.settings.bdr }};--bdra:{{ section.settings.bdra }};--bdrr:{{ section.settings.bdrr }}px;" {{ block.shopify_attributes }}>
+            <ul class="fl f-wrap product-tabs stl{{ section.settings.tab_style }}{% if section.settings.tab_align == "center" %} f-jcc{% endif %} hide-sm">
+                {%- for block in section.blocks -%}
+                    {%- if block.type == 'desc' -%}
+                        <li><a class="tablink tc" href="#ptabDesc">{{ block.settings.title }}</a></li>
+                    {%- elsif block.type == 'review' -%}
+                        <li><a class="tablink tc" href="#ptabReview">{{ block.settings.title }}</a></li>
+                    {%- elsif block.type == 'schart' -%}
+                        <li><a class="tablink tc" href="#ptabsize">{{ block.settings.title }}</a></li>
+                    {%- elsif block.type == 'richtext' -%}
+                        {%- if block.settings.content != blank -%}
+                        <li><a class="tablink tc" href="#tab{{ block.id }}">{{ block.settings.title }}</a></li>
+                        {%- endif -%}
+                    {%- else -%}
+                        <li><a class="tablink tc" href="#tab{{ block.id }}">{{ block.settings.title }}</a></li>
+                    {%- endif -%}
+                {%- endfor -%}
+            </ul>
+            <div class="tbs_wrp{% unless section.settings.tabs %} noTabs{% endunless %} stl{{ section.settings.tab_style }}">
+                {%- for block in section.blocks -%}
+                    {%- if block.type == 'desc' -%}
+                        <h2 class="prtabAcr fl f-aic hide-md hide-lg">{{ block.settings.title }} {% render 'icon-arrow', class: 'ml_auto' %}</h2>
+                        <div id="ptabDesc" class="tb_cnt"><div class="tb_pr_desc rte">{{ product.description }}</div></div>
+                    {%- elsif block.type == 'review' -%}
+                        <h2 class="prtabAcr fl f-aic hide-md hide-lg">{{ block.settings.title }} {% render 'icon-arrow', class: 'ml_auto' %}</h2>
+                        <div id="ptabReview" class="reviewtab tb_cnt">{% render 'reviews', blkst:block.settings %}</div>
+                    {%- elsif block.type == 'schart' -%}
+                        <h2 class="prtabAcr fl f-aic hide-md hide-lg">{{ block.settings.title }} {% render 'icon-arrow', class: 'ml_auto' %}</h2>
+                        <div id="ptabsize" class="tb_cnt">
+                            {%- assign prtype = product.type | handleize | append: "-size-chart" -%}
+                            {%- assign prbrand = product.vendor | handleize | append: "-size-chart" -%}
+                            {%- if product.metafields.custom.sizechart != blank -%}
+                                {{ product.metafields.custom.sizechart }}
+                            {%- elsif settings.sizechart_type == "type" and pages[prtype].content != empty -%}
+                                {{ pages[prtype].content }}
+                            {%- elsif settings.sizechart_type == "brand" and pages[prbrand].content != empty -%}
+                                {{ pages[prbrand].content }}
+                            {%- else -%}
+                                {{ pages[settings.sizechart_page].content }}
+                            {%- endif -%}
+                        </div>
+                    {%- elsif block.type == 'richtext' -%}
+                        {%- if block.settings.content != blank -%}
+                            <h2 class="prtabAcr fl f-aic hide-md hide-lg">{{ block.settings.title }} {% render 'icon-arrow', class: 'ml_auto' %}</h2>
+                            <div id="tab{{ block.id }}" class="tb_cnt rte mtmltxt">{{ block.settings.content }}</div>
+                        {%- endif -%}
+                    {%- elsif block.type == 'custom' -%}
+                        <h2 class="prtabAcr fl f-aic hide-md hide-lg">{{ block.settings.title }} {% render 'icon-arrow', class: 'ml_auto' %}</h2>
+                        <div id="tab{{ block.id }}" class="tb_cnt">{{ block.settings.content }}</div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+		</div>
+    </div>
+</div>
+{%- endif -%}
+{% schema %}
+{
+    "name": "Product Tabs",
+    "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+    "settings": [               	        
+        {
+            "type": "paragraph",          
+            "content":"[preview tab design.](https://vogal-demo.myshopify.com/pages/tab-design)"
+        },  		
+       {
+        "type": "select",
+        "id": "tab_style",
+        "label": "Tab Design",
+		"default": "1",      
+        "options": [
+          {
+            "value": "1",
+            "label": "Style 1 - Background and Border"
+          },
+          {
+            "value": "2",
+            "label": "Style 2 - Bottom Border"
+          }		 
+        ]
+      },
+      {
+        "type": "select",
+        "id": "tab_align",
+        "label": "Tab Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "range",
+        "id": "tfs",
+        "label": "Font Size",
+        "default": 13,
+        "min": 10,
+        "max": 40,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "tfsm",
+        "label": "Font Size (Mobile)",
+        "default": 16,
+        "min": 10,
+        "max": 40,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "tff",
+        "label": "Font Family",
+        "default": "ft1",
+        "options": [
+          {
+            "value": "ft1",
+            "label": "Font 1"
+          },
+          {
+            "value": "ft2",
+            "label": "Font 2"
+          },
+          {
+            "value": "ft3",
+            "label": "Font 3"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "tfw",
+        "label": "Font Weight",
+        "default": "600",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "cl",
+        "label": "Button Text",
+        "default": "#000"
+      },
+	  {
+        "type": "color",
+        "id": "tbg",
+        "label": "Button Background",
+        "default": "#eee"
+      },
+      {
+        "type": "color",
+        "id": "cla",
+        "label": "Active Button Text",
+        "default": "#eee"
+      },      
+      {
+        "type": "color",
+        "id": "tbga",
+        "label": "Active Button Background",
+        "default": "#000"
+      },      
+      {
+        "type": "color",
+        "id": "bdr",
+        "label": "Button Border",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "bdra",
+        "label": "Active Button Border",
+        "default": "#eee"
+      },
+      {
+        "type": "range",
+        "id": "bdrr",
+        "label": "Button Border Radius",
+        "default": 0,
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },	
+	  {
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fff"	         
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false            
+        }		
+    ],
+    "blocks": [
+        {
+            "type": "desc",
+            "name": "Product Description",
+            "limit": 1,          
+            "settings": [
+                { 
+                    "type":"text",
+                    "id":"title",
+                    "label":"Title",
+                    "default":"Product Details"                    
+                }
+            ]
+        },
+        {
+            "type": "review",
+            "name": "Review",
+            "limit": 1,
+            "settings": [				
+                { 
+                    "type":"text",
+                    "id":"title",
+                    "label":"Title",
+                    "default":"Reviews"
+                },
+				{ 
+				"type":"paragraph",				
+				"content":"Display Reviews from app. Choose app from General Settings -> Products Reviews"
+			    }, 
+				{
+					"type": "liquid",
+                    "id": "otherapp",
+					"label": "Add other app reviews snippet here"
+				}
+            ]
+        },
+        {
+            "type": "schart",
+            "name": "Size Chart",
+            "limit": 1,
+            "settings": [
+                { 
+                    "type":"text",
+                    "id":"title",
+                    "label":"Title",
+                    "default":"Size & Fit",
+                    "info":"Set content for size chart from Theme Settings -> Product Page -> Size Chart Type" 
+                }
+            ]
+        },
+        {
+            "type": "custom",
+            "name": "Global Text",
+            "limit": 3,
+            "settings": [
+                { 
+                    "type":"text",
+                    "id":"title",
+                    "label":"Title",
+                    "default":"Custom Text"
+                },
+                {
+                    "type": "liquid",
+                    "id": "content",
+                    "label": "Content"
+                }
+            ]
+        },
+		{
+            "type": "richtext",
+            "name": "Rich Text",           
+            "settings": [
+                { 
+                    "type":"text",
+                    "id":"title",
+                    "label":"Title",
+                    "default":"Rich Text"
+                },
+                {
+                    "type": "richtext",
+                    "id": "content",
+                    "label": "Content",
+					"info":"[How to set different data for each products?](https://www.adornthemes.com/knowledge-base/vogal-display-different-tab-details-for-each-product/)"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

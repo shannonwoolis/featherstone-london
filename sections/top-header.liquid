@@ -1,0 +1,266 @@
+{%- capture siteHeader -%}
+{%- assign secSt = section.settings -%}
+{%- if section.blocks.size > 0 -%}
+<div class="tophwrap{% if secSt.hidem %} hide-sm hide-md{% endif %}" style="--cl:{{ secSt.cl }};--clh:{{ secSt.clh }};--fs:{{ secSt.fs }}px;--fw:{{ secSt.fw }};--bg:{{ secSt.bg }};--bdr:{{ secSt.btmbd }};--mih:{{ secSt.mih }}px;">
+    <div class="fl f-col f-row-md top_hdr f-aic{% if section.settings.sw or settings.layout_style == 'fullwidth' %} fw-sec{% else %} page-width{% endif %}{% if secSt.tu %} ttu{% endif %}">
+        {%- for block in section.blocks limit: section.blocks.size -%}
+            {%- assign blkSt = block.settings -%}
+            {%- if block.type == 'menu' -%}
+                <div class="tmenu fl1 {{ blkSt.al }}{% if blkSt.hdm %} hide-sm hide-md{% endif %}">
+                    {%- for link in linklists[blkSt.menu].links -%}
+                        <a href="{{ link.url }}">{{ link.title }}</a>{% unless forloop.last %}&nbsp; | &nbsp;{% endunless %}
+                    {%- endfor -%}
+                </div>
+            {%- elsif block.type == 'text' and blkSt.txt != blank -%}
+                <div class="ttxt fl1 {{ blkSt.al }}{% if blkSt.hdm %} hide-sm hide-md{% endif %}">
+                    {{ blkSt.txt }}
+                </div>
+            {%- elsif block.type == 'sc' -%}
+                <div class="tscl fl1 {{ blkSt.al }}{% if blkSt.hdm %} hide-sm hide-md{% endif %}">
+                    {% render 'social-media' %}
+                </div>
+            {%- elsif block.type == 'cl' -%}
+                <div class="tcrlg fl1 {{ blkSt.al }} fl f-aic{% if blkSt.hdm %} hide-sm hide-md{% endif %}">
+                    {%- if blkSt.menu != blank -%}
+                        <div class="menu">{% for link in linklists[blkSt.menu].links %}<a href="{{ link.url }}">{{ link.title }}</a>{% unless forloop.last %}&nbsp; | &nbsp;{% endunless %}{% endfor %}</div>
+                        <span class="dbi">|</span>
+                    {%- endif -%}
+                    {%- if blkSt.sc -%}{% render 'social-media' %}<span class="dbi">|</span>{%- endif -%}
+                    {%- if blkSt.txt != blank -%}<div class="txt">{{ blkSt.txt }}</div><span class="dbi hide-sm hide-md">|</span>{%- endif -%}
+                    {% if settings.mlcurrency or settings.mlLang %}{% render 'currencyLang' %}{% endif %}
+                </div>
+            {%- endif -%}
+        {%- endfor -%}
+    </div>
+</div>
+{%- endif -%}
+{%- endcapture -%}
+{{ siteHeader | strip_newlines | remove: "	" | remove: "  " }}
+{% schema %}
+{
+    "name": "Top Header",
+    "class":"section-header",
+    "max_blocks": 3,
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "sw",
+            "label": "Fullwidth?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide bar in Mobile?",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Header Appearance ====="
+        },
+		 {
+            "type": "range",
+            "id": "mih",
+            "label": "Min. Height",
+            "default":38,
+            "min": 35,
+            "max": 60,
+            "step": 1,
+            "unit": "px"
+       },
+        {
+            "type": "range",
+            "id": "fs",
+            "label": "Font Size",
+            "min": 10,
+            "max": 30,
+            "step": 1,
+            "default": 11,
+            "unit": "px"
+        },
+        {
+                    "type": "select",
+                    "id": "fw",
+                    "label": "Font Weight",
+                    "default": "500",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+        }, 
+		{
+            "type": "checkbox",
+            "id": "tu",
+            "label": "Use Uppercase?",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "cl",
+            "label": "Text & Links",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "clh",
+            "label": "Text & Links Hover",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "btmbd",
+            "label": "Bottom Border",
+            "default": "#000"
+        }   
+    ],
+    "blocks": [
+      {
+        "type": "menu",
+        "name": "Menu",
+        "settings": [
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Select Menu",
+            "default": "main-menu"
+          },
+          {
+                "type": "checkbox",
+                "id": "hdm",
+                "label": "Hide in Mobile?",
+                "default": false
+          },
+          {
+            "type": "select",
+            "id": "al",
+            "label": "Text Align",
+			"default": "tl",
+            "options": [
+              { "value": "tl", "label": "Left" },
+              { "value": "tc f-jcc", "label": "Center" },
+              { "value": "tr f-jce", "label": "Right" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+            {
+                "type": "textarea",
+                "id": "txt",
+                "label": "Text"               
+            },
+            {
+                "type": "checkbox",
+                "id": "hdm",
+                "label": "Hide in Mobile?",
+                "default": false
+            },
+          {
+            "type": "select",
+            "id": "al",
+            "label": "Text Align",
+			"default": "tc f-jcc",
+            "options": [
+              { "value": "tl", "label": "Left" },
+              { "value": "tc f-jcc", "label": "Center" },
+              { "value": "tr f-jce", "label": "Right" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "sc",
+        "name": "Social Icons",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "hdm",
+                "label": "Hide in Mobile?",
+                "default": false
+            },
+          {
+            "type": "select",
+            "id": "al",
+            "label": "Text Align",
+			"default": "tl",
+            "options": [
+              { "value": "tl", "label": "Left" },
+              { "value": "tc f-jcc", "label": "Center" },
+              { "value": "tr f-jce", "label": "Right" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "cl",
+        "name": "Currency, Language & ...",
+        "settings": [
+             {
+                "type": "paragraph",
+                "content": "Manage Currency & Language from Theme Settings"               
+            },
+            {
+                "type": "checkbox",
+                "id": "sc",
+                "label": "Show Social?",
+                "default": false
+            },
+            {
+                "type": "link_list",
+                "id": "menu",
+                "label": "Select Menu"
+            },
+            {
+                "type": "textarea",
+                "id": "txt",
+                "label": "Text"               
+            },
+            {
+                "type": "checkbox",
+                "id": "hdm",
+                "label": "Hide in Mobile?",
+                "default": false
+            },
+          {
+            "type": "select",
+            "id": "al",
+            "label": "Text Align",
+			"default": "tr f-jce",
+            "options": [
+              { "value": "tl", "label": "Left" },
+              { "value": "tc f-jcc", "label": "Center" },
+              { "value": "tr f-jce", "label": "Right" }
+            ]
+          }
+        ]
+      }
+    ]
+}
+{% endschema %}

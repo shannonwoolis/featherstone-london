@@ -1,0 +1,412 @@
+{%- capture promotionBar -%}
+{%- assign secSt = section.settings -%}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}{%  if secSt.ganim %} gr_bg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px;--as:{{ secSt.animsp }}s;"> 
+	
+<div class="{% if secSt.sw %}fw-sec{% if section.settings.npd %} npd{% endif %}{% else %}page-width{% endif %} top-promo pr"  data-section-id="{{ section.id }}" data-section-type="quotes"
+	 style="--mih:{{ secSt.pht }}px;{% if secSt.frame %}--ol:{{ secSt.frame_s }};--olc:{{ secSt.frame_clr }};{% endif %}">
+	
+  	{% if section.blocks.size > 1 %}
+        <div class="flslieds swiper" id="Quotes-{{ section.id }}" data-autoplay='{% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %}' data-fade="{% if secSt.fade %}fade{% else %}slide{% endif %}">
+            <div class="swiper-wrapper">
+    {% endif %}
+	
+	{% for block in section.blocks limit: section.blocks.size %}
+        {% assign blkSt = block.settings %}
+      	<div class="swiper-slide w_100 fckSl" id="{{ block.id }}" {{ block.shopify_attributes }} style="--fs:{{ secSt.fts }}px;--fsm:{{ secSt.ftsm }}px;--lh:{{ secSt.lh }};--fw:{{ secSt.fw }};--mwidth:{{ secSt.fts | plus: 5 }}px;--cl:{% if blkSt.clgr != blank %}{{ blkSt.clgr }}{% else %}{{ blkSt.cl }}{% endif %};background:{% if blkSt.bgg != blank %}{{ blkSt.bgg }}{% else %}{{ blkSt.bg }}{% endif %};--clhl:{{ blkSt.clhl }};--timer:{{ blkSt.cnt_txt }};--btncl:{{ blkSt.btncl }};--btnbg:{{ blkSt.btnbg }};--imgrd:{{blkSt.imgrd }}px;--as:{{ blkSt.animsp }}s;">
+			
+      	{% capture countdown %}
+      		{% if blkSt.title contains '[countdown]' %}
+         		<div class="atCounter fl ttu" data-date="{{ blkSt.date }}"><span><span class="days">00</span> {{ 'date_formats.days' | t }}</span> : <span class="hours">00</span> : <span class="minutes">00</span> : <span class="seconds">00</span></div>
+      		{% endif %}
+      	{% endcapture %}
+			
+      	{% capture button %}
+      		{% if blkSt.title contains '[button]' and blkSt.btn_txt != blank -%}
+          		<span class="pr btn{% if blkSt.hdbtn %} hide-sm{% endif %}">{{ blkSt.btn_txt }}</span>        
+      		{% endif %}
+      	{% endcapture %}        	    
+          
+      	{% if blkSt.title != blank %}
+			<{% if blkSt.link != blank %}a href="{{ blkSt.link }}"{% else %}div{% endif %} class="fl f-jcc f-aic promo_msg tc {{ secSt.fontFm }}{% if blkSt.bgimg != blank %} bgImg lazyload{% endif %}{% if blkSt.clgr != blank %} gr_tx{%  if blkSt.ganim %} tanim{% endif %}{% endif %}" {% if blkSt.bgimg != blank %}data-bgset="{% render 'bgset', image: blkSt.bgimg %}" data-sizes="auto" data-parent-fit="contain"{% endif %}>
+        		{{ blkSt.title | replace:"[countdown]", countdown | replace:"[button]", button }}
+      		</{% if blkSt.link != blank %}a{% else %}div{% endif %}>
+      	{% endif %}
+      	</div>
+	{% endfor %}	
+  	{% if section.blocks.size > 1 %}
+        </div>
+        </div>
+    {% endif %}
+    </div>
+</div>
+{%- endcapture -%}
+{{ promotionBar | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+  {
+    "name": "Promotion Bar",
+    "class": "index-section",
+	"max_blocks": 5,
+	"settings":[	 
+		{
+          "type": "range",
+          "id": "pht",
+          "label": "Minimum Height",
+          "default": 80,
+          "min": 30,
+          "max": 130,
+          "step": 1,
+          "unit": "px"
+      },
+	 {
+        "type": "select",
+        "id": "fontFm",
+        "label": "Font Family",
+        "default": "ft1",
+        "options": [
+          { "value": "ft1", "label": "Font 1" },
+          { "value": "ft2", "label": "Font 2" },
+          { "value": "ft3", "label": "Font 3" }
+        ]
+      },
+	  {
+          "type": "range",
+          "id": "fts",
+          "label": "Font Size",
+          "default": 14,
+          "min": 10,
+          "max": 100,
+          "step": 1,
+          "unit": "px"
+      },
+      {
+          "type": "range",
+          "id": "ftsm",
+          "label": "Font Size(mobile)",
+          "default": 14,
+          "min": 10,
+          "max": 50,
+          "step": 1,
+          "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "fw",
+        "label": "Font Weight",
+        "default": "600",
+        "options": [
+            {
+                "value": "300",
+                "label": "Light"
+            },
+            {
+                "value": "400",
+                "label": "Regular"
+            },
+            {
+                "value": "500",
+                "label": "Medium"
+            },
+            {
+                "value": "600",
+                "label": "Semi Bold"
+            },
+            {
+                "value": "700",
+                "label": "Bold"
+            }
+        ]
+    },
+    {
+        "type": "range",
+        "id": "lh",
+        "label": "Line Height",
+        "default": 1.0,
+        "min": 1.0,
+        "max": 2.0,
+        "step": 0.1
+    },
+ 	 {
+			"type": "checkbox",
+			"id": "frame",
+			"label": "Add Frame?",
+			"default": true
+       },
+		{
+            "type": "color",
+            "id": "frame_clr",
+            "label": "Frame Color",
+            "default": "#B05D5D"
+        },
+		{
+			"type": "select",
+			"id": "frame_s",
+			"label": "Frame style",
+			"default": "solid",			
+			"options": [ 			
+				{ "label": "Solid", "value": "solid" },
+				{ "label": "Dashed", "value": "dashed" },
+				{ "label": "Dotted", "value": "dotted" }   
+			]
+		}, 	    
+	  {
+        "type": "checkbox",
+        "id": "fade",
+        "label": "Slide Fade Effect",
+        "default": true
+      }, 	  
+	  {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate Slide",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "speed",
+        "label": "Change Slide Every",
+        "default": 5,
+        "min": 1,
+        "max": 30,
+        "step": 1,
+		"unit": "Sec"
+      },
+	 {
+            "type": "header",
+            "content": "Section"
+        },
+	 {
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fff"	
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+       {
+            "type":"checkbox",
+            "id":"ganim",
+            "label":"Gradient animation?",
+            "default": false           
+        },	
+       {
+		"type": "range",
+		"id": "animsp",
+		"min": 0,
+		"max": 30,
+		"step": 1,
+		"label": "Animation Speed",
+		"unit": "px",
+		"default":15
+	},
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": true           
+        },		       
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": false,
+            "info":"Remove left/right padding when fullwidth"
+        },
+        {
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	
+	],
+    "blocks": [
+      {
+        "type": "bar",
+        "name": "Promotion Text",
+        "settings": [         
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Promotion Text",
+            "default": "UP TO 80% OFF ON THE ENTIRE STORE! hurry up!",
+			"info": "Use shortcode [countdown] to show Countdown, [button] to show button and <span class=\"hl\">text</span> for text highlight "
+          },
+          {
+            "type": "text",
+            "id": "date",
+            "label": "Countdown Date",
+            "info": "Date Format is Month\/Day\/Year. i.e 11\/25\/2023",
+            "default": "12\/20\/2023"
+          },
+          {
+            "type": "text",
+            "id": "btn_txt",
+            "label": "Button Text",
+            "default": "Shop Now"
+          },			
+          {
+            "type": "checkbox",
+            "id": "hdbtn",
+            "label": "Hide Button in Mobile?",
+            "default": true
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "header",
+            "content": "TEXT APPEARANCE==="
+          },
+          {
+            "type": "color",
+            "id": "cl",
+            "label": "Text Color",
+            "default": "#B05D5D"
+          },
+           {
+            "type": "color_background",
+            "id": "clgr",
+            "label": "Gradient Color"           
+          },
+           {
+            "type":"checkbox",
+            "id":"ganim",
+            "label":"Gradient animation?",
+            "default": false           
+          },
+            {
+    		"type": "range",
+    		"id": "animsp",
+    		"min": 0,
+    		"max": 30,
+    		"step": 1,
+    		"label": "Animation Speed",
+    		"unit": "px",
+    		"default":15
+      	},
+          {
+            "type": "color",
+            "id": "clhl",
+            "label": "Highlight Text",
+            "default": "#050505"
+          },         
+          {
+            "type": "color",
+            "id": "cnt_txt",
+            "label": "Countdown Text",
+            "default": "#B05D5D"
+          },
+          {
+            "type": "color",
+            "id": "btncl",
+            "label": "Button Text",
+            "default": "#fff"
+          },
+          {
+            "type": "color",
+            "id": "btnbg",
+            "label": "Button Background",
+            "default": "#333"
+          },
+          {
+            "type": "color",
+            "id": "bg",
+            "label": "Background Color",
+            "default": "#FFE8E8"
+          },
+          {
+             "type": "color_background",
+             "id": "bgg",
+             "label": "Gradient Background"
+          },
+          {
+            "type": "image_picker",
+            "id": "bgimg",
+            "label": "Background Image"
+          },
+          {
+            "type": "range",
+            "id": "imgrd",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "label": "Image Border Radius",
+            "unit": "px",
+            "default": 0
+          }
+        ]
+      }
+    ],  
+  "presets": [
+    {
+    "name": "Promotion Bar",
+      "blocks": [
+            {
+            "type": "bar"
+            },
+            {
+            "type": "bar"
+            }  
+        ]
+    }
+   ]
+  }
+{% endschema %}

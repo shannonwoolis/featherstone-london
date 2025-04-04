@@ -1,0 +1,641 @@
+{%- capture collectionBanner -%}
+
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">  
+	
+        <div class="{% if section.settings.sw %}fw-sec{% if section.settings.npd %} npd{% endif %}{% else %}page-width{% endif %} cl_banners" id="{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="masonary">
+			
+            {% render 'sec-title' %}
+
+            <div class="grid grid-masonary gspace rmr{{ section.id }}" style="--grsp:0 -{{ section.settings.gspace | divided_by: 2.0 }}px;--grspi:0 {{ section.settings.gspace | divided_by: 2.0 }}px {{ section.settings.gspace }}px;--grspm:0 -{{ section.settings.gspacem | divided_by: 2.0 }}px;--grspim:0 {{ section.settings.gspacem | divided_by: 2.0 }}px {{ section.settings.gspacem }}px;">
+                <div class="grid-sizer-{{ section.id }} col-{{ section.settings.col }} pa"></div>
+                {% for block in section.blocks limit: section.blocks.size %}                      		
+                    <div class="gitem msitem {{ block.settings.width }}-md it{{ block.id }}{% if block.settings.hidem %} hide-sm{% endif %}" {{ block.shopify_attributes }}>
+                        {%- assign collection = collections[block.settings.collection] -%}
+                        {% render 'collection-grid-item', collection: collection, block: block.settings, section: section.settings, masonary:true %}
+                    </div>
+                {% endfor %}
+                {% if section.blocks.size == 0 %}{% render 'no-blocks' %}{% endif %}
+            </div>
+        </div>   
+</div>
+{%- endcapture -%}
+{{ collectionBanner | strip_newlines | remove: '  ' | remove: '	' }}
+{% schema %}
+{
+    "name": "Masonry Banner",
+    "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+    "max_blocks": 15,
+    "settings": [
+       {
+         "type":"paragraph",
+         "content":"This is kind of advance section. you can achieve numerious banner style with different settings for each block and flexible image size.[What is masonry layout?](https://isotope.metafizzy.co/layout-modes/masonry.html)"
+       },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Masonry Collection Banner"
+        },
+        {
+            "type": "textarea",
+            "id": "subtitle",
+            "label": "Sub Heading",
+            "default": "Describe your products, collection, content etc..."
+        },
+        {
+            "type": "paragraph",
+            "content":"[Preview grid style](https://www.adornthemes.com/different-collection-banner-style/)"
+        },
+        {
+            "type": "header",
+            "content": "Appearance Grid ==="
+        },
+        {
+            "type": "range",
+            "id": "gspace",
+            "label": "Grid Spacing",
+            "default": 30,
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "unit":"px"
+        },
+        {
+            "type": "range",
+            "id": "gspacem",
+            "label": "Grid Spacing (mobile)",
+            "default": 15,
+            "min": 0,
+            "max": 15,
+            "step": 1,
+            "unit":"px"
+        },
+        {
+            "type": "range",
+            "id": "col",
+            "label": "Grid Column",
+            "default": 2,
+            "min": 2,
+            "max": 5,
+            "step": 1,
+            "info":"[Column Selection guide](https://www.adornthemes.com/masonry-column-selection/)"
+        },
+        {
+			"type": "select",
+			"id": "btn-style",
+			"label": "Select Button",
+			"default": "btn1",
+			"options": [
+			  {
+				"label": "Button 1",
+				"value": "btn1"
+			  },
+			  {
+				"label": "Button 2",
+				"value": "btn2"
+			  },
+			  {
+				"label": "Button 3",
+				"value": "btn3"
+			  },
+			  {
+				"label": "Button 4",
+				"value": "btn4"
+			  },
+			  {
+				"label": "Button 5",
+				"value": "btn5"
+			  },
+			  {
+				"label": "Button 6",
+				"value": "btn6"
+			  },
+              {
+                  "label": "Button 7 Gradient",
+                  "value": "btn7"
+              },
+              {
+                  "label": "Button 8 Gradient",
+                  "value": "btn8"
+              },
+			  {
+			    "label": "Link",
+			    "value": "btnLink"
+		      }
+			]
+		  },
+        {
+            "type": "select",
+            "id": "btn-size",
+            "label": "Button Size",
+            "default": "btn-sm",
+            "options": [
+                {
+                    "label": "Small",
+                    "value": "btn-sm"
+                },
+                {
+                    "label": "Medium",
+                    "value": "btn-md"
+                },
+                {
+                    "label": "Large",
+                    "value": "btn-lg"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "zoom",
+            "label": "Enable Image zoom on hover?",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "radius",
+            "label": "Image Border radius",
+            "default": 0,
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit":"px"
+        },
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 1,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 1,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 1,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 1,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "info":"select light color"
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },		       
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": false,
+            "info":"Remove left/right padding when fullwidth"
+        },
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	 
+    ],
+    "blocks": [
+        {
+            "type": "featured_collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "type":"image_picker",
+                    "id":"image",
+                    "label":"Upload Image",
+                    "info":"Image size depends on what grid layout you want to set. There is no one-size-fits-all recommendation for images. [examples](https://www.smashingmagazine.com/native-css-masonry-layout-css-grid/). [Demo grid images size](https://www.adornthemes.com/masonry-banners-on-vogal-demo/) "
+                },
+                {
+                    "label": "Collection",
+                    "id": "collection",
+                    "type": "collection"
+                },
+				 {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Link (optional)",
+                    "info": "Keep empty to use 'collection url'."
+                },
+				{
+					"type":"paragraph",
+					"content":"----------------------------------------"
+				},
+                {
+                    "type":"textarea",
+                    "id":"title",
+                    "label":"Title",
+                    "default":"FOREVER NEW"
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 16,
+                    "min": 12,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size(mobile)",
+                    "default": 16,
+                    "min": 12,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "select",
+                    "id": "ft",
+                    "label": "Font Family",
+                    "default": "ft1",
+                    "options": [
+                        {
+                            "value": "ft1",
+                            "label": "Font 1"
+                        },
+                        {
+                            "value": "ft2",
+                            "label": "Font 2"
+                        },
+                        {
+                            "value": "ft3",
+                            "label": "Font 3"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "fw",
+                    "label": "Font Weight",
+                    "default": "600",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                },
+                {
+                    "type": "range",
+                    "id": "lh",
+                    "label": "Line Height",
+                    "default": 1.0,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1
+                },
+                {
+                    "type": "range",
+                    "id": "to",
+                    "label": "Text Opacity",
+                    "default": 1,
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1
+                },
+				{
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Bottom Margin",
+                    "default": 10,
+                    "min": 1,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+				{
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Bottom Margin(mobile)",
+                    "default": 10,
+                    "min": 1,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },
+				{
+					"type":"paragraph",
+					"content":"----------------------------------------"
+				},
+                {
+                    "type":"textarea",
+                    "id":"text",
+                    "label":"Text",
+                    "default":"All exclusive only for you"
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidetm",
+                    "label":"Hide in mobile?",
+                    "default":false
+                },
+                {
+                    "type": "color",
+                    "id": "tcl",
+                    "label": "Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "tfs",
+                    "label": "Font Size",
+                    "default": 14,
+                    "min": 12,
+                    "max": 60,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "tfsm",
+                    "label": "Font Size (mobile)",
+                    "default": 13,
+                    "min": 12,
+                    "max": 40,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "range",
+                    "id": "tlh",
+                    "label": "Line Height",
+                    "default": 1.5,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1
+                },
+				{
+                    "type": "range",
+                    "id": "mb1",
+                    "label": "Bottom Margin",
+                    "default": 20,
+                    "min": 1,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                },
+				{
+                    "type": "range",
+                    "id": "mbm1",
+                    "label": "Bottom Margin(mobile)",
+                    "default": 5,
+                    "min": 1,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },
+                {
+                    "type": "text",
+                    "id": "btntxt",
+                    "label": "Button Text",
+                    "default": "Shop Now",
+                    "info":"Keep empty to hide"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hidebtn",
+                    "label": "Hide Button in mobile?",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "linkst",
+                    "label": "Use Link Button Style ?",
+                    "default": false
+                },
+                {
+                    "type": "color",
+                    "id": "btn",
+                    "label": "Link Button",
+                    "default": "#000"
+                },
+                {
+                    "type": "color",
+                    "id": "btnh",
+                    "label": "Link Button Hover",
+                    "default": "#f00"
+                },
+                {
+                    "type": "select",
+                    "id": "width",
+                    "label": "Column Width",
+                    "default": "wd50",
+                    "info":"Total width of all block must not be more than 100% per row",
+                    "options": [
+                        { "value": "wd20", "label": "20%" },
+                        { "value": "wd25", "label": "25%" },
+                        { "value": "wd33", "label": "33%" },
+                        { "value": "wd40", "label": "40%" },
+                        { "value": "wd50", "label": "50%" },
+                        { "value": "wd60", "label": "60%" },
+                        { "value": "wd66", "label": "66%" },
+                        { "value": "wd75", "label": "75%" },
+                        { "value": "wd80", "label": "80%" },
+                        { "value": "w_100", "label": "100%" }
+                    ]
+                },
+                {
+                    "type":"checkbox",
+                    "id":"hidem",
+                    "label":"Hide Block on mobile?",
+                    "default":false
+                },
+                {
+                    "type": "header",
+                    "content": "Text Appearance ==="
+                },
+			   {
+                    "type": "select",
+                    "id": "text-align",
+                    "label": "Text Alignment",
+                    "default": "tc",
+                    "options": [
+                        { "value":"tl", "label":"Left" },
+                        { "value":"tc", "label":"Center" },
+                        { "value":"tr", "label":"Right" }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "text_pos",
+                    "label": "Text Position",
+                    "default": "text_bc f-jcc f-aie",
+                    "options": [
+                        { "label": "Top Left", "value": "text_tl f-ais f-jcs" },
+                        { "label": "Top Center", "value": "text_tc f-jcc f-ais" },
+                        { "label": "Top Right",	"value": "text_tr f-jce f-ais" },
+                        { "label": "Left", "value": "f-aic f-jcs" },
+                        { "label": "Center", "value": "f-jcc f-aic" },
+                        { "label": "Right", "value": "f-jce f-aic" },
+                        { "label": "Bottom Left", "value": "text_bl f-aie f-jcs" },
+                        { "label": "Bottom Center","value": "text_bc f-jcc f-aie" },
+                        { "label": "Bottom Right", "value": "text_br f-jce f-aie" }
+                    ]
+                },
+				{
+                    "type": "checkbox",
+                    "id": "isbox",
+                    "label": "Add Box",
+                    "default": true
+                },
+                {
+                    "type": "color",
+                    "id": "bg",
+                    "label": "Box Background",
+                    "default": "#fff"
+                },
+                {
+                    "type": "range",
+                    "id": "box-pad",
+                    "label": "Box Padding",
+                    "default": 30,
+                    "min": 5,
+                    "max": 50,
+                    "step": 5,
+                    "unit":"px"
+                },               
+                {
+                    "type": "range",
+                    "id": "box-width",
+                    "label": "Box Width",
+                    "default": 50,
+                    "min": 30,
+                    "max": 90,
+                    "step": 5,
+                    "unit":"%"
+                },	
+               {
+                    "type": "range",
+                    "id": "radius",
+                    "label": "Box Radius",
+                    "default": 0,
+                    "min": 0,
+                    "max": 25,
+                    "step": 1,
+                    "unit":"px"
+                },
+			    {
+					"type": "checkbox",
+					"id": "frame",
+					"label": "Add Frame?",
+					"default": false
+        	 	},
+                {
+                    "type": "color",
+                    "id": "fcl",
+                    "label": "Frame",
+                    "default": "#000"
+                },
+				{
+					"type": "select",
+					"id": "fstl",
+					"label": "Frame Style",
+					"default": "solid",
+					"options": [
+						{ "label": "Solid", "value": "solid" },
+						{ "label": "Dashed", "value": "dashed" },
+						{ "label": "Dotted", "value": "dotted" }
+					]
+				}
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Masonry Banners",
+            "blocks": [
+                {
+                    "type": "featured_collection"
+                },
+                {
+                    "type": "featured_collection"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

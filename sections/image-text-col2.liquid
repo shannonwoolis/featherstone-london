@@ -1,0 +1,634 @@
+{%- capture infoBanner -%}
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px" id="carousel-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="quotes">  
+	
+        <div class="{% if secSt.sw %}fw-sec{% if secSt.npd %} npd{% endif %}{% else %}page-width{% endif %}"> 
+			
+            {% if secSt.carousel %}
+                <div id="Quotes-{{ section.id }}" class="image-with-text swiper" data-autoplay='{% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %}' data-fade='{% if secSt.fade %}fade{% else %}slide{% endif %}'>
+                    <div class="swiper-wrapper">
+            {% endif %}
+            {% for block in section.blocks limit: section.blocks.size %}
+                {% assign blkSt = block.settings %}
+                {%- capture styles -%}
+                    --tcl:{{ blkSt.tcl }};--tfs:{{ blkSt.tfs }}px;--tfsm:{{ blkSt.tfsm }}px;--tff:var(--{{ blkSt.tff }});--tfw:{{ blkSt.tfw }};--tlh:{{ blkSt.tlh }}; --cwd:{{ blkSt.cwd }}%;
+                    --cl:{{ blkSt.cl }};--fs:{{ blkSt.fs }}px;--fsm:{{ blkSt.fsm }}px;--lh:{{ blkSt.lh }}; --tcls:{{ blkSt.tcls }};--tfss:{{ blkSt.tfss }}px; --tfws:{{ blkSt.tfws }};                 
+                {%- endcapture -%}
+                <div class="{% if secSt.carousel %}swiper-slide{% endif %} ft_row fl f-aist w_100 brad of_hidden" style="--brad:{{ secSt.sbrad }}px;--bg:{% if blkSt.bgg != blank %}{{ blkSt.bgg }}{% else %}{{ blkSt.txtbg }}{% endif %};--mwd:{{ blkSt.image.width }}px;" {{ block.shopify_attributes }}>
+                    <div class="of_hidden fl f-aic{% if blkSt.layout == 'right' %} order2{% endif %} row_image brad" style="--wd:{{ blkSt.bnrwd }}%;--brad:{{ secSt.brad }}px;">
+                        {% if blkSt.image != blank %}
+                            {% if blkSt.link != blank %}<a class="db w_100" href="{{ blkSt.link }}">{% endif %}
+                                <div class="imgWrapper w_100 wow zoomIn" style="max-width:{{ blkSt.image.width }}px;">
+                                    <div class="bgImg lazyload" data-bgset="{% render 'prgrid-img', image: blkSt.image, sizes: '380,550,750,980,1200' %}" data-sizes="auto" data-parent-fit="contain" style="padding-bottom:{{ 1 | divided_by: blkSt.image.aspect_ratio | times: 100 }}%;"></div>
+                                </div>
+                            {% if blkSt.link != blank %} </a> {% endif %}
+                        {% else %}
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endif %}
+                    </div>
+                    <div class="of_hidden fl fl1 f-aic row_text" style="--wd:calc({{ 100 | minus: blkSt.bnrwd }}% - 30px);">
+                           <div class="row-text {{ blkSt.talign }}{% if blkSt.txtpd %} nobg{% endif %}" style="{{ styles }}">
+                            {% if blkSt.titles != blank %}<span class="pretxt mb5">{{ blkSt.titles }}</span>{% endif %}
+                            {% if blkSt.title != blank %}<h3 class="h3 mb{{ blkSt.tmbm }} mb{{ blkSt.tmb }}-md">{{ blkSt.title }}</h3>{% endif %}
+                            {% if blkSt.text != blank %}<div class="rte mb{{ blkSt.txtmbm }} mb{{ blkSt.txtmb }}-md">{{ blkSt.text }}</div>{% endif %}
+                            {% if blkSt.btn != blank and blkSt.link != blank %}
+                                <a href="{{ blkSt.link }}" class="btn {{ blkSt.btn-size }} {{ blkSt.btn-style }}">{{ blkSt.btn }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>        
+            {% endfor %}  
+            {% if secSt.carousel %}
+                    </div>
+                    <div class="swarw swn{{ section.id }} swiper-button-next{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swarw swp{{ section.id }} swiper-button-prev{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swiper-pagination swpg{{ section.id }}{% unless secSt.dotm %} hide-sm{% endunless %}{% unless secSt.dot %} hide-md hide-lg{% endunless %}"></div>
+            </div>
+            {% endif %}
+        </div>
+</div>
+{%- endcapture -%}
+{{ infoBanner | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+	"name": "Image & Text (2 Columns)",	
+    "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+    "settings":[	  	 			    
+	{
+		"type":"header",
+		"content":"Slider"	
+	},  
+     {
+              "type": "range",
+              "id": "brad",
+              "label": "Image Border Radius",
+              "default": 0,
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "unit":"px"		
+     },	 
+	{
+		"type":"checkbox",
+		"id":"carousel",
+		"label":"Enable",
+		"default": false
+	},       
+	  {
+        "type": "checkbox",
+        "id": "fade",
+        "label": "Slide Fade Effect?",
+        "default": false
+      },
+	  {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides?",
+        "default": true
+      },
+	  {
+          "type": "range",
+          "id": "speed",
+          "label": "Change Slides Every",
+          "default": 5,
+          "min": 1,
+          "max": 60,
+          "step": 1,
+          "unit": "sec"
+      },	         
+		{
+            "type": "paragraph",
+            "content": "Arrows ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "arrow",
+            "label": "Show on Desktop?",
+            "default": true			
+        },
+		{
+            "type": "checkbox",
+            "id": "arrowm",
+            "label": "Show on Mobile?",
+            "default": false			
+        },
+		{
+            "type": "paragraph",
+            "content": "Dot Navigation ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "dot",
+            "label": "Show on Desktop?",
+            "default": false			
+        },
+		{
+            "type": "checkbox",
+            "id": "dotm",
+            "label": "Show on Mobile?",
+            "default": true			
+        },
+		{
+            "type": "header",
+            "content": "Section"
+        },
+       {
+              "type": "range",
+              "id": "sbrad",
+              "label": "Border Radius",
+              "default": 0,
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "unit":"px"		
+        },	 
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fff"
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false            
+        },		       
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": false,
+            "info":"Remove left/right padding when fullwidth"
+        },
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	 
+	],
+	"blocks":[
+		{
+		"type": "row",
+		"name": "Block",
+		"settings": [
+			{
+				"type": "image_picker",
+				"id": "image",
+				"label": "Image"
+			},  
+			{
+				"type": "select",
+				"id": "layout",
+				"label":"Image Alignment",
+				"default": "left",
+				"options": [
+					{ "value": "left","label":"Left"},
+					{ "value": "right","label":"Right"}
+				]
+			}, 	
+           {
+            "type": "range",
+            "id": "bnrwd",
+            "min": 25,
+            "max": 75,
+            "step": 1,
+            "label": "Image Column Width",
+            "default": 50,
+            "unit": "%"
+            },
+            {
+            "type": "range",
+            "id": "cwd",
+            "min": 25,
+            "max": 100,
+            "step": 5,
+            "label": "Content Max. Width",
+            "default": 90,
+            "unit": "%"
+            },
+            {
+                "type": "paragraph",
+                "content": "----------------------------------------"
+            },
+			{
+				"type": "color",
+				"id": "txtbg",
+				"label": "Text Background",
+				"default": "#eee"
+			},
+            {
+                "type": "color_background",
+                "id": "bgg",
+                "label": "Gradient Background"
+            },
+			{
+				"type": "select",
+				"id": "talign",
+				"label": "Text Align",
+				"default": "tl",
+				"options": [
+					{ "value": "tl", "label": "Left" },
+					{ "value": "tc", "label": "Center" },
+					{ "value": "tr", "label": "Right" }
+				]
+			},	
+            {
+				"type": "checkbox",
+				"id": "txtpd",
+				"label": "Remove Text Padding(mobile)?",
+				"info": "Text left and right space for mobile view",
+                "default":false
+                
+			},
+           {
+                "type": "paragraph",
+                "content": "----------------------------------------"
+            },
+			{
+				"type": "textarea",
+				"id": "titles",
+				"label": "Subheading ",
+				"default": "ADD A TAGLINE"
+			},
+            {
+                "type": "color",
+                "id": "tcls",
+                "label": "Title",
+                "default": "#000"
+            },
+            {
+                "type": "range",
+                "id": "tfss",
+                "label": "Font Size",
+                "default": 12,
+                "min": 10,
+                "max": 25,
+                "step": 1,
+                "unit": "px"
+            },
+          {
+                "type": "select",
+                "id": "tfws",
+                "label": "Font Weight",
+                "default": "500",
+                "options": [
+                    {
+                        "value": "300",
+                        "label": "Light"
+                    },
+                    {
+                        "value": "400",
+                        "label": "Regular"
+                    },
+                    {
+                        "value": "500",
+                        "label": "Medium"
+                    },
+                    {
+                        "value": "600",
+                        "label": "Semi Bold"
+                    },
+                    {
+                        "value": "700",
+                        "label": "Bold"
+                    }
+                ]
+            }, 	
+			{
+                "type": "paragraph",
+                "content": "----------------------------------------"
+            },
+			{
+				"type": "textarea",
+				"id": "title",
+				"label": "Heading",
+				"default": "Spring Summer New Arrival"
+			},
+            {
+                "type": "color",
+                "id": "tcl",
+                "label": "Title",
+                "default": "#000"
+            },
+            {
+                "type": "range",
+                "id": "tfs",
+                "label": "Font Size",
+                "default": 24,
+                "min": 10,
+                "max": 100,
+                "step": 1,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "tfsm",
+                "label": "Font Size (mobile)",
+                "default": 20,
+                "min": 10,
+                "max": 100,
+                "step": 1,
+                "unit": "px"
+            },
+            {
+                "type": "select",
+                "id": "tff",
+                "label": "Font Family",
+                "default": "ft1",
+                "options": [
+                    {
+                        "value": "ft1",
+                        "label": "Font 1"
+                    },
+                    {
+                        "value": "ft2",
+                        "label": "Font 2"
+                    },
+                    {
+                        "value": "ft3",
+                        "label": "Font 3"
+                    }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "tfw",
+                "label": "Font Weight",
+                "default": "500",
+                "options": [
+                    {
+                        "value": "300",
+                        "label": "Light"
+                    },
+                    {
+                        "value": "400",
+                        "label": "Regular"
+                    },
+                    {
+                        "value": "500",
+                        "label": "Medium"
+                    },
+                    {
+                        "value": "600",
+                        "label": "Semi Bold"
+                    },
+                    {
+                        "value": "700",
+                        "label": "Bold"
+                    }
+                ]
+            }, 	
+            {
+                "type": "range",
+                "id": "tlh",
+                "label": "Line Height",
+                "default": 1.3,
+                "min": 1.0,
+                "max": 2.0,
+                "step": 0.1,
+                "info": "Space between text lines. Default is set to 1.3"
+            },
+            {
+                "type": "range",
+                "id": "tmb",
+                "label": "Text Bottom margin",
+                "default": 15,
+                "min":0,
+                "max": 50,
+                "step": 5,
+                "unit":"px"
+            },
+            {
+                "type": "range",
+                "id": "tmbm",
+                "label": "Text Bottom margin (mobile)",
+                "default": 10,
+                "min":0,
+                "max": 50,
+                "step":5,
+                "unit":"px"
+            }, 			  
+            {
+                "type": "paragraph",
+                "content": "----------------------------------------"
+            },
+			{
+				"type": "richtext",
+				"id": "text",
+				"label": "Text",
+				"default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+			},
+            {
+                "type": "color",
+                "id": "cl",
+                "label": "Text",
+                "default": "#666"
+            },
+            {
+                "type": "range",
+                "id": "fs",
+                "label": "Font Size",
+                "default": 14,
+                "min": 12,
+                "max": 50,
+                "step": 1,
+                "unit": "px"
+            },
+            {
+                "type": "range",
+                "id": "fsm",
+                "label": "Font Size (mobile)",
+                "default": 13,
+                "min": 12,
+                "max": 50,
+                "step": 1,
+                "unit": "px"
+            }, 	
+            {
+                "type": "range",
+                "id": "lh",
+                "label": "Line Height",
+                "default": 1.6,
+                "min": 1.0,
+                "max": 2.0,
+                "step": 0.1,
+                "info": "Space between text lines. Default is set to 1.6"
+            },
+            {
+                "type": "range",
+                "id": "txtmb",
+                "label": "Text Bottom margin",
+                "default": 25,
+                "min":0,
+                "max": 50,
+                "step": 5,
+                "unit":"px"
+            },
+            {
+                "type": "range",
+                "id": "txtmbm",
+                "label": "Text Bottom margin (mobile)",
+                "default": 20,
+                "min":0,
+                "max": 50,
+                "step":5,
+                "unit":"px"
+            }, 			  
+            {
+                "type": "paragraph",
+                "content": "----------------------------------------"
+            },
+            {
+                "type": "text",
+                "id": "btn",
+                "label": "Button label",
+				"default":"SHOP NOW"
+            },
+            {
+                "type": "url",
+                "id": "link",
+                "label": "Button link",
+                "default":"/"
+            },	 
+			 {
+            "type": "select",
+            "id": "btn-style",
+            "label": "Button Design",
+            "default": "btn1",
+            "options": [
+                {
+                    "label": "Button 1",
+                    "value": "btn1"
+                },
+                {
+                    "label": "Button 2",
+                    "value": "btn2"
+                },
+                {
+                    "label": "Button 3",
+                    "value": "btn3"
+                },
+                {
+                    "label": "Button 4",
+                    "value": "btn4"
+                },
+                {
+                    "label": "Button 5",
+                    "value": "btn5"
+                },
+				 {
+					"label": "Button 6",
+					"value": "btn6"
+				  },
+                 {
+                      "label": "Button 7 Gradient",
+                      "value": "btn7"
+                  },
+                  {
+                      "label": "Button 8 Gradient",
+                      "value": "btn8"
+                  },
+				  {
+					"label": "Link",
+					"value": "btnLink"
+				  }  
+            ]
+          },
+            {
+                "type": "select",
+                "id": "btn-size",
+                "label": "Button Size",
+                "default": "btn-md",
+                "options": [
+                    {
+                        "label": "Small",
+                        "value": "btn-sm"
+                    },
+                    {
+                        "label": "Medium",
+                        "value": "btn-md"
+                    },
+                    {
+                        "label": "Large",
+                        "value": "btn-lg"
+                    } 		  
+                ]
+            }
+		  ]
+		}
+	],
+	"presets": [
+		{
+			"name": "Image & Text (2 Column)",
+			"blocks":[
+				{
+					"type": "row"
+				}          
+			]
+		}
+	]
+}
+{% endschema %}

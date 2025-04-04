@@ -1,0 +1,31 @@
+{% assign product_box = forloop.index | minus:1 %}
+{% assign delay_time = 50 | times : product_box %} 
+{%- assign grid_image_scale = '2' -%}
+<div class="grid_bx style1">
+	<div class="grid_img_wr">
+		<a class="grid-view-item__link grid_img lazyload" href="{{ product.url | within: collection }}" data-bgset="{% render 'prgrid-img', image: product.featured_image %}" data-sizes="auto" data-parent-fit="contain"></a>
+      	<!-- product label -->
+      	{% unless block.type == 'megamenu2' %}
+		{% if settings.pr_lbl %}
+            <span class="pr_lbl">
+              {%- if settings.sale_lbl and product.compare_at_price > product.price and settings.sale_lbl -%}
+                {% if settings.sale_label_style == "salelabel" %}
+                  <label class="lbl on-sale">{{ 'products.product.on_sale' | t }}</label>
+                {% else %}
+                  <label class="lbl on-sale">-{{ product.compare_at_price_min | minus: product.price | times: 100 | divided_by: product.compare_at_price_min }}%</label>
+                {% endif %}
+              {%- endif -%}
+              {%- if product.tags contains settings.pr_label1 -%}<label class="lbl pr_lbl1">{{ settings.pr_label1 }}</label>{%- endif -%}
+      		  {%- if product.tags contains settings.pr_label2 -%}<label class="lbl pr_lbl2">{{ settings.pr_label2 }}</label>{%- endif -%}
+      		  {%- if product.tags contains settings.pr_label3 -%}<label class="lbl pr_lbl3">{{ settings.pr_label3 }}</label>{%- endif -%}
+              {%- unless product.available -%}<label class="lbl sold-out"><span>{{ 'products.product.sold_out' | t }}</span></label>{%- endunless -%}
+            </span>
+        {% endif %}
+      	{% endunless %}
+    </div>
+    <div class="details">
+      	{% if settings.show_vendor %}<div class="grid_vendor">{{ product.vendor }}</div>{% endif %}
+        <a href="{{ product.url | within: collection }}" class="grid_title">{{ product.title }}</a>
+      	{%- unless settings.hide-price -%}<div class="grid_meta">{% render 'product-price',product:product %}</div>{% endunless %}
+	</div>
+</div>

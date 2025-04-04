@@ -1,0 +1,64 @@
+{%- for item in cartItems -%}
+  {%- assign product_rec = item.product -%}
+{%- endfor -%}
+<cart-recommendations class="db cartrecomended mb20{%  if settings.h_recomand %} hide-sm{% endif %}" data-id="cartrecomSlider" data-url="{{ routes.product_recommendations_url }}?section_id=cart-drawer&product_id={{ product_rec.id }}&limit=5">
+      <div class="rmttl tc mb20 fl f-aic f-jcsb pr">
+        <span>{{ settings.rctitle }}</span>
+        <div class="fl1 swiper-pagination pgcartrecomSlider tr"></div>
+      </div>
+          <div class="grid cartrecomPr grid-products swiper" id="cartrecomSlider">
+              <div class="swiper-wrapper">
+              {% for recommendation in recommendations.products %}
+                  <div class="swiper-slide gitem">{% render 'product-card-columns', product: recommendation, block: block.settings, section: section.settings, sizes:image_size, showbtn:true %}</div>
+              {%- endfor -%}
+              </div>
+          </div>
+          
+</cart-recommendations>
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+    class CartRecommendations extends HTMLElement {
+    constructor(){super();}
+    connectedCallback() {
+      const handleIntersection = (entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        observer.unobserve(this);
+      
+        const secId = this.dataset.id;
+        fetch(this.dataset.url).then(response => response.text()).then(text => {
+            const html = document.createElement('div');
+            html.innerHTML = text;
+            const recommendations = html.querySelector('cart-recommendations');
+  
+            if (recommendations && recommendations.innerHTML.trim().length) {
+              this.innerHTML = recommendations.innerHTML;
+            }
+  
+            if (html.querySelector('.gitem')) {
+              this.classList.add('cart-recommendations--loaded');
+              var Recomswiper = new Swiper('#cartrecomSlider', {
+                loop: false,
+                slidesPerView: 'auto',
+                autoplay: {% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %},
+                pagination: {
+                  el: '.pgcartrecomSlider',
+                  clickable: true,
+                },
+                navigation: {
+                  nextEl: '.ncartrecomSlider',
+                  prevEl: '.pcartrecomSlider',
+                },
+              });
+              theme.countdown();shopreviews();
+            }
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      };
+      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 400px 0px'}).observe(this);
+    }
+  }
+  customElements.define('cart-recommendations', CartRecommendations);
+});
+</script>

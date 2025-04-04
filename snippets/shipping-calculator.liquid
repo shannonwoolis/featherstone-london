@@ -1,0 +1,70 @@
+<div id="shipping-calculator" class="tc shipCalc">
+  <h3 class="spttl"><span>{{ section.settings.shipTtl | default: 'Get shipping estimates' }}</span></h3>
+  <div id="shipping-calculator-form-wrapper" class="grid f-jcc f-aie">
+    <div class="gitem wd25-md" id="address_country_container" title="{{ 'customer.addresses.country' | t }}">
+        <select id="address_country" class="stopEv w_100" name="address[country]" data-default="{% if shop.customer_accounts_enabled and customer %}{{ customer.default_address.country }}{% elsif section.settings.default_country != blank %}{{ section.settings.default_country }}{% endif %}">{{ all_country_option_tags }}</select>
+    </div>
+    <div class="gitem wd25-md" id="address_province_container" style="display:none;" title="{{ 'customer.addresses.province' | t }}">
+        <select id="address_province" class="stopEv w_100" name="address[province]" data-default="{% if shop.customer_accounts_enabled and customer and customer.default_address.province != '' %}{{ customer.default_address.province }}{% endif %}"></select>
+    </div> 
+    <div class="gitem wd25-md" id="address_zip_container">
+      <input type="text" id="address_zip" class="stopEv w_100" name="address[zip]"{% if shop.customer_accounts_enabled and customer %} value="{{ customer.default_address.zip }}"{% endif %} placeholder="{{ 'customer.addresses.zip' | t }}"/>
+    </div>
+    <div class="gitem wd25-md" id="get-rates-container">
+      <input type="submit" id="get-rates-submit" class="btn get-rates w_100 {{ section.settings.shipping-btn }}" value="{{ 'cart.button.calculate_shipping' | t }}"/>      
+    </div>        
+  </div>
+
+  <div id="wrapper-response"></div>
+</div>
+<script src="/services/javascripts/countries.js" defer="defer"></script>
+<script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+<script src="{{ 'shipping-calculator.js' | asset_url }}" defer></script>
+<script src="{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' }}" defer="defer"></script>
+<script id="shipping-calculator-response-template" type="text/x-jquery-tmpl">
+  {% raw %}
+  <p id="shipping-rates-feedback" class="{{if success}}success{{else}}error{{/if}}">
+  {{if success}}
+          {{if rates.length > 1}}
+              {% endraw %}{{ 'cart.general.shipping_calculator_success_many_rates.there_are' |t }}{%raw%} ${rates.length} 
+              {%endraw%}{{ 'cart.general.shipping_calculator_success_many_rates.shipping_rates_available_for' |t }}{%raw%} ${address}
+              {%endraw%}{{ 'cart.general.shipping_calculator_success_many_rates.starting_at' |t }}{%raw%} 
+              {{html Shopify.Cart.ShippingCalculator.formatRate(rates[0].price)}}.
+
+          {{else}}
+              {{if rates.length == 1}}
+                  {%endraw%}{{ 'cart.general.shipping_calculator_success_one_rate' |t }}{%raw%} ${address}.
+              {{else}}
+                  {%endraw%}{{ 'cart.general.shipping_calculator_success_no_rate' |t }}{%raw%}
+              {{/if}}
+          {{/if}}
+  {{else}}
+      ${errorFeedback}
+  {{/if}}
+  </p>
+  <ul id="shipping-rates">
+    {{each(index, rate) rates}}
+    <li>
+      ${rate.name} 
+        {%endraw%}{{ 'cart.general.shipping_calculator_success_at' |t }}{%raw%}
+        {{html Shopify.Cart.ShippingCalculator.formatRate(rate.price)}}
+    </li>
+    {{/each}}
+  </ul>
+  {% endraw %} 
+</script>
+<script>
+    const submitButton = '{{ 'cart.button.calculate_shipping' | t }}';
+    const submitButtonDisabled = '{{ 'cart.button.calculating' | t }}';
+
+    window.addEventListener('load', () => {
+      Shopify.Cart.ShippingCalculator.show({
+        submitButton: submitButton,
+        submitButtonDisabled: submitButtonDisabled,
+        {% if shop.customer_accounts_enabled and customer %}
+        customerIsLoggedIn: true,
+        {% endif %}
+        moneyFormat: {{ shop.money_format | json }}
+      });
+    })
+</script>

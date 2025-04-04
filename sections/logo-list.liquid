@@ -1,0 +1,290 @@
+{%- capture logobar -%}
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">     
+        <div class="logo_br{% if section.settings.sw %} fw-sec{% else %} page-width{% endif %}" id="carousel-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="carousel">
+			
+            {% render 'sec-title' %}		
+
+            {% if section.blocks.size > 0 %}
+                {% if secSt.carousel %}<div class="arwOut pr">{% endif %}
+                <div class="grid rwcols-{{ section.settings.gridmb }} rwcols-md-{{ section.settings.gridtb }} rwcols-lg-{{ section.settings.grid }} {% if section.settings.carousel %}swiper carousel arwOut{% else %}logo-listing f-jcc{% endif %}"
+                     {% if secSt.carousel %}id="swp{{ section.id }}"data-slider-options='{ "slidesPerView":"auto", "loop":true, {% if secSt.autoplay %}"autoplay":{ "delay":"{{ secSt.speed | times: 1000 }}" },{% endif %} "navigation":{ "nextEl":".swn{{ section.id }}","prevEl":".swp{{ section.id }}" },"pagination":{ "el":".swpg{{ section.id }}","clickable":true }}'{% endif %}>
+                    {% if secSt.carousel %}<div class="swiper-wrapper">{% endif %}
+                    {% for block in section.blocks %}
+                        <div class="{% if secSt.carousel %}swiper-slide{% endif %} gitem" id="{{ block.id }}" {{ block.shopify_attributes }}>
+                            <div class="fl pd10 f-aic h_100 lg{{ section.id }}" style="background-color:{{ section.settings.logobg }}; border:1px solid {{ section.settings.logobd }};">
+                                <{% if block.settings.link != blank %}a  {% if block.settings.newtab %} target="blank" {%  endif %} href="{{ block.settings.link }}"{% else %}span{% endif %} class="db w_100 m_auto" style="max-width:{{ block.settings.image.width }}px">
+                                    {% if block.settings.image != blank %}
+                                        <img loading="lazy" class="imgFl lazyload" data-srcset="{% render 'lazyload', image: block.settings.image, sizes: '100,250,420' %}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" data-sizes="auto" alt="{{ block.settings.image.alt | escape }}" />
+                                    {% else %}
+                                        {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
+                                    {% endif %}
+                                </{% if block.settings.link != blank %}a{% else %}span{% endif %}>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if secSt.carousel %}
+                    </div>
+                        <div class="swarw swn{{ section.id }} swiper-button-next{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                        <div class="swarw swp{{ section.id }} swiper-button-prev{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                        <div class="swiper-pagination swpg{{ section.id }}{% unless secSt.dotm %} hide-sm{% endunless %}{% unless secSt.dot %} hide-md hide-lg{% endunless %}"></div>
+                    </div>
+                {% endif %}
+            {% endif %}
+            {% if section.blocks.size == 0 %}{% render 'no-blocks' %}{% endif %}
+        </div>
+</div>
+{%- endcapture -%}
+{{ logobar | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+  {
+    "name": "Logo List",
+    "class": "index-section",   
+    "settings": [	  
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Logo list"		
+      },
+ 	  {
+        "type": "textarea",
+        "id": "subtitle",
+        "label": "Sub Heading",
+        "default": "Describe your products, collection, content etc..."
+      }, 		
+	 {
+        "type": "paragraph",
+        "content": "Logos per row ==="
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": "Desktop",
+        "default": 6,
+        "min": 1,
+        "max": 8,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridtb",
+        "label": "Tablet",
+        "default": 5,
+        "min": 1,
+        "max": 6,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridmb",
+        "label": "Mobile",
+        "default": 3,
+        "min": 1,
+        "max": 4,
+        "step": 1
+      }, 	  
+	  {
+        "type": "color",
+        "id": "logobg",
+        "label": "Box Background",
+		"default":"#fff"
+	  },
+	  {
+        "type": "color",
+        "id": "logobd",
+        "label": "Box Border",
+		"default":"#eee"
+	  },
+		{
+            "type": "header",
+            "content": "Slider Settings ===="
+        },
+		{
+            "type":"checkbox",
+            "id":"carousel",
+            "label":"Enable Carousel",
+            "default": true
+        }, 	       
+	  {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate Logos",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "speed",
+        "label": "Change Logo Every",
+        "default": 5,
+        "min": 1,
+        "max": 30,
+        "step": 1,
+		"unit": "Sec"
+      },
+	  {
+            "type": "paragraph",
+            "content": "Arrows ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "arrow",
+            "label": "Show on Desktop?",
+            "default": true			
+        },
+		{
+            "type": "checkbox",
+            "id": "arrowm",
+            "label": "Show on Mobile?",
+            "default": false			
+        },
+		{
+            "type": "paragraph",
+            "content": "Dot Navigation ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "dot",
+            "label": "Show on Desktop?",
+            "default": false			
+        },
+		{
+            "type": "checkbox",
+            "id": "dotm",
+            "label": "Show on Mobile?",
+            "default": true			
+        },
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background"
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false           
+        },
+       {
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	
+    ],
+    "blocks": [
+      {
+        "type": "logo_image",
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+			"info":"Images size are flexible. Upload all logo of same size to make it look better."
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          },
+          {
+            "type": "checkbox",
+            "id": "newtab",
+            "label": "Open in new Tab"          
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Logo List",       
+        "blocks": [
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          },
+ 		 {
+            "type": "logo_image"
+          },
+          {
+            "type": "logo_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

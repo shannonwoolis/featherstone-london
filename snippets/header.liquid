@@ -1,0 +1,84 @@
+{%- capture header -%}
+{%- liquid
+        case settings.main_head
+            when '1'
+               section 'header-1'
+            when '2'
+               section 'header-2'
+            when '3'
+               section 'header-3'
+        endcase
+-%}
+{% if settings.main_head == '4' %}
+    <div class="hdr_wrap">
+        {% section 'header-4' %}
+        <div id="main_navwr" class="hide-sm hide-md">
+            <div class="pr fl{% unless settings.headerfw %} page-width{% else %} fw-sec{% endunless %}">
+                {% capture categories %}{% section 'categories' %}{% endcapture %}
+                {% assign ctmbNav = categories | split: '<!--mbnav-->' | last | split: '<!--mbnave-->' | first  %}
+                {% capture navigation %}{% section 'navigation' %}{% endcapture %}
+                {% assign mbNav = navigation | split: '<!--mbnav-->' | last | split: '<!--mbnave-->' | first  %}
+
+                {{ categories | remove: ctmbNav }}
+                {{ navigation | remove: mbNav }}
+            </div>
+        </div>
+    </div>
+    <div class="mob_nav_wr hide-lg" role="navigation">
+      <div class="closeMnav navToggle fl f-jcc f-aic" role="button" aria-label="{{ 'sections.navigation.close' | t }}">{% render 'icon-close' %}</div>
+      <div class="fl">
+          <a href="#mobNav" class="fl1 mnvTtl active">{{ 'sections.navigation.menu' | t }}</a>
+          <a href="#mobCtnav" class="fl1 mnvTtl">{{ 'sections.navigation.categories' | t }}</a>
+      </div>
+        {{ mbNav }}
+        {{ ctmbNav }}
+    </div>
+{% endif %}
+<div class="headSpace"></div>
+{% if settings.enable_search %}
+    <div class="searchDrawer anim">
+        <span class="closeSearch">{% render 'icon-close' %}</span>
+		<h2 class="srttl">{{ settings.search_ttl }}</h2>
+        {% render 'search-form', frmClas: 'drawer' %}
+    </div>
+{% endif %}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    "logo": {{ settings.logo | image_url: width: 600 | prepend: "https:" | json }},
+    "sameAs": [
+      {{ settings.twitter | json }},
+      {{ settings.facebook | json }},
+      {{ settings.pinterest | json }},
+      {{ settings.instagram | json }},
+      {{ settings.tumblr | json }},
+      {{ settings.snapchat | json }},
+      {{ settings.linkedin | json }},
+      {{ settings.tiktok | json }},
+      {{ settings.youtube | json }},
+      {{ settings.vimeo | json }}
+    ],
+    "url": {{ request.origin | append: page.url | json }}
+  }
+</script>
+{%- if request.page_type == 'index' -%}
+  {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ request.origin | append: page.url | json }}
+    }
+  </script>
+{%- endif -%}
+{%- endcapture -%}
+{{ header | strip_newlines | remove:"  " | remove:"	" }}

@@ -1,0 +1,118 @@
+{% if section.settings.api_key %} 
+<script>
+  theme.mapKey = {{ section.settings.api_key | json }};
+</script> 
+{% endif %} 
+<script>
+  theme.strings.addressError = {{ 'sections.map.address_error' | t | json }};
+  theme.strings.addressNoResults = {{ 'sections.map.address_no_results' | t | json }};
+  theme.strings.addressQueryLimit = {{ 'sections.map.address_query_limit_html' | t | json }};
+  theme.strings.authError = {{ 'sections.map.auth_error_html' | t | json }};
+</script>
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{{ secSt.bg }};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">
+	<div class="{% if section.settings.sw %}fw-sec{% if section.settings.npd %} npd{% endif %}{% else %}page-width{% endif %}" id="{{ section.id }}" style="font-size:0;">  
+{{ section.settings.gmap }}
+</div>
+</div>
+{% schema %}
+  {
+    "name": "Map",
+    "class": "index-section",
+    "settings": [	
+	 {
+		"type": "textarea",
+		"id": "gmap",
+		"label": "Google Iframe Code",
+		"info": "[Guide to Embed map](https://support.google.com/maps/answer/144361?co=GENIE.Platform%3DDesktop&hl=en#). In the iframe code, set width = '100%' and height as needed."
+     },
+	{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background"           
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false            
+        },		       
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": false,
+            "info":"Remove left/right padding when fullwidth"
+        },
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	
+    ],
+    "presets": [
+      {
+        "name": "Map"         
+      }
+    ]
+  }
+{% endschema %} 

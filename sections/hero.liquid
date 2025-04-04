@@ -1,0 +1,767 @@
+{%- capture heroBanner -%}
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{{ secSt.bg }};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">   
+    <div class="{% if section.settings.sw %}fw-sec{% if section.settings.npd %} npd{% endif %}{% else %}page-width{% endif %}">
+        <div class="hero fl pr">
+            {% if section.settings.image != blank or section.settings.imagem != blank %}
+                <div class="heroImg of_hidden brad" style="--brad:{{ secSt.sbrad  }}px;">
+                    {% if section.settings.image != blank %}
+                      <img loading="lazy" class="imgFt lazyload{% if secSt.parallax %} prlxImg{% endif %}{% if secSt.imagem != blank %} hide-sm{% endif %}" data-u-scale="1.3" src="{{ secSt.image | img_url: "100x" }}" width="{{ secSt.image.width }}" height="{{ secSt.image.height }}"
+                          data-srcset="{% render 'lazyload', image: secSt.image, sizes: '1000,1300,1600,2000' %}" data-sizes="auto" alt="{{ secSt.image.alt | escape }}" style="--ipos:{{ secSt.image.presentation.focal_point | default: 'center center' }};">
+                    {% endif %}
+                    {% if section.settings.imagem != blank %}
+                        <img loading="lazy" class="imgFt hide-md hide-lg lazyload{% if secSt.parallax %} prlxImg{% endif %}" src="{{ secSt.imagem | img_url: "100x" }}" width="{{ secSt.imagem.width }}" height="{{ secSt.imagem.height }}"
+                            data-srcset="{% render 'lazyload', image: secSt.imagem, sizes: '400,700,1000' %}" data-sizes="auto" alt="{{ secSt.imagem.alt | escape }}" style="--ipos:{{ secSt.imagem.presentation.focal_point | default: 'center center' }};">
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if section.settings.image == blank %}<div class="ph_bg">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg svgcl4' }}</div>{% endif %}                       	
+
+            <div class="hero_wrap fl m_auto {{ secSt.text_align }} {{ secSt.text_align_m }}" style="--mht:{{ secSt.hit }}px;--mhtt:{{ secSt.hitt }}px;--mhtm:{{ secSt.hitm }}px;--mwd:{{ secSt.cntwd }}px;--cwd:{{ secSt.cwd }}px;--brad:{{ secSt.brad }}px;--bpd:{{ secSt.bpd | minus:10 }}px;--bpds:{{ secSt.bpd }}px;--bpdm:{{ secSt.bpdm | minus:10 }}px;--bpdsm:{{ secSt.bpdm }}px;">
+                {% if section.settings.ol_link %}<a class="pa z3 all0" href="{{ section.settings.link }}" ></a> {% endif %}
+
+                {%  if  section.blocks.size > 0 %}
+                    <div class="hero_cap pr {{ section.settings.text-align }}" style="background-color:rgba({{ section.settings.tbg | color_to_rgb | remove:'rgb(' | remove: ')' }},{{ section.settings.opt }});{% if section.settings.frame %}--ol:2px {{ section.settings.frms }} {{ section.settings.frmcl }};{% endif %}">
+                        {% for block in section.blocks %}
+                            {% if block.type == 'heading' %}
+                                <h2 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fs }}px;--fsm:{{ block.settings.fsm }}px;--ls:{{ block.settings.ls }}px;--lh:{{ block.settings.lh }};--to:{{block.settings.to}};--fw:{{ block.settings.fw }};" {{ block.shopify_attributes }}>{{ block.settings.title }}</h2>
+                            {% elsif block.type == 'countdown' %}
+                                <div class="atCounter fl f-jcc tc ht{{ section.id }} ttu mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md" data-date="{{ block.settings.date }}"
+                                     style="--cl:{{ block.settings.cl }};--bg:{{ block.settings.bg }};--bd:{{ block.settings.bdr }};--br:{{ block.settings.radius }}px;--fs:{{ block.settings.fs }}px;--fsl:{{ block.settings.fsl }}px;" {{ block.shopify_attributes }}>
+                                    <span><span class="tm days">00</span>{{ 'date_formats.days' | t }}</span>
+                                    <span><span class="tm hours">00</span>{{ 'date_formats.hours' | t }}</span>
+                                    <span><span class="tm minutes">00</span>{{ 'date_formats.minuts' | t }}</span>
+                                    <span><span class="tm seconds">00</span>{{ 'date_formats.seconds' | t }}</span>
+                                </div>
+                            {% elsif block.type == 'text' %}
+                                <div class="heroTxt mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.hidem %} hide-sm{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fs }}px;--fsm:{{ block.settings.fsm }}px;--ls:{{ block.settings.ls }}px;--lh:{{ block.settings.lh }};" {{ block.shopify_attributes }}>{{ block.settings.title }}</div>
+                            {% elsif block.type == 'button' %}
+                                {% if block.settings.ol_link != true %}            
+                                    <a href="{{ block.settings.link }}" class="btn {{ block.settings.btn-size }} {{ block.settings.btn-style }} mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.hidem %} hide-sm{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</a>           
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}        
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{%- endcapture -%}
+{{ heroBanner | strip_newlines | remove: "  " | remove: "	" }}
+
+{% schema %}
+{
+    "name": "Hero Banner",
+    "class": "index-section",
+    "disabled_on": {
+    "groups": ["header", "footer"]
+    },
+    "settings": [                       
+        {
+            "type":"paragraph",
+            "content":"Banner Height ==="
+        },
+        {
+            "type": "range",
+            "id": "hit",
+            "label": "Desktop",
+            "default":600,
+            "min": 100,
+            "max": 1000,
+            "step": 10
+        },
+        {
+            "type": "range",
+            "id": "hitt",
+            "label": "Tablet",
+            "default":500,
+            "min": 100,
+            "max": 900,
+            "step": 10
+        },  
+        {
+            "type": "range",
+            "id": "hitm",
+            "label": "Mobile",
+            "default":400,
+            "min": 100,
+            "max": 900,
+            "step": 10
+        },  	  
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Recommended width 2000px and height as per above desktop height plus 300px for parallax"
+        },
+        {
+            "type": "image_picker",
+            "id": "imagem",
+            "label": "Mobile Image",
+            "info": "Recommended width 750px and height as per above mobile height plus 200px for parallax. If mobile image is blank, dekstop image will be used."
+        },
+        {
+                "type": "range",
+                "id": "sbrad",
+                "label": "Image Border Radius",
+                "default": 0,
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit":"px"		
+       },	 
+        {
+            "type": "select",
+            "id": "alignment",
+            "label": "Image Alignment",
+            "default": "center",
+            "options": [
+                {
+                    "value": "top",
+                    "label": "Top"
+                },
+                {
+                    "value": "center",
+                    "label": "Middle"
+                },
+                {
+                    "value": "bottom",
+                    "label": "Bottom"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "parallax",
+            "label": "Enable Parallax Scrolling",
+            "default":true,
+            "info":"For Parallax Effect Recommanded Image Size 1900x1000. Effect will not work on mobile device."
+        },		          	 		  
+        {
+            "type": "checkbox",
+            "id": "ol_link",
+            "label": "Enable click on entire image.",
+            "default":false
+        },		
+        {
+            "type": "header",        
+            "content": "Banner Caption" 			
+        },
+        {
+            "type": "range",
+            "id": "cntwd",
+            "min": 300,
+            "max": 2000,
+            "step": 100,
+            "label": "Container Max Width (desktop)",
+            "unit": "px",
+            "default": 600
+        },
+        {
+            "type": "range",
+            "id": "cwd",
+            "min": 300,
+            "max": 1000,
+            "step": 100,
+            "label": "Content Max Width (desktop)",
+            "unit": "px",
+            "default": 600
+        },
+       {
+            "type": "select",
+            "id": "text-align",
+            "label": "Text Align",
+            "default": "tc",			
+            "options": [
+                { "label": "Left",      "value": "tl" },
+                { "label": "Center",    "value": "tc" },
+                { "label": "Right",     "value": "tr" }                
+            ]
+        },   
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Position",
+            "default": "f-jcc-md f-aic-md",			
+            "options": [
+                { "label": "Top Left",      "value": "f-ais-md f-jcs-md" },
+                { "label": "Top Center",    "value": "f-jcc-md f-ais-md" },
+                { "label": "Top Right",     "value": "f-jce-md f-ais-md" },             
+                { "label": "Left",  		  "value": "f-aic-md f-jcs-md" },
+                { "label": "Center", 		  "value": "f-jcc-md f-aic-md" },
+                { "label": "Right",  		  "value": "f-jce-md f-aic-md" },
+                { "label": "Bottom Left",   "value": "f-aie-md f-jcs-md" },						 
+                { "label": "Bottom Center", "value": "f-jcc-md f-aie-md" }, 						 
+                { "label": "Bottom Right",  "value": "f-jce-md f-aie-md" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_align_m",
+            "label": "Position (mobile)",
+            "default": "f-jcc f-aic",			
+            "options": [ 			
+                { "label": "Top Left",      "value": "f-ais f-jcs" },
+                { "label": "Top Center",    "value": "f-jcc f-ais" },
+                { "label": "Top Right",     "value": "f-jce f-ais" },             
+                { "label": "Left",  		  "value": "f-aic f-jcs" },
+                { "label": "Center", 		  "value": "f-jcc f-aic" },
+                { "label": "Right",  		  "value": "f-jce f-aic" },
+                { "label": "Bottom Left",   "value": "f-aie f-jcs" },						 
+                { "label": "Bottom Center", "value": "f-jcc f-aie" }, 						 
+                { "label": "Bottom Right",  "value": "f-jce f-aie" }			              
+            ]
+        }, 	           
+        {
+            "type": "color",
+            "id": "tbg",
+            "label": "Box Background",
+            "default": "#fff"
+        },
+        {
+            "type": "range",
+            "id": "opt",
+            "min": 0,
+            "max": 1,
+            "step": 0.1,
+            "label": "Box Background Opacity",
+            "unit": "%",
+            "default": 0.9
+        },
+		{
+            "type": "range",
+            "id": "bpd",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "Box Padding",
+            "unit": "px",
+            "default":60
+        },
+		{
+            "type": "range",
+            "id": "bpdm",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+			"label": "Box Padding(mobile)",
+            "unit": "px",
+            "default":30
+        },
+		{
+            "type": "range",
+            "id": "brad",
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "label": "Box Radius",
+            "unit": "px",
+            "default":0
+        },
+		{
+            "type": "checkbox",
+            "id": "frame",
+            "label": "Add Frame?",
+            "default": false
+        },		
+		{
+            "type": "color",
+            "id": "frmcl",
+            "label": "Frame Color",
+            "default": "#000"
+        },
+		{
+            "type": "select",
+            "id": "frms",
+            "label": "Frame style",
+            "default": "solid",
+            "options": [ 			
+                { "label": "Solid", "value": "solid" },
+                { "label": "Dashed", "value": "dashed" },
+				{ "label": "Dotted", "value": "dotted" }   
+            ]
+		},
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fff"	            
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": true,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },		       
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": true,
+            "info":"Remove left/right padding when fullwidth"
+        },
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	
+    ],
+    "blocks": [
+        {
+            "type": "heading",
+            "name": "Heading",  
+            "settings": [
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Text",
+                    "default": "THE MOST ADVANCED<br/>SHOPIFY THEME IN THE MARKET"			
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 22,
+                    "min": 15,
+                    "max": 115,
+                    "step": 1,
+                    "unit": "px"
+                }, 
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 18,
+                    "min": 10,
+                    "max": 40,
+                    "step": 1,
+                    "unit": "px"
+                }, 	
+                {
+                    "type": "select",
+                    "id": "fw",
+                    "label": "Font Weight",
+                    "default": "600",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 	
+                {
+                    "type": "range",
+                    "id": "lh",
+                    "label": "Line Height",
+                    "default": 1.2,
+                    "min": 0.7,
+                    "max": 2.0,
+                    "step": 0.1                   
+                },
+                {
+                    "type": "range",
+                    "id": "to",
+                    "label": "Text Opacity",
+                    "default": 1,
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 15,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },			          
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 15,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Text",  
+            "settings":[        
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Text",
+                    "default": "The design of your site plays a crucial role. <br>It can make or break your website leading to sales either <br>falling flat or converting profitably.",
+					"info":"Add <br/> tag for line separation. In mobile view, the tag will be hidden so that it does not cause unwanted line breaking."
+                },          
+                {
+                    "type": "checkbox",
+                    "id": "hidem",
+                    "label": "Hide text in mobile?",
+                    "default": true			
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text Color",
+                    "default": "#000"
+                },
+                {
+                    "type": "range",
+                    "id": "fs",
+                    "label": "Font Size",
+                    "default": 14,
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px"
+                }, 
+                {
+                    "type": "range",
+                    "id": "fsm",
+                    "label": "Font Size (mobile)",
+                    "default": 14,
+                    "min": 10,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }, 		
+                {
+                    "type": "range",
+                    "id": "ls",
+                    "label": "Letter Spacing",
+                    "default":0,
+                    "min": 0,
+                    "max": 10,
+                    "step": 1,
+                    "unit": "px",
+                    "info": "Space between text. Default is set to 0"
+                }, 		
+                {
+                    "type": "range",
+                    "id": "lh",
+                    "label": "Line Height",
+                    "default": 1.5,
+                    "min": 1.0,
+                    "max": 2.0,
+                    "step": 0.1              
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 20,
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px"
+                },			          
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 20,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }      
+            ]
+        },    
+        {      
+            "type": "countdown",
+            "name": "Countdown Timer",  
+            "limit":1,    
+            "settings":[
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "Enter Date",
+					"info":"Date format should be mm/dd/year, i.e. 12/30/2023"
+                },
+                {
+                    "type": "color",
+                    "id": "bg",
+                    "label": "Background",
+                    "default": "#000"
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text",
+                    "default": "#eee"
+                },
+                {
+                    "type": "color",
+                    "id": "bdr",
+                    "label": "Border",
+                    "default": "#000"
+                },
+              {
+                    "type": "range",
+                    "id": "fs",
+                    "min": 10,
+                    "max": 30,
+                    "step": 1,
+                    "label": "Font Size Digit",
+                    "unit": "px",
+                    "default": 15
+                },
+               {
+                    "type": "range",
+                    "id": "fsl",
+                    "min": 10,
+                    "max": 20,
+                    "step": 1,
+                    "label": "Font Size Label",
+                    "unit": "px",
+                    "default": 15
+                },
+                {
+                    "type": "range",
+                    "id": "radius",
+                    "min": 0,
+                    "max": 50,
+                    "step": 1,
+                    "label": "Border Radius",
+                    "unit": "px",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 30,
+                    "min": 0,
+                    "max": 50,
+                    "step": 5,
+                    "unit": "px"
+                },				            
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 20,
+                    "min": 0,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px"
+                }      
+            ]
+        },    
+        {
+            "type": "button",
+            "name": "Button",  
+            "limit":1,    
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Button Label",
+                    "default":"SHOP NOW"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Button Link"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hidem",
+                    "label": "Hide in mobile?",
+                    "default": false		
+                },
+                {
+					"type": "select",
+					"id": "btn-style",
+					"label": "Button Design",
+					"default": "btn1",
+					"options": [
+					  {
+						"label": "Button 1",
+						"value": "btn1"
+					  },
+					  {
+						"label": "Button 2",
+						"value": "btn2"
+					  },
+					  {
+						"label": "Button 3",
+						"value": "btn3"
+					  },
+					  {
+						"label": "Button 4",
+						"value": "btn4"
+					  },
+					 {
+						"label": "Button 5",
+						"value": "btn5"
+					  },
+					  {
+						"label": "Button 6",
+						"value": "btn6"
+					  },
+                      {
+                          "label": "Button 7 Gradient",
+                          "value": "btn7"
+                      },
+                      {
+                          "label": "Button 8 Gradient",
+                          "value": "btn8"
+                      },
+					  {
+						"label": "Link",
+						"value": "btnLink"
+					  }  
+					]
+				  },
+                {
+                    "type": "select",
+                    "id": "btn-size",
+                    "label": "Button Size",
+                    "default": "btn-md",
+                    "options": [
+                        {
+                            "label": "Small",
+                            "value": "btn-sm"
+                        },
+                        {
+                            "label": "Medium",
+                            "value": "btn-md"
+                        },
+                        {
+                            "label": "Large",
+                            "value": "btn-lg"
+                        } 		  
+                    ]
+                },
+                {
+                    "type": "range",
+                    "id": "mb",
+                    "label": "Margin Bottom",
+                    "default": 20,
+                    "min": 0,
+                    "max": 50,
+                    "step": 5,
+                    "unit": "px"
+                },				            
+                {
+                    "type": "range",
+                    "id": "mbm",
+                    "label": "Margin Bottom (mobile)",
+                    "default": 20,
+                    "min": 0,
+                    "max": 50,
+                    "step": 5,
+                    "unit": "px"
+                }      
+            ]
+        }   
+    ],
+    "presets": [
+        {
+            "name": "Hero Banner",        
+            "blocks": [                    
+                {
+                    "type": "heading"
+                },        
+                {
+                    "type": "text"
+                },       
+                {
+                    "type": "button"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

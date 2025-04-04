@@ -1,0 +1,33 @@
+<div class="wrap-blog pr mb15 brad of_hidden mb30-md {{ section.blog_align }}" style="--brad:{{ section.bbrad }}px">
+    {% if article.image %}
+        <a class="db pr mb20 of_hidden brad" href="{{ article.url }}" style="padding-bottom:{{ section.img_ratio }}%;--brad:{{ section.brad }}px;" title="{{ article.title | escape }}">
+            <img loading="lazy" class="imgFt lazyload wow zoomInCnt" src="{{ article.image | img_url: "100x" }}" alt="{{ article.image.alt | escape }}"
+                 data-srcset="{% render 'lazyload', image: article.image, sizes: '160,360,560,860,1200' %}" width="{{ article.image.width }}" height="{{ article.image.height }}" data-sizes="auto">
+        </a>
+    {% endif %}
+    <div class="blogInr {{ section.blog_align }}">
+        <h3 class="blogTtl mb10"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+        {% if section.date or section.author or section.comment %}
+            <ul class="fl mb20 artDet {{ section.blog_align }} f-wrap">
+                {% if section.date %}
+                    <li class="mr20"><time class="fl f-aic" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{% render 'icon-date' %}{{ article.published_at | date: format: 'month_day_year' }}</time></li>
+                {% endif %}
+                {% if section.author %}
+                    <li class="mr20">{% render 'icon-user' %} {{ 'blogs.article.by_author' | t }} <span class="clr_body">{{ article.author }}</span></li>
+                {% endif %}
+                {% if section.comment and article.comments_count > 0 %}
+                    <li class="cmnt mr20"><a href="{{ article.url }}#comments">{% render 'icon-comment' %}{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}</a></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+        {% if section.tags and article.tags.size > 0 %}
+            <div class="blogTags fl f-wrap {{ section.blog_align }} mb10">
+                {% for tag in article.tags %}<a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% endfor %}
+            </div>
+        {% endif %}
+        {% if section.desc %}
+            <div class="rte mb25">{% if article.excerpt.size > 0 %}{{ article.excerpt }}{% else %}{{ article.content | strip_html | truncatewords: section.dwords }}{% endif %}</div>
+        {% endif %}
+        {% if section.more %}<a href="{{ article.url }}" class="btnLink" title="{{ article.title }}">{{ 'blogs.article.read_more' | t }}</a>{% endif %}
+    </div>
+</div>

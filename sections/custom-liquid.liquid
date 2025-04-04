@@ -1,0 +1,120 @@
+{% assign secSt = section.settings %}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px" >        
+    <div class="{% if section.settings.sw %}fw-sec{% else %}page-width{% endif %}" id="{{ section.id }}" data-section-id="{{ section.id }}">
+        {% render 'sec-title' %}		
+        {% if section.settings.custom_liquid != blank %}{{ section.settings.custom_liquid }}{% endif %}
+    </div>   
+</div>
+{% schema %}
+  {
+    "name": "Custom Liquid",
+    "class": "index-section",
+    "settings": [	  		
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Custom Liquid"		
+      },	  
+	  {
+         "type": "textarea",
+         "id": "subtitle",
+         "label": "Sub Heading",
+         "default": "Describe about this section..."
+      },
+      {
+         "id": "custom_liquid",
+         "type": "liquid",
+         "label": "Liquid Code"
+      },
+	  {
+            "type": "header",
+            "content": "Section"
+      },
+	{
+		"type": "paragraph",
+		"content": "Spacing ===="
+	},
+	{
+		"type": "range",
+		"id": "sst",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":30
+	},
+	{
+		"type": "range",
+		"id": "ssb",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":30
+	},
+	{
+		"type": "paragraph",
+		"content": "Spacing (mobile) ===="
+	},
+	{
+		"type": "range",
+		"id": "sstm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":15
+	},
+	{
+		"type": "range",
+		"id": "ssbm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":15
+	},       
+	{
+		"type": "color",
+		"id": "bg",
+		"label": "Background",
+		"info":"select light color"
+	},
+    {
+        "type": "color_background",
+        "id": "bgg",
+        "label": "Gradient Background"
+    },	
+	{
+		"type":"checkbox",
+		"id":"sw",
+		"label":"Fullwidth?",
+		"default": false,
+		"info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+	},		              
+	{
+		"type": "checkbox",
+		"id": "hidem",
+		"label": "Hide in Mobile?",
+		"default": false
+	},
+    {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+    }   
+	 ],
+    "presets": [
+      {
+        "name": "Custom Liquid"
+        
+      }
+    ]
+  }
+{% endschema %}

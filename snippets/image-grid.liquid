@@ -1,0 +1,17 @@
+{%- if link != blank -%}<a href="{{ link }}">{%- endif -%}
+{%- if image != blank -%}
+<img loading="lazy" class="imgFl lazyload wow zoomIn" src="{{ image | img_url: "50x" }}" width="{{ image.width }}" height="{{ image.height }}"
+    data-srcset="{% render 'lazyload', image: image, sizes: '200,400,600,800,1000,1200,1400' %}" data-sizes="auto" alt="{{ image.alt | escape }}">
+{%- else -%}
+    <img src="{{ 'https://dummyimage.com/' | append: imgSize | append: '/F4F4F4/ccc' }}" class="db" />
+{%- endif -%}
+{%- if text1 != blank or text2 != blank or text3 != blank %}
+<div class="fl grid_btxtwrap {{ pos }} {% if text_a %}tl{% else %}tc{% endif %}">
+<div class="dib pr grid_btxt t{{ blockId }} of_hidden">
+  {%- if text1 != blank -%}<span class="text1 db {% if hidetxt1 %}hide-sm{% endif %}">{{ text1 }}</span>{%- endif -%}
+  {%- if text2 != blank -%}<span class="text2 db {% if hidetxt2 %}hide-sm{% endif %}">{{ text2 }}</span>{%- endif -%}
+  {%- if text3 != blank -%}<span class="text3 db {% if hidetxt3 %}hide-sm{% endif %}">{{ text3 }}</span>{%- endif -%}
+</div>
+</div>
+{%- endif -%}
+{%- if link != blank -%}</a>{%- endif -%}

@@ -1,0 +1,856 @@
+{% assign secSt = section.settings %}
+<style type="text/css">
+  :root {
+    --cmntCl:{{ section.settings.cmntCl }};
+    --cmntBg:{{ section.settings.cmntBg }};
+    --wdTtl:{{ secSt.wdTtl }}px;
+  	--wdTtlft:var(--{{ secSt.wdTtlft }});
+    --wdTtlwt:{{ secSt.wdTtlwt }};
+  	--wdTtlcase:{{ secSt.wdTtlcase }};
+    --wdTtlcl:{{ secSt.wdTtlcl }};  
+    --wddvbd:{{ secSt.wddvbd }};
+    --ttlbdr:{{ secSt.ttlbdr }};
+    --linkf:{{ secSt.cl_bl_links }}px;
+    --datef:{{ secSt.cl_bl_links | minus : 2 }}px;
+	--slinks:{{ secSt.sidebar_links }};
+	--slinkshov:{{ secSt.sidebar_links_hv }}; 
+    --fieldbg:{{ block.settings.fieldbg }};
+    --fieldbdr:{{ block.settings.fieldbdr }};
+    --field:{{ block.settings.field }};
+  }
+</style>
+<div class="sec_cov" style="--sbg:{{ secSt.bg }};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">
+	 <article class="{% if secSt.sw %} fw-sec{% else %} page-width{% endif %}" >
+      <div class="fl f-col f-row-md">
+      <div class="fl1 w_100{% if section.settings.sbposi == 'left' %} order2{% endif %}">   
+      <div class="blog_listview"
+           style="--btcl:{{ section.settings.bgTtlcl }};--btfs:{{ section.settings.bgTtl }}px;--btfsm:{{ section.settings.bgTtlm }}px;--btff:var(--{{ section.settings.bgTtlft }});--btfw:{{ section.settings.bgTtlwt }};{% if section.settings.blog_case %}--bttt:uppercase;{% endif %}
+                  --adcl:{{ section.settings.bgpubcl }};--adfs:{{ section.settings.bgpub }}px;--adfsm:{{ section.settings.bgpubm }}px;
+                  --tgcl:{{ section.settings.tagcl }};--tgclh:{{ section.settings.tagclh }};--bdr:{{ section.settings.tagbdr }};--bdrh:{{ section.settings.tagbdrh }};">      
+        <h1 class="blogTtl mb10">{{ article.title }}</h1>
+        {% if section.settings.date or section.settings.author or blog.comments_enabled? %}
+                <ul class="fl mb20 artDet">                                               
+                  {% if section.settings.date %}
+                      <li class="mr20"><time class="fl f-aic" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{% render 'icon-date' %}{{ article.published_at | date: format: 'month_day_year' }}</time></li>
+                  {% endif %}
+                  {% if section.settings.author %}
+                      <li class="mr20">{% render 'icon-user' %}<span class="ml5">{{ 'blogs.article.by_author' | t }} <span class="clr_body">{{ article.author }}</span></span></li>
+                  {% endif %}
+                  {% if blog.comments_enabled? and article.comments_count > 0 %}
+                  <li class="cmnt mr20">
+                      <a href="{{ article.url }}#comments">{% render 'icon-comment' %}{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}</a></li>
+                  </li>
+                  {% endif %}
+                </ul>
+            {% endif %}
+
+        {% if article.image and section.settings.ftimg %}
+             <div class="mb20"> {{ article | img_url: 'master' | img_tag: article.title }}</div>
+        {% endif %}
+        <div class="rte mb20">{{ article.content }}</div>
+
+        {% if section.settings.tags and article.tags.size > 0 %}
+        <ul class="blogTags fl f-aic f-wrap mb10">
+              <li>{{ 'blogs.article.posted_in' | t }}: &nbsp;</li>
+            {% for tag in article.tags %}
+            <li><a class="ml5" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if section.settings.show_share_buttons or blog.next_article or blog.previous_article %}
+            <hr>
+            <div class="fl f-wrap f-jcsb">              	                
+				{% if section.settings.show_share_buttons %}
+                    <div class="mb20">{% render 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image, clname:'' %}</div>
+				{% endif %}
+                {% if blog.next_article or blog.previous_article %}
+                <div class="blog-nav mb20 fl f-jcc {% unless section.settings.show_share_buttons %} fl1{% endunless %}">
+                    {% if blog.previous_article %}<a href="{{ blog.previous_article }}">{% render 'icon-arrowl', class: 'arwl left mr5' %}{{ 'blogs.article.previous' | t }}</a>{% endif %}
+                    <span class="m_auto"> &nbsp; &nbsp; </span>
+                    {% if blog.next_article %}<a href="{{ blog.next_article }}">{{ 'blogs.article.next' | t }}{% render 'icon-arrowl', class: 'arwl right ml5' %}</a>{% endif %}
+                </div>
+                {% endif %}
+            </div>
+        {% endif %} 
+
+        <!-- Article comments --> 
+        {%- assign number_of_comments = article.comments_count -%}
+
+        {% if comment and comment.created_at %}
+        {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+        {% endif %} 
+        {% if blog.comments_enabled? %}
+        {% if number_of_comments > 0 %}<br>
+        <h2 class="sub-title mb0">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h2>
+        <hr />
+        {% paginate article.comments by 10 %}
+
+        {% comment %}#comments is required, it is used as an anchor link by Shopify.{% endcomment %}
+        <div id="comments">
+            
+          <ul class="comments mb30">
+            {% comment %}If a comment was just submitted with no blank field, show it.{% endcomment %}
+            {% if comment and comment.created_at %}
+                <li id="{{ comment.id }}" class="comment"> {% render 'comment' %}</li>
+                <li><hr /></li>
+            {% endif %}
+            {% for comment in article.comments %}
+                <li id="{{ comment.id }}" class="comment"> {% render 'comment', comment:comment %} </li>
+                {% unless forloop.last %}<li><hr /></li>{% endunless %}
+            {% endfor %}
+          </ul>
+          {% if paginate.pages > 1 %}{% render 'pagination' %}{% endif %}
+          </div>
+        {% endpaginate %}
+
+
+        {% endif %}
+        {% form 'new_comment', article %}
+          <h4 class="h3">{{ 'blogs.comments.title' | t }}</h4>
+          {% if comment and comment.created_at %}
+              <p class="note form-success">{% if blog.moderated? %}{{ 'blogs.comments.success_moderated' | t }}{% else %}{{ 'blogs.comments.success' | t }}{% endif %}</p>
+          {% endif %}
+          {{ form.errors | default_errors }}
+          <div class="grid">
+            <div class="gitem wd50-md">
+              <label for="CommentAuthor">{{ 'blogs.comments.name' | t }}</label>
+              <input type="text" name="comment[author]" id="CommentAuthor" class="input-full w_100{% if form.errors contains 'author' %} input--error{% endif %}" value="{{ form.author }}">
+            </div>
+            <div class="gitem wd50-md">
+              <label for="CommentEmail">{{ 'blogs.comments.email' | t }}</label>
+              <input type="email" name="comment[email]" id="CommentEmail" class="input-full w_100{% if form.errors contains 'email' %} input--error{% endif %}" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+            </div>
+            <div class="gitem wd50-md">
+              <label for="CommentBody">{{ 'blogs.comments.message' | t }}</label>
+              <textarea name="comment[body]" id="CommentBody" class="input-full w_100{% if form.errors contains 'body' %} input--error{% endif %}">{{ form.body }}</textarea>
+              </div>
+          </div>
+          {% if blog.moderated? %}
+          <p class="fine-print mt0">{{ 'blogs.comments.moderated' | t }}</p>
+          {% endif %}
+          <input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+          {% endform %}
+        {% endif %} 
+
+        <!-- article end --> 
+
+      </div>
+        <div class="tc mt15"><a href="{{ blog.url }}" class="btn">{% render 'icon-arrowl', class: 'arwl left' %} {{ 'blogs.article.back_to_blog' | t: title: blog.title }}</a></div>
+    </div>
+
+	<!-- sidebar --> 
+	  
+    {% unless section.settings.sbposi == 'nosidebar' %}
+    <div class="sidebar{% if section.settings.sbposi == 'left' %} mr30{% else %} ml30{% endif %}{% if secion.settings.sidem %} hide-sm hide-md{% endif %}">
+        {% for block in section.blocks %}
+            {% render 'blog-sidebar', blog:blog, blockType: block.type, block: block.settings, section: section.settings, bkat: block.shopify_attributes %}
+        {% endfor %}
+    </div>
+    {% endunless %}  
+  </div>
+</article>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": "{{ article.content | strip_html | escape }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ page.url }}"
+  },
+  "headline": "{{ article.title }}",
+  {% if article.excerpt != blank %}
+    "description": "{{ article.excerpt | strip_html }}",
+  {% endif %}
+  {% if article.image %}
+    {% assign image_size = article.image.width | append: 'x' %}
+    "image": [
+      "https:{{ article | img_url: image_size }}"
+    ],
+  {% endif %}
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "dateCreated": "{{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    {% if settings.share_image %}
+      {% assign image_size = article | img_url: 'master' | append: 'x' %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": "{{ settings.share_image.height }}",
+        "url": "https:{{ settings.share_image | img_url: image_size }}",
+        "width": "{{ settings.share_image.width }}"
+      },
+    {% endif %}
+    "name": "{{ shop.name }}"
+  }
+}
+</script>
+{% schema %}
+  {
+    "name": "Article Main",
+    "settings": [	 
+      {
+        "type": "checkbox",
+        "id": "ftimg",
+        "label": "Show Featured Image",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show Social Sharing Buttons",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Post Title ==="
+      },
+      {
+        "type": "range",
+        "id": "bgTtl",
+        "label": "Title Size",
+        "default": 22,
+        "min": 10,
+        "max": 60,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "bgTtlm",
+        "label": "Title Size (mobile)",
+        "default": 17,
+        "min": 10,
+        "max": 60,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "bgTtlft",
+        "label": "Font Family",
+        "default": "ft1",
+        "options": [
+          {
+            "value": "ft1",
+            "label": "Font 1"
+          },
+          {
+            "value": "ft2",
+            "label": "Font 2"
+          },
+          {
+            "value": "ft3",
+            "label": "Font 3"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "bgTtlwt",
+        "label": "Font Weight",
+        "default": "700",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_case",
+        "label": "Text Uppercase?"        
+      },
+      {
+        "type": "color",
+        "id": "bgTtlcl",
+        "label": "Title Text",
+        "default": "#000"
+      },
+      {
+        "type": "paragraph",
+        "content": "Post Publish Detail ==="
+      },
+      {
+        "type": "checkbox",
+        "id": "author",
+        "label": "Show Author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "date",
+        "label": "Show Date",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "bgpub",
+        "label": "Title Size",
+        "default": 12,
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "bgpubm",
+        "label": "Title Size (mobile)",
+        "default": 11,
+        "min": 8,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "bgpubcl",
+        "label": "Text",
+        "default": "#777"
+      },
+      {
+        "type": "paragraph",
+        "content": "Post Tags ==="
+      },
+      {
+        "type": "checkbox",
+        "id": "tags",
+        "label": "Show Post Tags",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "tagcl",
+        "label": "Text",
+        "default": "#333"
+      },
+      {
+        "type": "color",
+        "id": "tagbdr",
+        "label": "Border",
+        "default": "#999"
+      },
+      {
+        "type": "color",
+        "id": "tagclh",
+        "label": "Text hover",
+        "default": "#86BBBF"
+      },            
+      {
+        "type": "color",
+        "id": "tagbdrh",
+        "label": "Border Hover",
+        "default": "#86BBBF"
+      },
+	 {
+        "type": "header",
+        "content": "Comment Form"
+       },
+      {
+        "type": "color",
+        "id": "cmntCl",
+        "label": "Text",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "cmntBg",
+        "label": "Background",
+        "default": "#f6f6f6"
+      },
+	{
+        "type": "header",
+        "content": "Sidebar ==="
+      },
+	  {
+        "type": "select",
+        "id": "sbposi",
+        "label": "Sidebar Position",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          },
+		  {
+            "value": "nosidebar",
+            "label": "No Sidebar"
+          }
+        ]
+      },
+	  {
+        "type": "checkbox",
+        "id": "sidem",
+        "label": "Hide in Mobile?",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "wdTtl",
+        "label": "Title",
+        "default": 15,
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "select",
+        "id": "wdTtlft",
+        "label": "Font Family",
+        "default": "ft1",
+        "options": [
+          {
+            "value": "ft1",
+            "label": "Font 1"
+          },
+          {
+            "value": "ft2",
+            "label": "Font 2"
+          },
+          {
+            "value": "ft3",
+            "label": "Font 3"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "wdTtlwt",
+        "label": "Font Weight",
+        "default": "700",
+        "options": [
+          {
+            "value": "300",
+            "label": "Light"
+          },
+          {
+            "value": "400",
+            "label": "Regular"
+          },
+          {
+            "value": "500",
+            "label": "Medium"
+          },
+          {
+            "value": "600",
+            "label": "Semi Bold"
+          },
+          {
+            "value": "700",
+            "label": "Bold"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "wdTtlcase",
+        "label": "Text Case",
+        "default": "uppercase",
+        "options": [
+          {
+            "label": "Uppercase",
+            "value": "uppercase"
+          },
+          {
+            "label": "Capitalize",
+            "value": "capitalize"
+          },
+          {
+            "label": "None",
+            "value": "none"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "wdTtlcl",
+        "label": "Title Text",
+        "default": "#000"
+      }, 
+       {
+        "type": "checkbox",
+        "id": "ttlbdrt",
+        "label": "Show Title Border?",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "ttlbdr",
+        "label": "Title Border",
+        "default": "#f5f5f5"
+      },
+      {
+        "type": "color",
+        "id": "wddvbd",
+        "label": "Divider Border",
+        "default": "#f5f5f5"
+      },
+      {
+        "type": "range",
+        "id": "cl_bl_links",
+        "label": "Links Font Size",
+        "default": 12,
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "sidebar_links",
+        "label": "Links",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "sidebar_links_hv",
+        "label": "Links on Hover",
+        "default": "#EC9090"
+      },
+      {
+          "type": "header",
+          "content": "Section"
+      },
+      {
+          "type": "paragraph",
+          "content": "Spacing ===="
+      },
+      {
+          "type": "range",
+          "id": "sst",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "label": "Top",
+          "unit": "px",
+          "default":30
+      },
+      {
+          "type": "range",
+          "id": "ssb",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "label": "Bottom",
+          "unit": "px",
+          "default":30
+      },
+      {
+          "type": "paragraph",
+          "content": "Spacing (mobile) ===="
+      },
+      {
+          "type": "range",
+          "id": "sstm",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "label": "Top",
+          "unit": "px",
+          "default":15
+      },
+      {
+          "type": "range",
+          "id": "ssbm",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "label": "Bottom",
+          "unit": "px",
+          "default":15
+      },       
+      {
+          "type": "color",
+          "id": "bg",
+          "label": "Background",
+          "default":"#fff"	         
+      },	
+      {
+          "type":"checkbox",
+          "id":"sw",
+          "label":"Fullwidth?",
+          "default": false            
+      }
+    ],
+	"blocks": [
+      {
+        "type": "menu",
+        "name": "Navigation Menu",
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Title",
+			  "default": "Categories"
+          	},
+            {
+              "type": "link_list",
+              "id": "side_categories",
+              "label": "Select Categories",
+              "default": "main-menu"
+            }
+        ]
+      },
+      {
+        "type": "search",
+        "name": "Search",
+        "limit": 1,
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Title",
+			  "default": "Search in blog"
+          	}, 
+           { 
+              "type":"text",
+              "id":"sph",
+              "label":"Text Placeholder",
+			  "default": "Search..."
+          	}, 
+            {
+                "type": "color",
+                "id": "field",
+                "label": "Email Icon",
+                "default": "#666"
+            },
+            {
+                "type": "color",
+                "id": "fieldbg",
+                "label": "Text Field Background",
+                "default": "#f5f5f5"
+            },
+            {
+                "type": "color",
+                "id": "fieldbdr",
+                "label": "Text Field Border",
+                "default": "#eee"
+            }
+        ]
+      },
+	  {
+        "type": "rposts",
+        "name": "Recent Posts",
+		"limit": 1,
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Title",
+			  "default": "Recent Posts"
+          	},
+            {
+              "type": "range",
+              "id": "count",
+              "label": "Number of posts to show",
+              "default": 5,
+              "min": 1,
+              "max": 10,
+              "step": 1
+            }
+        ]
+     },
+	 {
+        "type": "tags",
+        "name": "Blog Tags",
+		"limit": 1,
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Title",
+			  "default":"Blog Tags"
+          	},
+          {
+            "type": "color",
+            "id": "txt",
+            "label": "Text",
+            "default": "#333"
+          },
+         {
+            "type": "color",
+            "id": "txthov",
+            "label": "Text Hover",
+            "default": "#000"
+          }
+        ]
+     },
+     {
+        "type": "products",
+        "name": "Products",
+		"limit": 1,
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Title Text",
+              "default":"Popular Products"
+          	},
+            {
+              "type": "collection",
+              "id": "sidebar_products",
+              "label": "Select Collection"
+            },
+            {
+              "type": "text",
+              "id": "num_of_products",
+              "label": "Number of products to show",
+              "default": "3"
+            },
+			{
+              "type": "checkbox",
+              "id": "side_all_products",
+              "label": "View all products button",
+              "default": false
+            },
+			{
+              "type": "text",
+              "id": "btn_txt",
+              "label": "Button Text",
+              "default": "View All"
+            }
+        ]
+      },
+     {
+        "type": "nw",
+        "name": "Newsletter",
+        "limit": 1,
+        "settings": [
+         	{ 
+              "type":"text",
+              "id":"title",
+              "label":"Title",
+			  "default": "Newsletter Signup"
+          	},
+            { 
+              "type":"text",
+              "id":"subttl",
+              "label":"Sub Title",
+			  "default": "Enter your email to receive daily news and get 20% off coupon for all items."
+          	},
+            {
+                "type": "color",
+                "id": "field",
+                "label": "Search Icon",
+                "default": "#666"
+            },
+            {
+                "type": "color",
+                "id": "fieldbg",
+                "label": "Text Field Background",
+                "default": "#fafafa"
+            },
+           {
+                "type": "color",
+                "id": "fieldbdr",
+                "label": "Field Border",
+                "default": "#ddd"
+            }
+        ]
+      },
+	  {
+        "type": "image",
+        "name": "Image Banner",
+        "settings": [
+            {
+              "type": "image_picker",
+              "id": "img",
+              "label": "Banner Image"
+            },
+            {
+              "type": "url",
+              "id": "link",
+              "label": "Banner"
+            }
+      	]
+      },
+	  {
+        "type": "social",
+        "name": "Social Media",
+        "limit": 1,
+        "settings": [
+            { 
+              "type":"text",
+              "id":"title",
+              "label":"Title Text",
+              "default":"Follow us on"
+          	},
+            {
+              "type": "richtext",
+              "id": "text",
+              "label": "Text"
+            },
+            {
+                "type": "range",
+                "id": "icnsz",
+                "label": "Icon size",
+                "default": 18,
+                "min": 10,
+                "max": 50,
+                "step": 1,
+                "unit": "px"
+            },
+            {
+                "type": "color",
+                "id": "icon",
+                "label": "Icons",
+                "default": "#333"
+            },
+            {
+                "type": "color",
+                "id": "iconbd",
+                "label": "Icons Border",
+                "default": "#ccc"
+            }
+      	]
+      },
+	  {
+        "type": "text",
+        "name": "Static Text",
+        "settings": [
+            { 
+              "type":"text",
+              "id":"title",
+              "label":"Title Text",
+              "default":"Static Block Title"
+          	},
+            {
+              "type": "richtext",
+              "id": "text",
+              "label": "Text",
+              "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+            }
+      	]
+      }
+]
+  }
+{% endschema %} 

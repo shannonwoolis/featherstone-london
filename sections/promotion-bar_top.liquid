@@ -1,0 +1,304 @@
+{%- capture topInfoBar -%}
+{%- assign secSt = section.settings -%}
+{%- if section.blocks.size > 0 -%}
+<div class="{% if secSt.sw %}fw-sec npd{% else %}page-width{% endif %} top-promo pr {% if secSt.hidem %} hide-sm{% endif %}"  data-section-id="{{ section.id }}" data-section-type="quotes"
+	 style="--mih:{{ secSt.pht }}px;{%- if secSt.frame -%}--ol:{{ secSt.frame_s }};--olc:{{ secSt.frame_clr }};{%- endif -%}{% unless secSt.close %}display:none;{% endunless %}">
+	
+    {% if section.blocks.size > 1 %}
+        <div class="flslieds swiper" id="Quotes-{{ section.id }}" data-autoplay='{% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %}' data-fade="{% if secSt.fade %}fade{% else %}slide{% endif %}">
+            <div class="swiper-wrapper">
+    {% endif %}
+	
+        {% for block in section.blocks %}
+	        {% assign blkSt = block.settings %}
+           	<div class="swiper-slide w_100 fckSl pr" id="{{ block.id }}" {{ block.shopify_attributes }} style="--fs:{{ secSt.fts }}px;--fsm:{{secSt.fsm }}px;--fw:{{secSt.fw }};--mwidth:{{ secSt.fts | plus: 5 }}px;--cl:{% if blkSt.clgr != blank %}{{ blkSt.clgr }}{% else %}{{ blkSt.cl }}{% endif %};background:{% if blkSt.bgg != blank %}{{ blkSt.bgg }}{% else %}{{ blkSt.bg }}{% endif %};--clhl:{{ blkSt.clhl }};--timer:{{ blkSt.cnt_txt }};--btncl:{{ blkSt.btncl }};--btnbg:{{ blkSt.btnbg }};--as:{{ blkSt.animsp }}s;">
+				
+                {% capture countdown %}
+                    {% if blkSt.title contains '[countdown]' %}
+                        <div class="atCounter fl ttu" data-date="{{ blkSt.date }}"><span><span class="days">00</span> {{ 'date_formats.days' | t }}</span> : <span class="hours">00</span> : <span class="minutes">00</span> : <span class="seconds">00</span></div>
+                    {% endif %}
+                {% endcapture %}
+				
+                {% capture button %}
+                    {% if blkSt.title contains '[button]' and blkSt.btn_txt != blank -%}
+                        <span class="pr btn-link{% if blkSt.hdbtn %} hide-sm{% endif %}">{{ blkSt.btn_txt }}</span>        
+                    {% endif %}
+                {% endcapture %}
+				
+                {% if blkSt.title != blank %}
+                    <{% if blkSt.link != blank %}a href="{{ blkSt.link }}"{% else %}div{% endif %} class="fl f-jcc f-aic promo_msg tc {{ secSt.fontFm }} lazyload{% if blkSt.clgr != blank %} gr_tx{%  if blkSt.ganim %} tanim{% endif %}{% endif %}" 
+                        data-bgset="{% render 'bgset', image: blkSt.promotion_bg %}" data-sizes="auto" data-parent-fit="contain">
+                        {{ blkSt.title | replace:"[countdown]", countdown | replace:"[button]", button }}
+                    </{% if blkSt.link != blank %}a{% else %}div{% endif %}>
+                    {% unless secSt.close %}<span class="close-promo" style="color:{{ blkSt.cl }}">{% render 'icon-close' %}</span>{% endunless %}
+                {% endif %}
+				
+            </div>
+        {% endfor %}
+    {% if section.blocks.size > 1 %}</div></div>{% endif %}
+</div>
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+    if(getCookie('promotion') != 'true'){
+        $(".top-promo").slideDown('slow');
+    }
+    $(".close-promo").click(function(){
+        $(".top-promo").slideUp();
+        setCookie('promotion','true',1);
+    });
+});
+</script>
+{%- endif -%}
+{%- endcapture -%}
+{{ topInfoBar | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+    "name": "Top Promotion Bar",
+    "class": "index-section",
+    "max_blocks": 5,
+    "settings":[						       
+		{
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": true            
+        }, 
+	 { 
+            "type":"checkbox",
+            "id":"hidem",
+            "label":"Hide in Mobile?",
+            "default": false
+        },
+		 { 
+            "type":"checkbox",
+            "id":"close",
+            "label":"Hide Close Button?",
+            "default": false
+        },
+        {
+            "type": "range",
+            "id": "pht",
+            "label": "Minimum Height",
+            "default": 50,
+            "min": 30,
+            "max": 130,
+            "step": 1,
+            "unit": "px"
+        },
+		{
+            "type": "select",
+            "id": "fontFm",
+            "label": "Font Family",
+            "default": "ft1",
+            "options": [
+                { "value": "ft1", "label": "Font 1" },
+                { "value": "ft2", "label": "Font 2" },
+                { "value": "ft3", "label": "Font 3" }
+            ]
+        },
+        {
+            "type": "range",
+            "id": "fts",
+            "label": "Font Size",
+            "default": 13,
+            "min": 10,
+            "max": 20,
+            "step": 1,
+            "unit": "px"
+        }, 
+       {
+            "type": "range",
+            "id": "fsm",
+            "label": "Font Size(mobile)",
+            "default": 13,
+            "min": 10,
+            "max": 20,
+            "step": 1,
+            "unit": "px"
+        },     
+      {
+                    "type": "select",
+                    "id": "fw",
+                    "label": "Font Weight",
+                    "default": "500",
+                    "options": [
+                        {
+                            "value": "300",
+                            "label": "Light"
+                        },
+                        {
+                            "value": "400",
+                            "label": "Regular"
+                        },
+                        {
+                            "value": "500",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "600",
+                            "label": "Semi Bold"
+                        },
+                        {
+                            "value": "700",
+                            "label": "Bold"
+                        }
+                    ]
+                }, 	
+		{
+			"type": "checkbox",
+			"id": "frame",
+			"label": "Add Frame?",
+			"default": false
+       },
+		{
+            "type": "color",
+            "id": "frame_clr",
+            "label": "Frame Color",
+            "default": "#B05D5D"
+        },
+		{
+			"type": "select",
+			"id": "frame_s",
+			"label": "Frame style",
+			"default": "solid",			
+			"options": [ 			
+				{ "label": "Solid", "value": "solid" },
+				{ "label": "Dashed", "value": "dashed" },
+				{ "label": "Dotted", "value": "dotted" }   
+			]
+		}, 	    
+        {
+            "type": "checkbox",
+            "id": "fade",
+            "label": "Slide Fade Effect",
+            "default": true
+        }, 	  
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate Slide",
+            "default": false
+        },
+        {
+            "type": "range",
+            "id": "speed",
+            "label": "Change Slide Every",
+            "default": 5,
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "unit": "Sec"
+        }        
+    ],
+    "blocks": [
+        {
+            "type": "text_block",
+            "name": "Promotion Text",
+            "settings": [         
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Promotion Text",
+                    "default": "UP TO 80% OFF ON THE ENTIRE STORE! hurry up!",
+                    "info": "Use shortcode [countdown] to show Countdown, [button] to show button link and <span class=\"hl\">text</span> to Highlight text"
+                },
+                {
+                    "type": "text",
+                    "id": "date",
+                    "label": "Countdown Date",
+                    "info": "Date Format is Month\/Day\/Year. i.e 11\/25\/2020",
+                    "default": "12\/20\/2023"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_txt",
+                    "label": "Button Link Text",
+                    "default": "Shop Now"
+                },              
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "hdbtn",
+                    "label": "Hide Button in Mobile?",
+                    "default": true
+                },
+                {
+                    "type": "header",
+                    "content": "APPEARANCE TEXT ==="
+                },
+                {
+                    "type": "color",
+                    "id": "cl",
+                    "label": "Text Color",
+                    "default": "#111"
+                },
+                {
+                  "type": "color_background",
+                  "id": "clgr",
+                  "label": "Gradient Color"           
+                },
+                 {
+                  "type":"checkbox",
+                  "id":"ganim",
+                  "label":"Gradient animation?",
+                  "default": false           
+                },
+                  {
+          		"type": "range",
+          		"id": "animsp",
+          		"min": 0,
+          		"max": 30,
+          		"step": 1,
+          		"label": "Animation Speed",
+          		"unit": "px",
+          		"default":15
+            	},
+                {
+                    "type": "color",
+                    "id": "clhl",
+                    "label": "Highlight Text",
+                    "default": "#050505"
+                },
+                {
+                    "type": "color",
+                    "id": "cnt_txt",
+                    "label": "Countdown Text",
+                    "default": "#111"
+                },
+                {
+                    "type": "color",
+                    "id": "btncl",
+                    "label": "Button Text",
+                    "default": "#fff"
+                },
+                {
+                    "type": "color",
+                    "id": "btnbg",
+                    "label": "Button Background",
+                    "default": "#333"
+                },
+                {
+                    "type": "color",
+                    "id": "bg",
+                    "label": "Background Color",
+                    "default": "#FFE8E8"
+                },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },
+                {
+                    "type": "image_picker",
+                    "id": "bgimg",
+                    "label": "Background image"
+                }
+            ]
+        }
+    ]    
+}
+{% endschema %}

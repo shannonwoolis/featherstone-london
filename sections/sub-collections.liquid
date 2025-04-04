@@ -1,0 +1,460 @@
+{%- capture subColection -%}
+{% assign secSt = section.settings %}
+{%- if section.settings.cl != blank -%}
+{%- capture styles -%}
+    {%- if section.settings.st == "1" -%}
+        --grsp:0;
+        --grspi:0;
+    {%- else -%}
+        --grsp:{{ section.settings.gspace }}px -{{ section.settings.gspace | divided_by: 2.0 }}px 0;
+        --grspi:0 {{ section.settings.gspace | divided_by: 2.0 }}px {{ section.settings.gspace }}px;
+        --grspm:{{ section.settings.gspacem }}px -{{ section.settings.gspacem | divided_by: 2.0 }}px 0;
+        --grspim:0 {{ section.settings.gspacem | divided_by: 2.0 }}px {{ section.settings.gspacem }}px;
+    {%- endif -%}
+    --bd:{{ section.settings.bdr }};
+    --bdh:{{ section.settings.bdrh }};
+    --cl:{{ section.settings.lcl }};
+    --clh:{{ section.settings.lclh }};
+    --bg:{{ section.settings.lkbg }};
+    --bgh:{{ section.settings.lkbgh }};
+    --fs:{{ section.settings.fts }}px;
+    --fsm:{{ section.settings.ftsm }}px;
+    --icn:{{ section.settings.icn }}px;
+    --bdrr:{{ section.settings.bdrr }}px;
+{%- endcapture -%}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px">      
+    <div class="{% if section.settings.sw %}fw-sec{% if section.settings.npd %} npd{% endif %}{% else %}page-width{% endif %}">
+        {% if secSt.carousel %}<div class="arwOut pr">{% endif %}
+        <div class="subCl st{{ section.settings.st }} grid gspace tc rwcols-{{ section.settings.gridmb }} rwcols-md-{{ section.settings.gridtb }} rwcols-lg-{{ section.settings.grid }}{% if section.settings.carousel %} swiper{% else %} f-wrap{% endif %}"
+            {% if secSt.carousel %}id="subclSlider" data-autoplay='{% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %}'{% endif %}
+            style="{{ styles }}">
+            {% if secSt.carousel %}<div class="swiper-wrapper">{% endif %}
+                {% for collection in section.settings.cl %}
+                    {% if section.settings.st == "1" or section.settings.st == "2" %}
+                    <div class="{% if secSt.carousel %}swiper-slide {% endif %}gitem sblBx fl f-aist">
+                        <a href="{{ collection.url }}" class="sbLink fl f-aic f-jcc {{ section.settings.ffml }} {{ section.settings.fw }}{% if section.settings.case %} ttu{% endif %}">
+                            {% if section.settings.sicn and collection.metafields.custom.icon != blank %}
+                                {% capture icnSz %}{{ section.settings.icn | plus: 50 }}x{% endcapture %}
+                                <img class="icon lazyload mr15" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ section.settings.icn }}" height="{{ section.settings.icn }}" alt="{{ collection.title }}" />
+                            {% endif %}
+                            {{ collection.title }}
+                        </a>
+                    </div>
+                    {% else %}
+                        <div class="{% if secSt.carousel %}swiper-slide {% endif %}gitem sblBx">
+                          <a href="{{ collection.url }}" class="sbLink dbi tc {{ section.settings.ffml }} {{ section.settings.fw }}{% if section.settings.case %} ttu{% endif %}">
+                              {% if section.settings.sicn and collection.metafields.custom.icon != blank %}
+                                  {% capture icnSz %}{{ section.settings.icn | plus: 50 }}x{% endcapture %}
+                                  <div class="img pr"><img class="imgFt anim lazyload" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="100" height="100" alt="{{ collection.title }}" /></div>
+                              {% endif %}
+                              {{ collection.title }}
+                          </a>
+                      </div>
+                    {% endif %}
+                {% endfor %}
+                    </div>
+                 {% if secSt.carousel %}
+                        </div>
+                      <div class="swarw sbclnext swiper-button-next{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                      <div class="swarw sbclprev swiper-button-prev{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                      <div class="swiper-pagination sbclpg{% unless secSt.dotm %} hide-sm{% endunless %}{% unless secSt.dot %} hide-md hide-lg{% endunless %}"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+    var swiper = new Swiper('#subclSlider', {
+      loop: false,
+      slidesPerView: 'auto',
+      freeMode: true,
+      autoplay: '{% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %}',
+      pagination: {
+        el: ".sbclpg",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".sbclnext",
+        prevEl: ".sbclprev",
+      },
+    });
+});
+</script>
+{% endif %}
+{%- endcapture -%}
+{{ subColection | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+    "name": "Sub Collections",
+    "class": "subClwrap",
+    "settings": [  
+		{
+			"type":"paragraph",
+			"content":"[How to display?](https://www.adornthemes.com/knowledge-base/sub-collection-list/)"
+		},
+        {
+            "type": "collection_list",
+            "id": "cl",
+            "label": "Select",
+            "info": "Create metafields and select here to show as sub collection"
+        },
+        {
+            "type": "select",
+            "id": "st",
+            "label": "Style",
+            "default": "1",
+            "options": [
+                {
+                    "value": "1",
+                    "label": "Style 1"
+                },
+                {
+                    "value": "2",
+                    "label": "Style 2"
+                },
+                {
+                    "value": "3",
+                    "label": "Style 3"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "content": "Items per row for list ==="
+        }, 	
+        {
+            "type": "range",
+            "id": "grid",
+            "label": "Desktop",
+            "default": 6,
+            "min": 1,
+            "max": 10,
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "gridtb",
+            "label": "Tablet",
+            "default": 3,
+            "min": 1,
+            "max": 7,
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "gridmb",
+            "label": "Mobile",
+            "default": 2,
+            "min": 1,
+            "max": 5,
+            "step": 1
+        }, 	
+        {
+            "type": "header",
+            "content": "Grid Appearance ==="
+        },
+        {
+            "type": "range",
+            "id": "gspace",
+            "label": "Grid Spacing",
+            "default": 15,
+            "min": 0,
+            "max": 30,
+            "step": 1,
+            "unit":"px"
+        },
+        {
+            "type": "range",
+            "id": "gspacem",
+            "label": "Grid Spacing (mobile)",
+            "default": 10,
+            "min": 0,
+            "max": 15,
+            "step": 1,
+            "unit":"px"		
+        },
+		{
+            "type": "header",
+            "content": "Slider Settings ===="
+        },
+		{
+            "type":"checkbox",
+            "id":"carousel",
+            "label":"Enable Carousel",
+            "default": true
+        },
+ 		{
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate Slide",
+            "default": false			
+        },
+        {
+            "type": "range",
+            "id": "speed",
+            "label": "Change Slide Every",
+            "default": 5,
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "unit": "Sec"			
+        },
+		{
+            "type": "paragraph",
+            "content": "Arrows ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "arrow",
+            "label": "Show on Desktop?",
+            "default": true
+        },
+		{
+            "type": "checkbox",
+            "id": "arrowm",
+            "label": "Show on Mobile?",
+            "default": false
+        },
+		{
+            "type": "paragraph",
+            "content": "Dot Navigation ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "dot",
+            "label": "Show on Desktop?",
+            "default": false
+        },
+		{
+            "type": "checkbox",
+            "id": "dotm",
+            "label": "Show on Mobile?",
+            "default": true
+        },
+        {
+            "type": "header",        
+            "content": "Links Appearance" 			
+        },
+        {
+            "type":"checkbox",
+            "id":"sicn",
+            "label":"Show Icon/Image with Links?",
+            "default": true,
+			"info":"[How to add?](https://www.adornthemes.com/knowledge-base/icon-image-for-collection/)"
+        },
+        {
+            "type": "range",
+            "id": "icn",
+            "label": "Icon/img Size",
+            "default":50,
+            "min": 20,
+            "max": 200,
+            "step": 5,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "fts",
+            "label": "Font Size",
+            "default": 16,
+            "min": 10,
+            "max": 35,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "range",
+            "id": "ftsm",
+            "label": "Font Size (Mobile)",
+            "default": 13,
+            "min": 10,
+            "max": 35,
+            "step": 1,
+            "unit": "px"
+        },
+        {
+            "type": "select",
+            "id": "ffml",
+            "label": "Font Family",
+            "default": "ft2",
+            "options": [
+                {
+                    "value": "ft1",
+                    "label": "Font 1"
+                },
+                {
+                    "value": "ft2",
+                    "label": "Font 2"
+                },
+                {
+                    "value": "ft3",
+                    "label": "Font 3"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "fw",
+            "label": "Heading Font Weight",
+            "default": "fwsb",
+            "options": [
+                {
+                    "value": "fwl",
+                    "label": "Light"
+                },
+                {
+                    "value": "fwr",
+                    "label": "Regular"
+                },
+                {
+                    "value": "fwm",
+                    "label": "Medium"
+                },
+                {
+                    "value": "fwsb",
+                    "label": "Semi Bold"
+                },
+                {
+                    "value": "fwb",
+                    "label": "Bold"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "case",
+            "label": "Use Links Uppercase?"       
+        },
+        {
+            "type": "color",
+            "id": "lcl",
+            "label": "Links",
+            "default": "#333"
+        },
+        {
+            "type": "color",
+            "id": "lkbg",
+            "label": "Background",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "lclh",
+            "label": "Links Hover",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "lkbgh",
+            "label": "Background Hover",
+            "default": "#f5f5f5"
+        },
+        {
+            "type": "color",
+            "id": "bdr",
+            "label": "Border",
+            "default": "#eee"
+        },
+        {
+            "type": "color",
+            "id": "bdrh",
+            "label": "Border Hover",
+            "default": "#F67280",
+            "info":"For style 2 and style 3"
+        },
+       {
+			"type": "range",
+			"id": "bdrr",
+			"min": 0,
+			"max": 15,
+			"step": 1,
+			"label": "Border Radius",
+			"unit": "px",
+			"default":0,
+            "info":"For style 2 and style 3"
+        },
+		{
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":0
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":0
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":0
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":0
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background"        
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": true            
+        },		       
+        {
+            "type":"checkbox",
+            "id":"npd",
+            "label":"No Padding?",
+            "default": false,
+            "info":"Remove left/right padding when fullwidth"
+        },		               
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide in Mobile?",
+            "default": false
+        }
+    ]
+}
+{% endschema %}

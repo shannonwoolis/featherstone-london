@@ -1,0 +1,237 @@
+{%- capture richText -%}
+{% assign secSt = section.settings %}
+{% assign secId = section.id | split: '-' | last %}
+<style>
+    .scrlTxtWrap { box-sizing: border-box; overflow:hidden; }
+    .scrlTxt { white-space:nowrap; width:200%; }
+    .scrlTxt .text-bd { color: transparent; -webkit-text-stroke: 2px var(--cl); -text-stroke: 2px var(--cl);}
+    .scrlTxt .rgTxt { padding:0 30px; }
+
+    .scrlTxt .rgTxt span { padding:0 15px;}
+    @keyframes tscrol{{ secId }}{0%{transform:translateX(0)}100%{transform:translate(-50%) }}
+  #std{{ secId }} { animation:tscrol{{ secId }} {{ secSt.speedm }}s linear infinite running; }
+  @media only screen and (min-width:766px){
+    #std{{ secId }} { animation:tscrol{{ secId }} {{ secSt.speed }}s linear infinite running; }
+   .scrlTxt .rgTxt span { padding:0 25px;}
+  }
+</style>
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px;">  	
+	<div class="scrlTxtWrap">
+        {% if secSt.link != 'blank' %}<a href="{{ secSt.link }}">{% endif %}
+            <div id="std{{ secId }}" class="scrlTxt fl tc">
+                <div id="st{{ secId }}" class="rgTxt scrtx {{ secSt.ff }} fl1" style="--cl:{{ secSt.cl }};--fs:{{ secSt.fs }}px;--fsm:{{ secSt.fsm }}px;--fw:{{ secSt.fw }};--lh:{{ secSt.lh }};">{{ secSt.title }}</div>
+                <div class="rgTxt {{ secSt.ff }} fl1" style="--cl:{{ secSt.cl }};--fs:{{ secSt.fs }}px;--fsm:{{ secSt.fsm }}px;--fw:{{ secSt.fw }};--lh:{{ secSt.lh }};">{{ secSt.title }}</div>
+            </div>
+        {% if secSt.link != 'blank' %}</a>{% endif %}
+	</div> 
+</div>
+<script>
+    var textWd = document.getElementById('st{{ secId }}'),
+        element = document.getElementById('std{{ secId }}');
+    width = Math.ceil(textWd.clientWidth);
+    element.style.width = width * 2+'px';
+</script>
+{%- endcapture -%}
+{{ richText | strip_newlines | remove: "  " | remove: "	" }}
+{% schema %}
+{
+"name": "Scrolling Text",
+"class": "scrolTxt",
+"settings":[
+    {
+        "type": "textarea",
+        "id": "title",
+        "label": "Text",
+        "default": "I AM VOGAL - NEXT GENERATION SHOPIFY THEME",
+        "info":"Add multiple text line with <span>text here</span> tags"
+    },
+    {
+        "type": "color",
+        "id": "cl",
+        "label": "Color",
+        "default": "#000"
+    },
+    {
+        "type": "range",
+        "id": "fs",
+        "label": "Font Size",
+        "default": 75,
+        "min": 10,
+        "max": 200,
+        "step": 5,
+        "unit": "px"
+    },
+    {
+        "type": "range",
+        "id": "fsm",
+        "label": "Font Size (mobile)",
+        "default": 50,
+        "min": 10,
+        "max": 200,
+        "step": 5,
+        "unit": "px"
+    },
+    {
+        "type": "select",
+        "id": "ff",
+        "label": "Font Family",
+        "default": "ft1",
+        "options": [
+            {
+                "value": "ft1",
+                "label": "Font 1"
+            },
+            {
+                "value": "ft2",
+                "label": "Font 2"
+            },
+            {
+                "value": "ft3",
+                "label": "Font 3"
+            }
+        ]
+    },  
+    {
+        "type": "select",
+        "id": "fw",
+        "label": "Font Weight",
+        "default": "700",
+        "options": [
+            {
+                "value": "300",
+                "label": "Light"
+            },
+            {
+                "value": "400",
+                "label": "Regular"
+            },
+            {
+                "value": "500",
+                "label": "Medium"
+            },
+            {
+                "value": "600",
+                "label": "Semi Bold"
+            },
+            {
+                "value": "700",
+                "label": "Bold"
+            }
+        ]
+    }, 	
+    {
+        "type": "range",
+        "id": "lh",
+        "label": "Line Height",
+        "default": 1.2,
+        "min": 1.0,
+        "max": 2.0,
+        "step": 0.1,
+        "info": "Space between text lines. Default is set to 1.3"
+    },
+    {
+        "type": "url",
+        "id": "link",
+        "label": "URL"
+    },
+	  {
+        "type": "range",
+        "id": "speed",
+        "label": "Text scrolling speed",
+        "default": 20,
+        "min": 5,
+        "max": 100,
+        "step": 1		
+      },
+	  {
+        "type": "range",
+        "id": "speedm",
+        "label": "Text scrolling speed(mobile)",
+        "default": 15,
+        "min": 5,
+        "max": 100,
+        "step": 1		
+      },
+	{
+		"type": "header",
+		"content": "Section"
+	},
+	{
+		"type": "paragraph",
+		"content": "Spacing ===="
+	},
+	{
+		"type": "range",
+		"id": "sst",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":30
+	},
+	{
+		"type": "range",
+		"id": "ssb",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":30
+	},
+	{
+		"type": "paragraph",
+		"content": "Spacing (mobile) ===="
+	},
+	{
+		"type": "range",
+		"id": "sstm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Top",
+		"unit": "px",
+		"default":15
+	},
+	{
+		"type": "range",
+		"id": "ssbm",
+		"min": 0,
+		"max": 100,
+		"step": 5,
+		"label": "Bottom",
+		"unit": "px",
+		"default":15
+	},       
+	{
+		"type": "color",
+		"id": "bg",
+		"label": "Background",
+		"default":"#FFF"			
+	},
+    {
+        "type": "color_background",
+        "id": "bgg",
+        "label": "Gradient Background"
+    },	
+	{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+        } 	
+],
+"presets": [
+	{
+		"name": "Scrolling Text"
+	}
+]
+}
+{% endschema %}

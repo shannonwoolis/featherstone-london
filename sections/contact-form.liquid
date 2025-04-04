@@ -1,0 +1,339 @@
+{% assign secSt = section.settings %}
+<div class="contact-page sec_cov{% if secSt.hidem %} hide-sm{% endif %}{% if secSt.hided %} hide-md hide-lg{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px;--cl:{{ secSt.cl }};--page_wid:{{ section.settings.page_Width }}px;">  
+	
+  <div class="page-width">        
+      {% if page.content.size > 0 %}{{ page.content }}{% endif %}    
+
+      <div class="grid contact{{ section.settings.layout }}{% if section.settings.layout == "2" %} f-wrap{% endif %}">
+        
+        <div class="gitem{% if section.settings.layout == "1" %} wd66-md{% endif %}">          
+          <div class="contact-frm form-vertical">
+            <div class="section-header">
+              {% if section.settings.title != blank %}<h2 class="mb10 tc">{{ section.settings.title }}</h2>{% endif %}
+            </div>
+            {% if section.settings.details %}<div class="rte mb25">{{ section.settings.details }}</div>{% endif %}
+            {% form 'contact' %}
+            {% if form.posted_successfully? %}<p class="note form-success">{{ 'contact.form.post_success' | t }}</p>{% endif %}
+
+            {{ form.errors | default_errors }} 
+            <div class="grid">
+              <div class="gitem wd50-md">
+                <input type="text" id="ContactFormName" name="contact[name]" placeholder="{{ 'contact.form.name' | t }}" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+              </div>       
+              <div class="gitem wd50-md">
+                <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" class="{% if form.errors contains 'email' %}input--error{% endif %}">
+              </div>              
+            </div>
+            {% unless section.settings.show_phone %}
+            <input type="tel" id="ContactFormPhone" name="contact[phone]" pattern="[0-9\-]*" placeholder="{{ 'contact.form.phone' | t }}" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+            {% endunless %} 
+            {% unless section.settings.show_subject %}
+            <input type="text" id="ContactFormSubject" name="contact[email subject]" placeholder="{{ 'contact.form.subject' | t }}" value="{% if form[subject] %}{{ form[subject] }}{% endif %}">
+            {% endunless %}
+            <textarea rows="10" id="ContactFormMessage" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+            <input type="submit" class="btn" value="{{ 'contact.form.submit' | t }}">
+            {% endform %}
+          </div>        
+        </div>
+        
+        <div class="gitem {% if section.settings.layout == "1" %}wd30-md{% endif %}">
+          <div class="c_details">                        
+             {% for block in section.blocks %}
+            
+             {% case block.type %}
+             
+               {% when 'address' %}
+                <div class="col">
+                {% if block.settings.logo %}
+                <p class="mb20" {{ block.shopify_attributes }}><img src="{{ block.settings.logo | img_url: '300x' }}" srcset="{{ block.settings.logo | img_url: '300x' }} 1x, {{ block.settings.logo | img_url: '300x', scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: shop.name }}"></p>
+                {% endif %}
+                {% if block.settings.cnt_title != blank %}<div {{ block.shopify_attributes }} class="h4 fwm mb10">{{ block.settings.cnt_title }}</div>{% endif %}       
+                {% if block.settings.store_address != blank or block.settings.store_phone != blank or block.settings.store_email != blank %}
+                <ul class="c_address mb15" {{ block.shopify_attributes }}>
+                  {% if block.settings.store_address != blank %}<li>{{ block.settings.store_address }}</li>{% endif %}
+                  {% if block.settings.store_phone != blank %}<li class="phone">{{ block.settings.store_phone }}</li>{% endif %}
+                  {% if block.settings.store_email != blank %}<li class="email">{{ block.settings.store_email }}</li>{% endif %}
+                </ul>
+                {% endif %}            
+                </div>
+            
+                {% when 'devider' %}
+               <div class="sep" style="background:{{ block.settings.clr_hr }};" ></div>
+                <hr style="border-bottom:1px solid {{ block.settings.clr_hr }};" {{ block.shopify_attributes }} />                
+            
+                {% when 'storetime' %}
+
+                <div class="col">
+                {% if block.settings.cnt_title != blank %}<div {{ block.shopify_attributes }} class="h4 fwm mb10">{{ block.settings.cnt_title }}</div>{% endif %}
+                {% if block.settings.storetime != blank %}<div class="mb15">{{ block.settings.storetime }}</div>{% endif %}
+                </div>
+            
+                {% when 'socialicon' %}
+                
+                <div class="follow-us">
+                {% if block.settings.cnt_title != blank %}<div {{ block.shopify_attributes }} class="h4 fwm mb10">{{ block.settings.cnt_title }}</div>{% endif %}
+                {% if block.settings.show_socials %}  {%- render 'social-media' -%}{% endif %}
+                </div>            
+                
+            
+             {% endcase %}
+             {% endfor %}
+            
+          </div>
+        </div>
+        
+      </div>   
+    
+  </div>
+</div>
+{% schema %}
+{
+    "name": "Contact Form",
+    "class":"contact-form",
+    "settings": [
+      {
+          "type": "select",
+          "id": "layout",
+          "label": "Select Style",
+          "default": "1",
+          "options": [
+            {
+            "value": "1",
+            "label": "Style 1"
+            },        
+            {
+            "value": "2",
+            "label": "Style 2"
+            }
+          ]
+       },   
+      {
+            "type": "range",
+            "id": "page_Width",
+            "label": "Container Width",
+            "default": 1000,
+            "min": 700,
+            "max": 1600,
+            "step": 100,
+            "unit": "px"
+       },  
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Drop Us A Line"
+      },
+      {
+        "type": "textarea",
+        "id": "details",
+        "label": "Text"
+      },
+      {
+          "type": "checkbox",
+          "id": "show_phone",
+          "label": "Hide Phone?",
+          "default":false
+      },
+      {
+          "type": "checkbox",
+          "id": "show_subject",
+          "label": "Hide Subject?",
+          "default":false
+      },      
+      {
+         "type": "header",
+         "content": "Section"
+    },
+    {
+        "type": "paragraph",
+        "content": "Spacing ===="
+    },
+    {
+        "type": "range",
+        "id": "sst",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "label": "Top",
+        "unit": "px",
+        "default":30
+    },
+    {
+        "type": "range",
+        "id": "ssb",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "label": "Bottom",
+        "unit": "px",
+        "default":30
+    },
+    {
+        "type": "paragraph",
+        "content": "Spacing (mobile) ===="
+    },
+    {
+        "type": "range",
+        "id": "sstm",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "label": "Top",
+        "unit": "px",
+        "default":15
+    },
+    {
+        "type": "range",
+        "id": "ssbm",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "label": "Bottom",
+        "unit": "px",
+        "default":15
+    },
+    {
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide on Mobile?",
+            "default": false
+    },
+    {
+            "type": "checkbox",
+            "id": "hided",
+            "label": "Hide on Desktop?",
+            "default": false
+    }, 
+    {
+        "type": "color",
+        "id": "bg",
+        "label": "Background",
+        "default":"#f5f5f5"
+    },
+    {
+        "type": "color_background",
+        "id": "bgg",
+        "label": "Gradient Background"
+    },
+    {
+        "type": "color",
+        "id": "cl",
+        "label": "Text",
+        "default":"#000"		
+    }
+],
+"blocks": [
+      {
+        "type": "address",
+        "name": "Address",
+        "limit":1,
+        "settings": [
+		     {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo image"
+              }, 
+              {
+                "type": "text",
+                "id": "cnt_title",
+                "label": "Title",
+                "default":" Address"
+              },             
+              {
+                "type": "richtext",
+                "id": "store_address",
+                "label": "Address",
+                "default":"<p>55 Gallaxy Enque, 2568 steet, 23568 NY</p>"
+              }, 
+              {
+                "type": "text",
+                "id": "store_phone",
+                "label": "Phone Number",
+                "default":"<b>PHONE</b>: +1 (440) 568 4568"
+              }, 
+              {
+                "type": "text",
+                "id": "store_email",
+                "label": "Email",
+                "default":" <b>EMAIL</b>: sales@yousite.com"
+             }
+		]
+	  },
+	  {
+        "type": "storetime",
+        "name": "Store Time",
+         "limit":3,
+        "settings": [
+             {
+                "type": "text",
+                "id": "cnt_title",
+                "label": "Title",
+                "default":"Opening Time:"
+              },
+            {
+              "type": "richtext",
+              "id": "storetime",
+              "label": "Text",
+              "default":"<p>Mon - Sat : 9am - 11pm <br/>Sunday: 11am - 5pm</p>"
+            }
+          ]
+	  },
+ 	{
+        "type": "devider",
+        "name": "Divider",
+		"settings": [
+            {
+              "type": "color",
+              "id": "clr_hr",
+              "label": "Border Color",
+              "default":"#eee"
+            }
+          ]
+	  },
+	  {
+        "type": "socialicon",
+        "name": "Social Icon",
+		"limit": 1,
+        "settings": [
+             {
+                "type":"checkbox",
+                "id":"show_socials",
+                "label":"Show Socials",
+                "default":true
+              },
+               {
+                "type": "text",
+                "id": "cnt_title",
+                "label": "Title",
+                "default":"Stay Connected"
+              }
+          ]
+	  }
+	],
+    "presets": [
+      {
+        "name": "Contact Form" ,
+          "blocks": [
+           {
+            "type": "devider"
+          },
+          {
+            "type": "address"
+          },   
+          {
+            "type": "devider"
+          },
+          {
+            "type": "storetime"
+          },  
+          {
+            "type": "devider"
+          },
+          {
+            "type": "socialicon"
+          }      		  
+        ]
+	}
+    ]
+}
+{% endschema %}

@@ -1,0 +1,275 @@
+{%- assign secSt = section.settings -%}
+<div class="sec_cov{% if secSt.hidem %} hide-sm{% endif %}" style="--sbg:{% if secSt.bgg != blank %}{{ secSt.bgg }}{% else %}{{ secSt.bg }}{% endif %};--sst:{{ secSt.sst }}px;--ssb:{{ secSt.ssb }}px;--sstm:{{ secSt.sstm }}px;--ssbm:{{ secSt.ssbm }}px"> 
+    <div class="recent-product" id="{{ section.id }}" data-pr="{{ product.handle | handleize }}" data-section-id="{{ section.id }}" data-section-type="carousel12"  {{ block.shopify_attributes }}>
+        <div class="{% if section.settings.sw %}fw-sec{% else %}page-width{% endif %}">
+            {% render 'sec-title' %}
+            {% if secSt.carousel %}<div class="arwOut pr">{% endif %}
+            <div class="grid rwcols-{{ section.settings.gridmb }} rwcols-md-{{ section.settings.gridtb }} rwcols-lg-{{ section.settings.grid }} grid-products{% if secSt.carousel %} swiper{% else %} recentPrList{% endif %}"
+                id="swp{{ section.id }}" {% if secSt.carousel %}data-autoplay='{% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %}'{% endif %}>
+                {% if secSt.carousel %}<div class="swiper-wrapper recentPrList">{% endif %}
+            </div>
+            {% if secSt.carousel %}
+                    </div>
+                    <div class="swarw swnrecent swiper-button-next{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swarw swprecent swiper-button-prev{% unless secSt.arrowm %} hide-sm{% endunless %}{% unless secSt.arrow %} hide-md hide-lg{% endunless %}"></div>
+                    <div class="swiper-pagination swpgrecent{% unless secSt.dotm %} hide-sm{% endunless %}{% unless secSt.dot %} hide-md hide-lg{% endunless %}"></div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+	window.addEventListener('DOMContentLoaded',function(){
+    	var rcCookie = "recentproducts",
+      		pr = "{{ product.handle }}";
+        if(getCookie(rcCookie) == undefined){
+			var str = pr;
+        } else {
+          	var ctrItems = String(getCookie(rcCookie)).split("+");
+	        if(ctrItems.length < {{ section.settings.row | plus: 1 }}){
+            	if(getCookie(rcCookie).indexOf(pr) == -1) {
+    	        	var str = pr + '+' + getCookie(rcCookie);
+        		}
+        	} else {
+              	if(getCookie(rcCookie).indexOf(pr) == -1) {
+    	        	var str = pr + '+' + ctrItems.slice(0, -1).join("+");
+        		}
+        	}
+            var crproduct = {{ product.handle | json }};
+            $.ajax({
+                url: '{{ routes.collections_url }}/all?type='+getCookie(rcCookie)+'__pr='+crproduct+'&view=prlist',
+                dataType: 'html',
+                type: 'GET',
+                success: function(data) {
+                    if($(data).find('.grid_bx').length){
+                        $('.recentPrList').html(data);
+                    } else {
+                        $('.recent-product').hide();
+                    }
+                },
+                error: function(data) {
+                    console.log('ajax error');
+                },
+                complete: function(){
+                    if(ctrItems.length > 1){
+                        {% if secSt.carousel %}
+                            var recentswiper = new Swiper('#swp{{ section.id }}', {
+                              loop: false,
+                              slidesPerView: 'auto',
+                              autoplay: {% if secSt.autoplay %}{ "delay":"{{ secSt.speed | times: 1000 }}" }{% else %}false{% endif %},
+                              pagination: {
+                                el: ".swpgrecent",
+                                clickable: true,
+                              },
+                              navigation: {
+                                nextEl: ".swnrecent",
+                                prevEl: ".swprecent",
+                              },
+                            });
+                        {% endif %}
+                    }
+                    theme.countdown();
+                }
+            });
+		}
+        if(str != undefined){
+		  setCookie(rcCookie, str, 7);
+        }
+	});
+</script>
+{% schema %}
+  {
+    "name": "Recently Viewed Products",
+    "settings": [		        
+ 	 {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "Recently Viewed Products"
+      },
+ 	  {
+        "id": "subtitle",
+        "type": "textarea",
+        "label": "Sub title"      
+      },
+      {
+        "type": "paragraph",
+        "content": "Products Per Row"
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": "Desktop",
+        "default": 4,
+        "min": 2,
+        "max": 7,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridtb",
+        "label": "Tablet",
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "gridmb",
+        "label": "Mobile",
+        "default": 2,
+        "min": 1,
+        "max": 3,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "row",
+        "label": "Number of Products to show",
+        "default": 6,
+        "min":1,
+        "max":15,
+        "step":1
+      },	
+	  {
+		"type":"paragraph",
+		"content":"Manage grid style from Theme Settings -> Products Grid"
+	  },
+		{
+            "type": "header",
+            "content": "Slider Settings ===="
+        },
+		{
+            "type":"checkbox",
+            "id":"carousel",
+            "label":"Enable Carousel",
+            "default": true
+        },
+ 		{
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Auto-rotate List",
+            "default": false			
+        },
+        {
+            "type": "range",
+            "id": "speed",
+            "label": "Change Grid Every",
+            "default": 5,
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "unit": "Sec"			
+        },
+		{
+            "type": "paragraph",
+            "content": "Arrows ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "arrow",
+            "label": "Show on Desktop?",
+            "default": true			
+        },
+		{
+            "type": "checkbox",
+            "id": "arrowm",
+            "label": "Show on Mobile?",
+            "default": true			
+        },
+		{
+            "type": "paragraph",
+            "content": "Dot Navigation ===="
+        },
+		{
+            "type": "checkbox",
+            "id": "dot",
+            "label": "Show on Desktop?",
+            "default": false			
+        },
+		{
+            "type": "checkbox",
+            "id": "dotm",
+            "label": "Show on Mobile?",
+            "default": false			
+        },
+	  {
+            "type": "header",
+            "content": "Section"
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing ===="
+        },
+		{
+			"type": "range",
+			"id": "sst",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":30
+        },
+		{
+			"type": "range",
+			"id": "ssb",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":30
+        },
+		{
+            "type": "paragraph",
+            "content": "Spacing (mobile) ===="
+        },
+		{
+			"type": "range",
+			"id": "sstm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Top",
+			"unit": "px",
+			"default":15
+        },
+		{
+			"type": "range",
+			"id": "ssbm",
+			"min": 0,
+			"max": 100,
+			"step": 5,
+			"label": "Bottom",
+			"unit": "px",
+			"default":15
+        },       
+        {
+            "type": "color",
+            "id": "bg",
+            "label": "Background",
+            "default":"#fff"	         
+        },
+        {
+            "type": "color_background",
+            "id": "bgg",
+            "label": "Gradient Background"
+        },	
+        {
+            "type":"checkbox",
+            "id":"sw",
+            "label":"Fullwidth?",
+            "default": false,
+            "info":"Manage fullwidth padding from Theme Settings -> Layout Style"
+        },		               
+		{
+            "type": "checkbox",
+            "id": "hidem",
+            "label": "Hide in Mobile?",
+            "default": false
+        }
+	]
+  }
+{% endschema %}
