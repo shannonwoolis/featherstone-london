@@ -35,10 +35,13 @@
   }
   
   {% if section.settings.dis_botbdr %}
-  .flTtl {border-bottom:1px solid {{ section.settings.flbtmbdr }}; padding-bottom:15px; }
-  .filterDD {margin:20px 0 25px;}
-  .filterBx {margin-bottom:0;}
-  .sdBlock {margin-bottom:20px }
+    .flTtl {border-bottom:1px solid {{ section.settings.flbtmbdr }}; padding-bottom:15px; }
+    .filterDD {margin:20px 0 25px;padding: 0 45px 35px 45px !important;}
+    .filterBx {margin-bottom:0;}
+    .sdBlock {margin-bottom:20px }
+    .flTop .bxTtl { padding: 35px 0 15px 0 !important; }
+    .sb_filter { width: 90% !important; }
+    .flForm { max-width: 100%; padding-top: 35px; }
   {% endif %}
   
   {% if section.settings.tglico %}
