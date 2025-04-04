@@ -209,7 +209,7 @@
     "grid_box": false,
     "mlcurrency": false,
     "auto_currencies": true,
-    "mlLang": true,
+    "mlLang": false,
     "langOpt": "2",
     "mlLangfl": false,
     "languages": "",
