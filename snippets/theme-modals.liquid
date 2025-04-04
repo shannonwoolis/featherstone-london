@@ -65,7 +65,7 @@
 
 {% if settings.show_cookie %}
   <style>  
-  .cookie_box { color: {{ settings.cookie_txt }}; background: {{ settings.cookie_bg }}; z-index:98; width:100%; max-width:350px; padding:20px 25px; position:fixed; right:10px; bottom:10px; }
+  .cookie_box { display: none !important; color: {{ settings.cookie_txt }}; background: {{ settings.cookie_bg }}; z-index:98; width:100%; max-width:350px; padding:20px 25px; position:fixed; right:10px; bottom:10px; }
   .cookie_action a { color:{{ settings.link_clr }}; display:inline-block; border-bottom:1px solid {{ settings.link_clr }}; align-items: center; text-transform: uppercase; font-size: 11px;}  
   .cookie_action button.link2 { border:1px solid {{ settings.link_clr }}; padding:4px 15px; margin-{% if isRtl %}right{% else %}left{% endif %}:20px; font-size:11px; text-transform: uppercase;} 
   .cookie_action button.link2:hover { border-color:{{ settings.link_clr }}; color: {{ settings.cookie_bg }}; background: {{ settings.link_clr }}; }
