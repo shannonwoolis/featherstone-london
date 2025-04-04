@@ -1,1 +1,193 @@
-{"sections":{"banner":{"type":"cl-page-banner","blocks":{"title":{"type":"title","settings":{"cl":"#ffffff","fts":30,"fsm":20,"hfw":"500","tuu":false,"mb":5,"mbm":5}}},"block_order":["title"],"settings":{"hit":200,"hitt":160,"hitm":100,"bg":"#f4f4f4","bgg":"linear-gradient(127deg, rgba(183, 169, 128, 1) 10%, rgba(240, 247, 245, 1) 44%, rgba(25, 24, 24, 1) 71%, rgba(51, 51, 51, 1) 91%)","image":"shopify:\/\/shop_images\/IMG_8363-no_watermark.jpg","alignment":"center","cntwd":1300,"text-align":true,"tbg":"rgba(0,0,0,0)","opt":0.9,"bpd":30,"bpdm":20,"brad":0}},"breadcrumb":{"type":"breadcrumb","settings":{"sw":false,"hidemb":false,"tc":false}},"sub-collections":{"type":"sub-collections","settings":{"cl":[],"st":"3","grid":7,"gridtb":5,"gridmb":3,"gspace":15,"gspacem":10,"carousel":true,"autoplay":false,"speed":5,"arrow":true,"arrowm":false,"dot":false,"dotm":true,"sicn":true,"icn":60,"fts":13,"ftsm":13,"ffml":"ft1","fw":"fwm","case":true,"lcl":"#333333","lkbg":"#f8f7fc","lclh":"#000000","lkbgh":"#ffffff","bdr":"#eeeeee","bdrh":"#86bbbf","bdrr":4,"sst":10,"ssb":0,"sstm":0,"ssbm":0,"bg":"#ffffff","bgg":"","sw":false,"npd":false,"hidem":false}},"collection":{"type":"main-collection","blocks":{"b1cf9b1d-3efd-4bb6-9db0-423fe4896457":{"type":"categories","settings":{"title":"Categories","side_categories":""}},"categories_p77L7e":{"type":"categories","settings":{"title":"SIze","side_categories":""}},"c48c56f1-0620-4109-aef0-490223599f1d":{"type":"image_bnr","disabled":true,"settings":{"link":"#","rad":0}},"fe1f3e3a-2385-4c5b-b338-ed0c295ba47a":{"type":"filter_by","settings":{"title":"","flpcnt":false}}},"block_order":["b1cf9b1d-3efd-4bb6-9db0-423fe4896457","categories_p77L7e","c48c56f1-0620-4109-aef0-490223599f1d","fe1f3e3a-2385-4c5b-b338-ed0c295ba47a"],"settings":{"clttl":false,"climg":false,"des_pos":"2","talign":false,"pcount":false,"gridicn":true,"sortby":true,"grid":3,"gridtb":3,"gridmb":2,"prpp":12,"pagination":"infinite","filters":true,"sbpos":"top","tbg":false,"flbgcl":"#ffffff","flbdr":"#f5f5f5","flshadow":false,"sbg":false,"sbgc":"#ffffff","sbgb":"#eeeeee","bx_ttl":14,"bx_ttlw":"fwm","bx_tcase":"ttu","bx_ttlc":"#000000","dis_botbdr":true,"flbtmbdr":"#f5f5f5","tglico":true,"opt":13,"optcase":"ttc","floptcl":"#000000","catlinkhv":"#40b884","fclr_size":"large","fclr_style":"l_rectangle","actclr":"#000000","flcolumn":"Brand, Product Type, Size","act_fltxt":"#ffffff","act_flbg":"#222222","bar":"#eeeeee","bara":"#333333","sst":40,"ssb":40,"sstm":20,"ssbm":20,"bg":"#ffffff","sw":false}}},"order":["banner","breadcrumb","sub-collections","collection"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "cl-page-banner",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "cl": "#ffffff",
+            "fts": 30,
+            "fsm": 20,
+            "hfw": "500",
+            "tuu": false,
+            "mb": 5,
+            "mbm": 5
+          }
+        }
+      },
+      "block_order": [
+        "title"
+      ],
+      "settings": {
+        "hit": 200,
+        "hitt": 160,
+        "hitm": 100,
+        "bg": "#f4f4f4",
+        "bgg": "linear-gradient(127deg, rgba(183, 169, 128, 1) 10%, rgba(240, 247, 245, 1) 44%, rgba(25, 24, 24, 1) 71%, rgba(51, 51, 51, 1) 91%)",
+        "image": "shopify://shop_images/IMG_8363-no_watermark.jpg",
+        "alignment": "center",
+        "cntwd": 1300,
+        "text-align": true,
+        "tbg": "rgba(0,0,0,0)",
+        "opt": 0.9,
+        "bpd": 30,
+        "bpdm": 20,
+        "brad": 0
+      }
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "sw": false,
+        "hidemb": false,
+        "tc": false
+      }
+    },
+    "sub-collections": {
+      "type": "sub-collections",
+      "settings": {
+        "cl": [],
+        "st": "3",
+        "grid": 7,
+        "gridtb": 5,
+        "gridmb": 3,
+        "gspace": 15,
+        "gspacem": 10,
+        "carousel": true,
+        "autoplay": false,
+        "speed": 5,
+        "arrow": true,
+        "arrowm": false,
+        "dot": false,
+        "dotm": true,
+        "sicn": true,
+        "icn": 60,
+        "fts": 13,
+        "ftsm": 13,
+        "ffml": "ft1",
+        "fw": "fwm",
+        "case": true,
+        "lcl": "#333333",
+        "lkbg": "#f8f7fc",
+        "lclh": "#000000",
+        "lkbgh": "#ffffff",
+        "bdr": "#eeeeee",
+        "bdrh": "#86bbbf",
+        "bdrr": 4,
+        "sst": 10,
+        "ssb": 0,
+        "sstm": 0,
+        "ssbm": 0,
+        "bg": "#ffffff",
+        "bgg": "",
+        "sw": false,
+        "npd": false,
+        "hidem": false
+      }
+    },
+    "collection": {
+      "type": "main-collection",
+      "blocks": {
+        "b1cf9b1d-3efd-4bb6-9db0-423fe4896457": {
+          "type": "categories",
+          "settings": {
+            "title": "Categories",
+            "side_categories": ""
+          }
+        },
+        "categories_p77L7e": {
+          "type": "categories",
+          "settings": {
+            "title": "SIze",
+            "side_categories": ""
+          }
+        },
+        "c48c56f1-0620-4109-aef0-490223599f1d": {
+          "type": "image_bnr",
+          "disabled": true,
+          "settings": {
+            "link": "#",
+            "rad": 0
+          }
+        },
+        "fe1f3e3a-2385-4c5b-b338-ed0c295ba47a": {
+          "type": "filter_by",
+          "settings": {
+            "title": "",
+            "flpcnt": false
+          }
+        }
+      },
+      "block_order": [
+        "b1cf9b1d-3efd-4bb6-9db0-423fe4896457",
+        "categories_p77L7e",
+        "c48c56f1-0620-4109-aef0-490223599f1d",
+        "fe1f3e3a-2385-4c5b-b338-ed0c295ba47a"
+      ],
+      "settings": {
+        "clttl": false,
+        "climg": false,
+        "des_pos": "2",
+        "talign": false,
+        "pcount": false,
+        "gridicn": true,
+        "sortby": true,
+        "grid": 3,
+        "gridtb": 3,
+        "gridmb": 2,
+        "prpp": 12,
+        "pagination": "infinite",
+        "filters": true,
+        "sbpos": "popup",
+        "tbg": false,
+        "flbgcl": "#ffffff",
+        "flbdr": "#f5f5f5",
+        "flshadow": false,
+        "sbg": false,
+        "sbgc": "#ffffff",
+        "sbgb": "#eeeeee",
+        "bx_ttl": 14,
+        "bx_ttlw": "fwm",
+        "bx_tcase": "ttu",
+        "bx_ttlc": "#000000",
+        "dis_botbdr": true,
+        "flbtmbdr": "#f5f5f5",
+        "tglico": true,
+        "opt": 13,
+        "optcase": "ttc",
+        "floptcl": "#000000",
+        "catlinkhv": "#40b884",
+        "fclr_size": "large",
+        "fclr_style": "l_rectangle",
+        "actclr": "#000000",
+        "flcolumn": "Brand, Product Type, Size",
+        "act_fltxt": "#ffffff",
+        "act_flbg": "#222222",
+        "bar": "#eeeeee",
+        "bara": "#333333",
+        "sst": 40,
+        "ssb": 40,
+        "sstm": 20,
+        "ssbm": 20,
+        "bg": "#ffffff",
+        "sw": false
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "breadcrumb",
+    "sub-collections",
+    "collection"
+  ]
+}
