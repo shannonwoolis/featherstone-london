@@ -6,7 +6,7 @@
         <div class="grid custom-cnt gspace" style="--grsp:0 -{{ section.settings.gspace | divided_by: 2.0 }}px;--grspi:0 {{ section.settings.gspace | divided_by: 2.0 }}px {{ section.settings.gspace }}px;--grspm:0 -{{ section.settings.gspacem | divided_by: 2.0 }}px;--grspim:0 {{ section.settings.gspacem | divided_by: 2.0 }}px {{ section.settings.gspacem }}px;">
                 {% for block in section.blocks %}
                     {% assign blkSt = block.settings %}
-                    <div class="gitem ct_item cti{{ block.id }} {{ blkSt.width }}-md {{ blkSt.alignment }}{%  if block.type == "richtxt" %} customrich{% endif %}{% if blkSt.hidem %} hide-sm{% endif %}" {{ block.shopify_attributes }}>
+                    <div class="gitem ct_item cti{{ block.id }} {{ blkSt.width }}-md {{ blkSt.alignment }}{%  if block.type == "richtxt" %} customrich{% endif %}{% if blkSt.hidem %} hide-sm{% endif %} {% if blkSt.hided %} hide-md hide-lg{% endif %}" {{ block.shopify_attributes }}>
                         <div class="of_hidden ct_item_in ct_item_{{ block.type }} w_100" style="--bg:{{ blkSt.clbg }};--brad:{{ blkSt.brad }}px;">                           
                         {% case block.type %}
                           
