@@ -56,6 +56,7 @@
           "type": "image",
           "settings": {
             "hidem": true,
+            "hided": false,
             "image": "shopify://shop_images/spring-summer-banner.jpg",
             "imgurl": "https://featherstonelondon.co.uk/collections/frontpage",
             "alignment": "f-ass",
@@ -67,6 +68,7 @@
           "type": "image",
           "settings": {
             "hidem": false,
+            "hided": true,
             "image": "shopify://shop_images/spring_summer_banner_option_2_mob.jpg",
             "imgurl": "",
             "alignment": "f-ass",
