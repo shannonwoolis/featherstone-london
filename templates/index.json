@@ -55,17 +55,29 @@
         "image_fEPdqN": {
           "type": "image",
           "settings": {
-            "hidem": false,
+            "hidem": true,
             "image": "shopify://shop_images/spring-summer-banner.jpg",
             "imgurl": "https://featherstonelondon.co.uk/collections/frontpage",
             "alignment": "f-ass",
             "brad": 0,
             "width": "w_100"
           }
+        },
+        "image_6rNqPj": {
+          "type": "image",
+          "settings": {
+            "hidem": false,
+            "image": "shopify://shop_images/spring_summer_banner_option_2_mob.jpg",
+            "imgurl": "",
+            "alignment": "f-ass",
+            "brad": 0,
+            "width": "wd50"
+          }
         }
       },
       "block_order": [
-        "image_fEPdqN"
+        "image_fEPdqN",
+        "image_6rNqPj"
       ],
       "settings": {
         "title": "",
