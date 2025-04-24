@@ -420,7 +420,7 @@
             "type": "dd",
             "settings": {
               "title": "SHOP",
-              "url": "shopify://collections/frontpage",
+              "url": "shopify://collections",
               "menu": "shop"
             }
           },
