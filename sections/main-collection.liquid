@@ -15,7 +15,27 @@
 %}
 <style type="text/css">
   :root {
-   	--flbgcl:{{ section.settings.flbgcl }};
+  .product-card__image,
+.card__image,
+.card__media,
+.grid-products .gitem .product__media {
+  height: 650px !important;
+  max-height: 650px !important;
+  object-fit: contain !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card__image img,
+.card__image img,
+.card__media img,
+.grid-products .gitem .product__media img {
+  height: 100% !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+ 	--flbgcl:{{ section.settings.flbgcl }};
   	--flbdr:{{ section.settings.flbdr }};
     --wdttl:{{ section.settings.bx_ttl }}px;
     --filterby:{{ section.settings.bx_ttl | minus:1 }}px;
