@@ -14,6 +14,8 @@
     endif
 %}
 <style type="text/css">  
+<style type="text/css">  
+/* Image container styles */
 .product-card__image,
 .card__image,
 .card__media,
@@ -26,6 +28,7 @@
   justify-content: center;
 }
 
+/* Image itself */
 .product-card__image img,
 .card__image img,
 .card__media img,
@@ -33,9 +36,29 @@
   height: 100% !important;
   width: auto !important;
   object-fit: contain !important;
-  :root {
-
 }
+
+/* Global CSS variables */
+:root {
+  --flbgcl: {{ section.settings.flbgcl }};
+  --flbdr: {{ section.settings.flbdr }};
+  --wdttl: {{ section.settings.bx_ttl }}px;
+  --filterby: {{ section.settings.bx_ttl | minus:1 }}px;
+  --wdtcl: {{ section.settings.bx_ttlc }};
+  --opt: {{ section.settings.opt }}px;
+  --optp: {{ section.settings.opt | plus : 1 }}px;
+  --optcl: {{ section.settings.floptcl }};
+  --actclr: {{ section.settings.actclr }};
+  --actftxt: {{ section.settings.act_fltxt }};
+  --actfbg: {{ section.settings.act_flbg }};
+  --actfbd: {{ section.settings.act_fltxt | color_modify:'alpha', 0.2 }};
+  --catactl: {{ section.settings.catlinkhv }}; 
+  --pbarbg: {{ section.settings.bar }};
+  --pbarbga: {{ section.settings.bara }};
+  --crsymbol: '{{ cart.currency.symbol }}';
+  --sbgc: {{ section.settings.sbgc }};
+}
+
  	--flbgcl:{{ section.settings.flbgcl }};
   	--flbdr:{{ section.settings.flbdr }};
     --wdttl:{{ section.settings.bx_ttl }}px;
