@@ -585,7 +585,7 @@ s.pr_price { opacity:0.6; margin-right:4px; font-weight:400; }
 .grid_img_wr { width:100%; overflow:hidden; position:relative; z-index:1; }
 
 .grid_img .placeholder-svg {position:absolute;}
-.grid_img { display:block; position:relative; padding-bottom:100%; border-radius:0px;
+.grid_img { display:block; position:relative; padding-bottom:150%; border-radius:0px;
     background-position:center center; background-size:cover; background-repeat:no-repeat; transition:all 0.5s cubic-bezier(0,0,.3,1); }
 .grid_img_wr .hover,
 .grid_img_wr .variantImg { visibility:hidden; opacity:0; position:absolute; left:0; top:0; z-index:2; width:100%; height:100%; }
