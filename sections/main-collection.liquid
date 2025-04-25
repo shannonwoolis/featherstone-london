@@ -13,7 +13,7 @@
         assign pmRight = 'right'
     endif
 %}
-<style type="text/css">  
+<style type="text/css">
 /* Image container styles */
 .product-card__image,
 .card__image,
@@ -45,45 +45,89 @@
   --filterby: {{ section.settings.bx_ttl | minus:1 }}px;
   --wdtcl: {{ section.settings.bx_ttlc }};
   --opt: {{ section.settings.opt }}px;
-  --optp: {{ section.settings.opt | plus : 1 }}px;
+  --optp: {{ section.settings.opt | plus: 1 }}px;
   --optcl: {{ section.settings.floptcl }};
   --actclr: {{ section.settings.actclr }};
   --actftxt: {{ section.settings.act_fltxt }};
   --actfbg: {{ section.settings.act_flbg }};
-  --actfbd: {{ section.settings.act_fltxt | color_modify:'alpha', 0.2 }};
-  --catactl: {{ section.settings.catlinkhv }}; 
+  --actfbd: {{ section.settings.act_fltxt | color_modify: 'alpha', 0.2 }};
+  --catactl: {{ section.settings.catlinkhv }};
   --pbarbg: {{ section.settings.bar }};
   --pbarbga: {{ section.settings.bara }};
   --crsymbol: '{{ cart.currency.symbol }}';
   --sbgc: {{ section.settings.sbgc }};
-</style>
-  {% if section.settings.dis_botbdr %}
-    .flTtl {border-bottom:1px solid {{ section.settings.flbtmbdr }}; padding-bottom:15px; }
-    .filterDD {margin:20px 0 25px;padding: 0 45px 35px 45px !important;}
-    .filterBx {margin-bottom:0;}
-    .sdBlock {margin-bottom:20px }
-    .flTop .bxTtl { padding: 35px 0 15px 0 !important; }
-    .sb_filter {  width: 90% !important; max-width: 400px; @media only screen and (min-width:1024px){ width: 100% !important; max-width: 100%; } }
-    .flForm { max-width: 100%; padding-top: 35px; }
-  {% endif %}
-  
-  {% if section.settings.tglico %}
-  .sidebar .filterBx .at-icon {display:none;}
-  {% endif %}
+}
 
-  {% if section.settings.sbg and section.settings.sbpos != 'top' %}
-    @media only screen and (min-width:1024px){
-     #main-collection-filters:not(.sb_popup) { padding:25px 30px;  }
-    }
-    #main-collection-filters { background:{{ section.settings.sbgc }}; border:1px solid {{ section.settings.sbgb }};}
- {% endif %}
-  
- {% if section.settings.tbg %}
-   .flTop { padding:10px 10px 10px 20px; margin-bottom:10px; background-color:var(--flbgcl); border:1px solid var(--flbdr); }
- {% endif %}
-  
-   price-range.flList .field:before { content:'{{ cart.currency.symbol }}'; position:absolute; top:5px; {{ pmLeft }}:10px; }
+/* Conditional styles */
+{% if section.settings.dis_botbdr %}
+.flTtl {
+  border-bottom: 1px solid {{ section.settings.flbtmbdr }};
+  padding-bottom: 15px;
+}
+.filterDD {
+  margin: 20px 0 25px;
+  padding: 0 45px 35px 45px !important;
+}
+.filterBx {
+  margin-bottom: 0;
+}
+.sdBlock {
+  margin-bottom: 20px;
+}
+.flTop .bxTtl {
+  padding: 35px 0 15px 0 !important;
+}
+.flForm {
+  max-width: 100%;
+  padding-top: 35px;
+}
+{% endif %}
+
+{% if section.settings.dis_botbdr %}
+@media only screen and (min-width: 1024px) {
+  .sb_filter {
+    width: 100% !important;
+    max-width: 100%;
+  }
+}
+{% endif %}
+
+{% if section.settings.tglico %}
+.sidebar .filterBx .at-icon {
+  display: none;
+}
+{% endif %}
+
+{% if section.settings.sbg and section.settings.sbpos != 'top' %}
+@media only screen and (min-width: 1024px) {
+  #main-collection-filters:not(.sb_popup) {
+    padding: 25px 30px;
+  }
+}
+#main-collection-filters {
+  background: {{ section.settings.sbgc }};
+  border: 1px solid {{ section.settings.sbgb }};
+}
+{% endif %}
+
+{% if section.settings.tbg %}
+.flTop {
+  padding: 10px 10px 10px 20px;
+  margin-bottom: 10px;
+  background-color: var(--flbgcl);
+  border: 1px solid var(--flbdr);
+}
+{% endif %}
+
+/* Price range symbol */
+price-range.flList .field:before {
+  content: '{{ cart.currency.symbol }}';
+  position: absolute;
+  top: 5px;
+  {{ pmLeft }}: 10px;
+}
 </style>
+
 <div id="{{ section.id }}" data-section-type="collection-template">
 {%- paginate collection.products by section.settings.prpp -%}
 
