@@ -160,6 +160,7 @@
     "search_rad": 6,
     "search_lbl1": "Quick Search:",
     "search_word": "jeans, overcoat, raincoat",
+    "search_recomand": "prr",
     "search_lbl2": "You May Also Like",
     "searchCl": "new-arrivals",
     "s_size": "large",
@@ -420,7 +421,7 @@
             "type": "dd",
             "settings": {
               "title": "SHOP",
-              "url": "shopify://collections/all",
+              "url": "https://featherstonelondon.co.uk/collections/frontpage",
               "menu": "shop"
             }
           },
