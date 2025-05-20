@@ -619,7 +619,7 @@
           "settings": {
             "image": "shopify://shop_images/resized_for_shopify.jpg",
             "layout": "left",
-            "bnrwd": 60,
+            "bnrwd": 50,
             "cwd": 75,
             "txtbg": "#ffffff",
             "bgg": "",
