@@ -213,22 +213,22 @@
         "template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-0": {
           "type": "feature",
           "settings": {
-            "title": "<span class=\"db mb5\">Luxury Redefined</span>",
-            "text": "At Featherstone London, we believe that luxury is more than a label—it's a lifestyle. Each garment is handpicked for its superior quality, timeless design, and refined elegance, reflecting our passion for creating exceptional menswear. When you choose Featherstone London, you're not just purchasing clothing; you're investing in a statement of sophistication that exudes confidence and class."
+            "title": "<span class=\"db mb5\">Luxury Menswear, Redefined</span>",
+            "text": "At Featherstone London, luxury is more than fabric or fit — it’s a mindset. We create men’s clothing rooted in craftsmanship and quiet confidence. Every piece reflects our belief in refined details, honest materials, and lasting quality. From elevated staples to smart casual essentials, our collections are made to complement a modern, minimalist wardrobe."
           }
         },
         "template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-1": {
           "type": "feature",
           "settings": {
-            "title": "<span class=\"db mb5\">Our Commitment to Excellence\n</span>",
-            "text": "We pride ourselves on our meticulous attention to detail, ensuring that every stitch, seam, and fabric selection meets the highest standards. Our team is dedicated to helping you look and feel your best, offering a personalized shopping experience that is as seamless as it is stylish."
+            "title": "<span class=\"db mb5\">Commitment to Craft and Detail\n</span>",
+            "text": "Every garment is the result of focused attention — from fabric selection to final stitch. Our commitment to excellence shows in the precision of our cuts, the integrity of our materials, and the care in our process. This is menswear made to look sharp, feel effortless, and wear well over time."
           }
         },
         "feature_jJJrGp": {
           "type": "feature",
           "settings": {
-            "title": "Building Lasting Relationships",
-            "text": "We value the connections we build with our customers. Whether you're a loyal client or visiting Featherstone London for the first time, we are here to create an inviting and memorable experience. Your satisfaction is our priority, and we are committed to offering a service that puts your needs at the heart of everything we do."
+            "title": "A Personal Approach, Built on Trust",
+            "text": "Featherstone is a founder-led menswear brand that values relationships as much as results. Whether you're discovering us for the first time or returning as a loyal client, we’re here to offer a tailored, personal experience — one that places your needs at the centre. Based in London and serving customers across the UK, we design with purpose and deliver with pride."
           }
         }
       },
@@ -244,14 +244,14 @@
         "tbgg": "",
         "talign": "tl",
         "txtpd": true,
-        "title": "Featherstone London",
+        "title": "Featherstone London: Redefining British Menswear",
         "tcl": "#ffffff",
         "tfs": 24,
         "tfsm": 20,
         "tff": "ft2",
         "tfw": "500",
         "tlh": 1.3,
-        "text": "<h3><strong>Featherstone London: Redefining British Menswear</strong></h3><p>Our story begins with founder Craig Featherstone — a master tailor with over 30 years of experience, trained on London’s iconic Savile Row. His deep expertise in modern tailoring is the foundation of Featherstone London. Known for his precise eye and refined approach, Craig brings a new perspective to British menswear — one that values subtle elegance, timeless design, and garments that stand the test of time.</p><h3><strong>Luxury Menswear, Redefined</strong></h3><p>At Featherstone London, luxury is more than fabric or fit — it’s a mindset. We create men’s clothing rooted in craftsmanship and quiet confidence. Every piece reflects our belief in refined details, honest materials, and lasting quality. From elevated staples to smart casual essentials, our collections are made to complement a modern, minimalist wardrobe.</p><h3><strong>Commitment to Craft and Detail</strong></h3><p>Every garment is the result of focused attention — from fabric selection to final stitch. Our commitment to excellence shows in the precision of our cuts, the integrity of our materials, and the care in our process. This is menswear made to look sharp, feel effortless, and wear well over time.</p><h3><strong>A Personal Approach, Built on Trust</strong></h3><p>Featherstone is a founder-led menswear brand that values relationships as much as results. Whether you're discovering us for the first time or returning as a loyal client, we’re here to offer a tailored, personal experience — one that places your needs at the centre. Based in London and serving customers across the UK, we design with purpose and deliver with pride.</p>",
+        "text": "<p><br/>Our story begins with founder Craig Featherstone — a master tailor with over 30 years of experience, trained on London’s iconic Savile Row. His deep expertise in modern tailoring is the foundation of Featherstone London. Known for his precise eye and refined approach, Craig brings a new perspective to British menswear — one that values subtle elegance, timeless design, and garments that stand the test of time.<br/></p>",
         "cl": "#ffffff",
         "fs": 14,
         "fsm": 13,
