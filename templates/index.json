@@ -619,8 +619,8 @@
           "settings": {
             "image": "shopify://shop_images/resized_for_shopify.jpg",
             "layout": "left",
-            "bnrwd": 50,
-            "cwd": 50,
+            "bnrwd": 40,
+            "cwd": 75,
             "txtbg": "#ffffff",
             "bgg": "",
             "talign": "tl",
