@@ -1,1 +1,604 @@
-{"sections":{"banner":{"type":"page-banner","blocks":{"title":{"type":"title","settings":{"cl":"#ffffff","fts":30,"ftsm":20,"fw":"500","tuu":false,"mb":5,"mbm":5}}},"block_order":["title"],"settings":{"hit":220,"hitt":220,"hitm":100,"bg":"#f4f4f4","bgg":"","image":"shopify:\/\/shop_images\/IMG_8363-no_watermark.jpg","cntwd":1000,"text-align":true,"tbg":"rgba(0,0,0,0)","opt":0.9,"bpd":30,"bpdm":20,"brad":0}},"breadcrumb":{"type":"breadcrumb","settings":{"sw":false,"hidemb":false,"tc":false}},"main":{"type":"main-page","settings":{"hidettl":true,"hide_hdft":false,"sst":0,"ssb":0,"sstm":0,"ssbm":0,"bg":"","sw":false}},"5a6bab00-c185-4fc3-8574-c59c057eafb2":{"type":"image-text-col2","blocks":{"template--17818058752289__5a6bab00-c185-4fc3-8574-c59c057eafb2-1675671477a3bc6815-0":{"type":"row","settings":{"layout":"left","bnrwd":50,"cwd":90,"txtbg":"#ffffff","bgg":"","talign":"tl","txtpd":true,"titles":"EXPECT MORE. PAY LESS","tcls":"#000000","tfss":14,"tfws":"500","title":"We’re Devoted shopify theme Consultants Helping Your Online store","tcl":"#000000","tfs":24,"tfsm":18,"tff":"ft1","tfw":"500","tlh":1.3,"tmb":15,"tmbm":10,"text":"<p>Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos. Duis tristique del ante le maliquam praesent murna de tellus laoreet cosmopolis. Quisque hendrerit nibh an purus<\/p>","cl":"#666666","fs":14,"fsm":13,"lh":1.6,"txtmb":30,"txtmbm":20,"btn":"READ MORE","link":"\/","btn-style":"btn1","btn-size":"btn-sm"}}},"block_order":["template--17818058752289__5a6bab00-c185-4fc3-8574-c59c057eafb2-1675671477a3bc6815-0"],"disabled":true,"settings":{"brad":0,"carousel":false,"fade":false,"autoplay":true,"speed":5,"arrow":true,"arrowm":false,"dot":false,"dotm":true,"sbrad":0,"sst":70,"ssb":70,"sstm":20,"ssbm":20,"bg":"#ffffff","bgg":"","sw":false,"npd":false,"hidem":false,"hided":false}},"e8d3c243-5b87-45e3-a17c-1252447cf7f6":{"type":"icon-and-text","blocks":{"template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-2":{"type":"text_block","settings":{"title":"EASY TO SET UP","text":"Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos.","url":""}},"template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-0":{"type":"text_block","settings":{"title":"FULLY RESPONSIVE","text":"Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos.","url":""}},"template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-1":{"type":"text_block","settings":{"title":"FASTEST PAGE LOAD","text":"Nullam aliquet vestibulum augue non varius Cras cosmo congue an melitos.","url":""}},"template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-3":{"type":"text_block","settings":{"title":"TOP NOTCH SUPPORT","text":"Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos.","url":""}}},"block_order":["template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-2","template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-0","template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-1","template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-3"],"disabled":true,"settings":{"title":"Why Choose Vogal","subtitle":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Suspendisse eget consectetur purus","style":"stl1","showicn":true,"icns":35,"icnsm":35,"iconbg":"#ffffff","cl":"#333333","ftfs":15,"ftfsm":14,"ftfw":"600","fs":14,"fsm":13,"box":true,"boxbg":"#ffffff","bdr":"rgba(0,0,0,0)","brad":3,"grid":4,"gridtb":2,"gridmb":1,"sst":70,"ssb":70,"sstm":25,"ssbm":25,"bg":"#fafafa","bgg":"","sw":false,"hidem":false,"hided":false}},"94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe":{"type":"featured-banner","blocks":{"template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-0":{"type":"feature","settings":{"title":"<span class=\"db mb5\">Luxury Redefined<\/span>","text":"At Featherstone London, we believe that luxury is more than a label—it's a lifestyle. Each garment is handpicked for its superior quality, timeless design, and refined elegance, reflecting our passion for creating exceptional menswear. When you choose Featherstone London, you're not just purchasing clothing; you're investing in a statement of sophistication that exudes confidence and class."}},"template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-1":{"type":"feature","settings":{"title":"<span class=\"db mb5\">Our Commitment to Excellence\n<\/span>","text":"We pride ourselves on our meticulous attention to detail, ensuring that every stitch, seam, and fabric selection meets the highest standards. Our team is dedicated to helping you look and feel your best, offering a personalized shopping experience that is as seamless as it is stylish."}},"feature_jJJrGp":{"type":"feature","settings":{"title":"Building Lasting Relationships","text":"We value the connections we build with our customers. Whether you're a loyal client or visiting Featherstone London for the first time, we are here to create an inviting and memorable experience. Your satisfaction is our priority, and we are committed to offering a service that puts your needs at the heart of everything we do."}}},"block_order":["template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-0","template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-1","feature_jJJrGp"],"settings":{"image":"shopify:\/\/shop_images\/About_Page_Background.jpg","layout":"left","tbg":"#000000","tbgg":"","talign":"tl","txtpd":true,"title":"Featherstone London","tcl":"#ffffff","tfs":24,"tfsm":20,"tff":"ft2","tfw":"500","tlh":1.3,"text":"<p>Our story begins with Craig Featherstone, a renowned Savile Row master tailor with over 30 years of experience. His expertise in the art of tailoring is the foundation of Featherstone London. Craig's dedication to excellence has established him as a trusted figure in the world of menswear, where he continues to lead with an unmatched eye for detail, creating pieces that transcend trends and stand the test of time.<\/p>","cl":"#ffffff","fs":14,"fsm":13,"lh":1.6,"style":"stl2","icncl":"#666666","icnbg":"#eeeeee","icns":30,"icnsm":30,"fttfs":18,"fttfsm":16,"ftlh":1.3,"ftfw":"500","ftfs":14,"ftfsm":13,"grid":1,"gridtb":1,"gridmb":1,"btn":"","link":"","btn-style":"btn2","btn-size":"btn-sm","sst":80,"ssb":80,"sstm":25,"ssbm":0,"bg":"#ffffff","bgg":"","sw":false,"npd":false,"hidem":false,"hided":false}},"8a4d33f4-12b8-4851-8050-bb27c915e8d6":{"type":"testimonials","blocks":{"template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-0":{"type":"quote","settings":{"title":"Suspendisse semper eget nisl in tincidunto.","text":"<p>I'm not usually that impressed by themes but this one has surpassed my expectations in terms of features, documentation, and support.<\/p>","author":"Asher Rebeca","rat":true,"rating":5,"prod":""}},"template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-1":{"type":"quote","settings":{"title":"Suspendisse semper eget nisl in tincidunto.","text":"<p>I'm not usually that impressed by themes but this one has surpassed my expectations in terms of features, documentation, and support.<\/p>","author":"Daniel Martine","rat":true,"rating":5,"prod":""}},"template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-2":{"type":"quote","settings":{"title":"Suspendisse semper eget nisl in tincidunto.","text":"<p>I'm not usually that impressed by themes but this one has surpassed my expectations in terms of features, documentation, and support.<\/p>","author":"Melissa Smith","rat":true,"rating":5,"prod":""}}},"block_order":["template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-0","template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-1","template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-2"],"disabled":true,"settings":{"title":"Happy Customers","subtitle":"","style":"quote3","ttl":"#111111","txtcl":"#444444","box_bg":"rgba(0,0,0,0)","box_bdr":"rgba(0,0,0,0)","box_shadow":false,"bpd":25,"br":5,"q_fs":16,"tfw":"500","t_fs":13,"t_fsm":13,"atf":14,"clat":"#ebb868","fade":false,"autoplay":false,"speed":5,"arrow":true,"arrowm":false,"dot":false,"dotm":true,"sst":70,"ssb":70,"sstm":25,"ssbm":25,"bg":"#fafafa","bgg":"","sw":false,"hidem":false,"hided":false}},"e3f6eb34-c5b2-45a2-9fd9-7032573fec53":{"type":"custom-block","blocks":{"template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-0":{"type":"text","settings":{"hidem":false,"dis_img":true,"title":"Dylan Lee","fs":16,"fsm":16,"ff":"ft1","fw":"600","lh":1.2,"tbm":0,"text":"<p>CEO<\/p>","btntxt":"","btnurl":"","btn-style":"btn1","btn-size":"btn-md","bg":false,"clbg":"#f5f5f5","cl":"#000000","boxrad":0,"brad":0,"align_text":"tc","alignment":"f-ass","width":"wd25"}},"template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-1":{"type":"text","settings":{"hidem":false,"dis_img":true,"title":"Melissa Smith","fs":16,"fsm":16,"ff":"ft1","fw":"600","lh":1.2,"tbm":0,"text":"<p>Director<\/p>","btntxt":"","btnurl":"","btn-style":"btn1","btn-size":"btn-md","bg":false,"clbg":"#f5f5f5","cl":"#000000","boxrad":0,"brad":0,"align_text":"tc","alignment":"f-ass","width":"wd25"}},"265fd6b3-8934-4558-b2c4-ff63f60b9be5":{"type":"text","settings":{"hidem":false,"dis_img":true,"title":"Asher Rebeca","fs":16,"fsm":16,"ff":"ft1","fw":"600","lh":1.2,"tbm":0,"text":"<p>Sale Executive<\/p>","btntxt":"","btnurl":"","btn-style":"btn1","btn-size":"btn-md","bg":false,"clbg":"#f5f5f5","cl":"#000000","boxrad":0,"brad":0,"align_text":"tc","alignment":"f-ass","width":"wd25"}},"9a840797-8db0-4f51-a030-f2832260defc":{"type":"text","settings":{"hidem":false,"dis_img":true,"title":"Daniel Martine","fs":16,"fsm":16,"ff":"ft1","fw":"600","lh":1.2,"tbm":0,"text":"<p>Sale Support<\/p>","btntxt":"","btnurl":"","btn-style":"btn1","btn-size":"btn-md","bg":false,"clbg":"#f5f5f5","cl":"#000000","boxrad":0,"brad":0,"align_text":"tc","alignment":"f-ass","width":"wd25"}}},"block_order":["template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-0","template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-1","265fd6b3-8934-4558-b2c4-ff63f60b9be5","9a840797-8db0-4f51-a030-f2832260defc"],"disabled":true,"settings":{"title":"Meat The Team","subtitle":"Cosmo lacus meleifend menean diverra loremous. <br>Nullam sit amet orci rutrum risus laoreet semper vel non magna.","gspace":30,"gspacem":15,"prbox_style":"grid_1","sst":70,"ssb":30,"sstm":30,"ssbm":0,"bg":"","bgg":"","sw":false,"hidem":false,"hided":false}},"accbf8d1-f923-4856-8031-05ac5ab9cd6b":{"type":"logo-list","blocks":{"template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-1":{"type":"logo_image","settings":{"link":"","newtab":false}},"template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-0":{"type":"logo_image","settings":{"link":"","newtab":false}},"template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-2":{"type":"logo_image","settings":{"link":"","newtab":false}},"template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-3":{"type":"logo_image","settings":{"link":"","newtab":false}},"template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-5":{"type":"logo_image","settings":{"link":"","newtab":false}},"58dc9f68-4e78-404d-8330-a2252c8eb9ab":{"type":"logo_image","settings":{"link":"","newtab":false}},"4ffe2586-783b-4cd2-9a5e-bb17c2085f64":{"type":"logo_image","settings":{"link":"","newtab":false}}},"block_order":["template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-1","template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-0","template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-2","template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-3","template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-5","58dc9f68-4e78-404d-8330-a2252c8eb9ab","4ffe2586-783b-4cd2-9a5e-bb17c2085f64"],"disabled":true,"settings":{"title":"Our Partner","subtitle":"","grid":7,"gridtb":5,"gridmb":3,"logobg":"#ffffff","logobd":"#eeeeee","carousel":true,"autoplay":false,"speed":5,"arrow":true,"arrowm":false,"dot":false,"dotm":true,"sst":0,"ssb":40,"sstm":0,"ssbm":40,"bg":"rgba(0,0,0,0)","bgg":"","sw":false,"hidem":false,"hided":false}}},"order":["banner","breadcrumb","main","5a6bab00-c185-4fc3-8574-c59c057eafb2","e8d3c243-5b87-45e3-a17c-1252447cf7f6","94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe","8a4d33f4-12b8-4851-8050-bb27c915e8d6","e3f6eb34-c5b2-45a2-9fd9-7032573fec53","accbf8d1-f923-4856-8031-05ac5ab9cd6b"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "cl": "#ffffff",
+            "fts": 30,
+            "ftsm": 20,
+            "fw": "500",
+            "tuu": false,
+            "mb": 5,
+            "mbm": 5
+          }
+        }
+      },
+      "block_order": [
+        "title"
+      ],
+      "settings": {
+        "hit": 220,
+        "hitt": 220,
+        "hitm": 100,
+        "bg": "#f4f4f4",
+        "bgg": "",
+        "image": "shopify://shop_images/IMG_8363-no_watermark.jpg",
+        "cntwd": 1000,
+        "text-align": true,
+        "tbg": "rgba(0,0,0,0)",
+        "opt": 0.9,
+        "bpd": 30,
+        "bpdm": 20,
+        "brad": 0
+      }
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "sw": false,
+        "hidemb": false,
+        "tc": false
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "hidettl": true,
+        "hide_hdft": false,
+        "sst": 0,
+        "ssb": 0,
+        "sstm": 0,
+        "ssbm": 0,
+        "bg": "",
+        "sw": false
+      }
+    },
+    "5a6bab00-c185-4fc3-8574-c59c057eafb2": {
+      "type": "image-text-col2",
+      "blocks": {
+        "template--17818058752289__5a6bab00-c185-4fc3-8574-c59c057eafb2-1675671477a3bc6815-0": {
+          "type": "row",
+          "settings": {
+            "layout": "left",
+            "bnrwd": 50,
+            "cwd": 90,
+            "txtbg": "#ffffff",
+            "bgg": "",
+            "talign": "tl",
+            "txtpd": true,
+            "titles": "EXPECT MORE. PAY LESS",
+            "tcls": "#000000",
+            "tfss": 14,
+            "tfws": "500",
+            "title": "We’re Devoted shopify theme Consultants Helping Your Online store",
+            "tcl": "#000000",
+            "tfs": 24,
+            "tfsm": 18,
+            "tff": "ft1",
+            "tfw": "500",
+            "tlh": 1.3,
+            "tmb": 15,
+            "tmbm": 10,
+            "text": "<p>Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos. Duis tristique del ante le maliquam praesent murna de tellus laoreet cosmopolis. Quisque hendrerit nibh an purus</p>",
+            "cl": "#666666",
+            "fs": 14,
+            "fsm": 13,
+            "lh": 1.6,
+            "txtmb": 30,
+            "txtmbm": 20,
+            "btn": "READ MORE",
+            "link": "/",
+            "btn-style": "btn1",
+            "btn-size": "btn-sm"
+          }
+        }
+      },
+      "block_order": [
+        "template--17818058752289__5a6bab00-c185-4fc3-8574-c59c057eafb2-1675671477a3bc6815-0"
+      ],
+      "disabled": true,
+      "settings": {
+        "brad": 0,
+        "carousel": false,
+        "fade": false,
+        "autoplay": true,
+        "speed": 5,
+        "arrow": true,
+        "arrowm": false,
+        "dot": false,
+        "dotm": true,
+        "sbrad": 0,
+        "sst": 70,
+        "ssb": 70,
+        "sstm": 20,
+        "ssbm": 20,
+        "bg": "#ffffff",
+        "bgg": "",
+        "sw": false,
+        "npd": false,
+        "hidem": false,
+        "hided": false
+      }
+    },
+    "e8d3c243-5b87-45e3-a17c-1252447cf7f6": {
+      "type": "icon-and-text",
+      "blocks": {
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-2": {
+          "type": "text_block",
+          "settings": {
+            "title": "EASY TO SET UP",
+            "text": "Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos.",
+            "url": ""
+          }
+        },
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-0": {
+          "type": "text_block",
+          "settings": {
+            "title": "FULLY RESPONSIVE",
+            "text": "Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos.",
+            "url": ""
+          }
+        },
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-1": {
+          "type": "text_block",
+          "settings": {
+            "title": "FASTEST PAGE LOAD",
+            "text": "Nullam aliquet vestibulum augue non varius Cras cosmo congue an melitos.",
+            "url": ""
+          }
+        },
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-3": {
+          "type": "text_block",
+          "settings": {
+            "title": "TOP NOTCH SUPPORT",
+            "text": "Nullam aliquet vestibulum augue non varius. Cras cosmo congue an melitos.",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-2",
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-0",
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-1",
+        "template--17818058752289__e8d3c243-5b87-45e3-a17c-1252447cf7f6-167567200259bdd775-3"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Why Choose Vogal",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>Suspendisse eget consectetur purus",
+        "style": "stl1",
+        "showicn": true,
+        "icns": 35,
+        "icnsm": 35,
+        "iconbg": "#ffffff",
+        "cl": "#333333",
+        "ftfs": 15,
+        "ftfsm": 14,
+        "ftfw": "600",
+        "fs": 14,
+        "fsm": 13,
+        "box": true,
+        "boxbg": "#ffffff",
+        "bdr": "rgba(0,0,0,0)",
+        "brad": 3,
+        "grid": 4,
+        "gridtb": 2,
+        "gridmb": 1,
+        "sst": 70,
+        "ssb": 70,
+        "sstm": 25,
+        "ssbm": 25,
+        "bg": "#fafafa",
+        "bgg": "",
+        "sw": false,
+        "hidem": false,
+        "hided": false
+      }
+    },
+    "94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe": {
+      "type": "featured-banner",
+      "blocks": {
+        "template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-0": {
+          "type": "feature",
+          "settings": {
+            "title": "<span class=\"db mb5\">Luxury Redefined</span>",
+            "text": "At Featherstone London, we believe that luxury is more than a label—it's a lifestyle. Each garment is handpicked for its superior quality, timeless design, and refined elegance, reflecting our passion for creating exceptional menswear. When you choose Featherstone London, you're not just purchasing clothing; you're investing in a statement of sophistication that exudes confidence and class."
+          }
+        },
+        "template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-1": {
+          "type": "feature",
+          "settings": {
+            "title": "<span class=\"db mb5\">Our Commitment to Excellence\n</span>",
+            "text": "We pride ourselves on our meticulous attention to detail, ensuring that every stitch, seam, and fabric selection meets the highest standards. Our team is dedicated to helping you look and feel your best, offering a personalized shopping experience that is as seamless as it is stylish."
+          }
+        },
+        "feature_jJJrGp": {
+          "type": "feature",
+          "settings": {
+            "title": "Building Lasting Relationships",
+            "text": "We value the connections we build with our customers. Whether you're a loyal client or visiting Featherstone London for the first time, we are here to create an inviting and memorable experience. Your satisfaction is our priority, and we are committed to offering a service that puts your needs at the heart of everything we do."
+          }
+        }
+      },
+      "block_order": [
+        "template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-0",
+        "template--17818058752289__94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe-1675674734a309d214-1",
+        "feature_jJJrGp"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/About_Page_Background.jpg",
+        "layout": "left",
+        "tbg": "#000000",
+        "tbgg": "",
+        "talign": "tl",
+        "txtpd": true,
+        "title": "Featherstone London",
+        "tcl": "#ffffff",
+        "tfs": 24,
+        "tfsm": 20,
+        "tff": "ft2",
+        "tfw": "500",
+        "tlh": 1.3,
+        "text": "<h3><strong>Featherstone London: Redefining British Menswear</strong></h3><p>Our story begins with founder Craig Featherstone — a master tailor with over 30 years of experience, trained on London’s iconic Savile Row. His deep expertise in modern tailoring is the foundation of Featherstone London. Known for his precise eye and refined approach, Craig brings a new perspective to British menswear — one that values subtle elegance, timeless design, and garments that stand the test of time.</p><h3><strong>Luxury Menswear, Redefined</strong></h3><p>At Featherstone London, luxury is more than fabric or fit — it’s a mindset. We create men’s clothing rooted in craftsmanship and quiet confidence. Every piece reflects our belief in refined details, honest materials, and lasting quality. From elevated staples to smart casual essentials, our collections are made to complement a modern, minimalist wardrobe.</p><h3><strong>Commitment to Craft and Detail</strong></h3><p>Every garment is the result of focused attention — from fabric selection to final stitch. Our commitment to excellence shows in the precision of our cuts, the integrity of our materials, and the care in our process. This is menswear made to look sharp, feel effortless, and wear well over time.</p><h3><strong>A Personal Approach, Built on Trust</strong></h3><p>Featherstone is a founder-led menswear brand that values relationships as much as results. Whether you're discovering us for the first time or returning as a loyal client, we’re here to offer a tailored, personal experience — one that places your needs at the centre. Based in London and serving customers across the UK, we design with purpose and deliver with pride.</p>",
+        "cl": "#ffffff",
+        "fs": 14,
+        "fsm": 13,
+        "lh": 1.6,
+        "style": "stl2",
+        "icncl": "#666666",
+        "icnbg": "#eeeeee",
+        "icns": 30,
+        "icnsm": 30,
+        "fttfs": 18,
+        "fttfsm": 16,
+        "ftlh": 1.3,
+        "ftfw": "500",
+        "ftfs": 14,
+        "ftfsm": 13,
+        "grid": 1,
+        "gridtb": 1,
+        "gridmb": 1,
+        "btn": "",
+        "link": "",
+        "btn-style": "btn2",
+        "btn-size": "btn-sm",
+        "sst": 80,
+        "ssb": 80,
+        "sstm": 25,
+        "ssbm": 0,
+        "bg": "#ffffff",
+        "bgg": "",
+        "sw": false,
+        "npd": false,
+        "hidem": false,
+        "hided": false
+      }
+    },
+    "8a4d33f4-12b8-4851-8050-bb27c915e8d6": {
+      "type": "testimonials",
+      "blocks": {
+        "template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-0": {
+          "type": "quote",
+          "settings": {
+            "title": "Suspendisse semper eget nisl in tincidunto.",
+            "text": "<p>I'm not usually that impressed by themes but this one has surpassed my expectations in terms of features, documentation, and support.</p>",
+            "author": "Asher Rebeca",
+            "rat": true,
+            "rating": 5,
+            "prod": ""
+          }
+        },
+        "template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-1": {
+          "type": "quote",
+          "settings": {
+            "title": "Suspendisse semper eget nisl in tincidunto.",
+            "text": "<p>I'm not usually that impressed by themes but this one has surpassed my expectations in terms of features, documentation, and support.</p>",
+            "author": "Daniel Martine",
+            "rat": true,
+            "rating": 5,
+            "prod": ""
+          }
+        },
+        "template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-2": {
+          "type": "quote",
+          "settings": {
+            "title": "Suspendisse semper eget nisl in tincidunto.",
+            "text": "<p>I'm not usually that impressed by themes but this one has surpassed my expectations in terms of features, documentation, and support.</p>",
+            "author": "Melissa Smith",
+            "rat": true,
+            "rating": 5,
+            "prod": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-0",
+        "template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-1",
+        "template--17818058752289__8a4d33f4-12b8-4851-8050-bb27c915e8d6-16756762117ee65430-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Happy Customers",
+        "subtitle": "",
+        "style": "quote3",
+        "ttl": "#111111",
+        "txtcl": "#444444",
+        "box_bg": "rgba(0,0,0,0)",
+        "box_bdr": "rgba(0,0,0,0)",
+        "box_shadow": false,
+        "bpd": 25,
+        "br": 5,
+        "q_fs": 16,
+        "tfw": "500",
+        "t_fs": 13,
+        "t_fsm": 13,
+        "atf": 14,
+        "clat": "#ebb868",
+        "fade": false,
+        "autoplay": false,
+        "speed": 5,
+        "arrow": true,
+        "arrowm": false,
+        "dot": false,
+        "dotm": true,
+        "sst": 70,
+        "ssb": 70,
+        "sstm": 25,
+        "ssbm": 25,
+        "bg": "#fafafa",
+        "bgg": "",
+        "sw": false,
+        "hidem": false,
+        "hided": false
+      }
+    },
+    "e3f6eb34-c5b2-45a2-9fd9-7032573fec53": {
+      "type": "custom-block",
+      "blocks": {
+        "template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-0": {
+          "type": "text",
+          "settings": {
+            "hidem": false,
+            "dis_img": true,
+            "title": "Dylan Lee",
+            "fs": 16,
+            "fsm": 16,
+            "ff": "ft1",
+            "fw": "600",
+            "lh": 1.2,
+            "tbm": 0,
+            "text": "<p>CEO</p>",
+            "btntxt": "",
+            "btnurl": "",
+            "btn-style": "btn1",
+            "btn-size": "btn-md",
+            "bg": false,
+            "clbg": "#f5f5f5",
+            "cl": "#000000",
+            "boxrad": 0,
+            "brad": 0,
+            "align_text": "tc",
+            "alignment": "f-ass",
+            "width": "wd25"
+          }
+        },
+        "template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-1": {
+          "type": "text",
+          "settings": {
+            "hidem": false,
+            "dis_img": true,
+            "title": "Melissa Smith",
+            "fs": 16,
+            "fsm": 16,
+            "ff": "ft1",
+            "fw": "600",
+            "lh": 1.2,
+            "tbm": 0,
+            "text": "<p>Director</p>",
+            "btntxt": "",
+            "btnurl": "",
+            "btn-style": "btn1",
+            "btn-size": "btn-md",
+            "bg": false,
+            "clbg": "#f5f5f5",
+            "cl": "#000000",
+            "boxrad": 0,
+            "brad": 0,
+            "align_text": "tc",
+            "alignment": "f-ass",
+            "width": "wd25"
+          }
+        },
+        "265fd6b3-8934-4558-b2c4-ff63f60b9be5": {
+          "type": "text",
+          "settings": {
+            "hidem": false,
+            "dis_img": true,
+            "title": "Asher Rebeca",
+            "fs": 16,
+            "fsm": 16,
+            "ff": "ft1",
+            "fw": "600",
+            "lh": 1.2,
+            "tbm": 0,
+            "text": "<p>Sale Executive</p>",
+            "btntxt": "",
+            "btnurl": "",
+            "btn-style": "btn1",
+            "btn-size": "btn-md",
+            "bg": false,
+            "clbg": "#f5f5f5",
+            "cl": "#000000",
+            "boxrad": 0,
+            "brad": 0,
+            "align_text": "tc",
+            "alignment": "f-ass",
+            "width": "wd25"
+          }
+        },
+        "9a840797-8db0-4f51-a030-f2832260defc": {
+          "type": "text",
+          "settings": {
+            "hidem": false,
+            "dis_img": true,
+            "title": "Daniel Martine",
+            "fs": 16,
+            "fsm": 16,
+            "ff": "ft1",
+            "fw": "600",
+            "lh": 1.2,
+            "tbm": 0,
+            "text": "<p>Sale Support</p>",
+            "btntxt": "",
+            "btnurl": "",
+            "btn-style": "btn1",
+            "btn-size": "btn-md",
+            "bg": false,
+            "clbg": "#f5f5f5",
+            "cl": "#000000",
+            "boxrad": 0,
+            "brad": 0,
+            "align_text": "tc",
+            "alignment": "f-ass",
+            "width": "wd25"
+          }
+        }
+      },
+      "block_order": [
+        "template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-0",
+        "template--17818058752289__e3f6eb34-c5b2-45a2-9fd9-7032573fec53-16756767145d0ca90c-1",
+        "265fd6b3-8934-4558-b2c4-ff63f60b9be5",
+        "9a840797-8db0-4f51-a030-f2832260defc"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Meat The Team",
+        "subtitle": "Cosmo lacus meleifend menean diverra loremous. <br>Nullam sit amet orci rutrum risus laoreet semper vel non magna.",
+        "gspace": 30,
+        "gspacem": 15,
+        "prbox_style": "grid_1",
+        "sst": 70,
+        "ssb": 30,
+        "sstm": 30,
+        "ssbm": 0,
+        "bg": "",
+        "bgg": "",
+        "sw": false,
+        "hidem": false,
+        "hided": false
+      }
+    },
+    "accbf8d1-f923-4856-8031-05ac5ab9cd6b": {
+      "type": "logo-list",
+      "blocks": {
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-1": {
+          "type": "logo_image",
+          "settings": {
+            "link": "",
+            "newtab": false
+          }
+        },
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-0": {
+          "type": "logo_image",
+          "settings": {
+            "link": "",
+            "newtab": false
+          }
+        },
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-2": {
+          "type": "logo_image",
+          "settings": {
+            "link": "",
+            "newtab": false
+          }
+        },
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-3": {
+          "type": "logo_image",
+          "settings": {
+            "link": "",
+            "newtab": false
+          }
+        },
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-5": {
+          "type": "logo_image",
+          "settings": {
+            "link": "",
+            "newtab": false
+          }
+        },
+        "58dc9f68-4e78-404d-8330-a2252c8eb9ab": {
+          "type": "logo_image",
+          "settings": {
+            "link": "",
+            "newtab": false
+          }
+        },
+        "4ffe2586-783b-4cd2-9a5e-bb17c2085f64": {
+          "type": "logo_image",
+          "settings": {
+            "link": "",
+            "newtab": false
+          }
+        }
+      },
+      "block_order": [
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-1",
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-0",
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-2",
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-3",
+        "template--17457093542177__f34d1a5a-4d8e-4070-9868-1c7582d3e6c2-1673013103634f18c3-5",
+        "58dc9f68-4e78-404d-8330-a2252c8eb9ab",
+        "4ffe2586-783b-4cd2-9a5e-bb17c2085f64"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "Our Partner",
+        "subtitle": "",
+        "grid": 7,
+        "gridtb": 5,
+        "gridmb": 3,
+        "logobg": "#ffffff",
+        "logobd": "#eeeeee",
+        "carousel": true,
+        "autoplay": false,
+        "speed": 5,
+        "arrow": true,
+        "arrowm": false,
+        "dot": false,
+        "dotm": true,
+        "sst": 0,
+        "ssb": 40,
+        "sstm": 0,
+        "ssbm": 40,
+        "bg": "rgba(0,0,0,0)",
+        "bgg": "",
+        "sw": false,
+        "hidem": false,
+        "hided": false
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "breadcrumb",
+    "main",
+    "5a6bab00-c185-4fc3-8574-c59c057eafb2",
+    "e8d3c243-5b87-45e3-a17c-1252447cf7f6",
+    "94c55a06-e79b-4eb4-9ff7-8cc6d0129cbe",
+    "8a4d33f4-12b8-4851-8050-bb27c915e8d6",
+    "e3f6eb34-c5b2-45a2-9fd9-7032573fec53",
+    "accbf8d1-f923-4856-8031-05ac5ab9cd6b"
+  ]
+}
