@@ -617,10 +617,10 @@
         "row_rVYcq7": {
           "type": "row",
           "settings": {
-            "image": "shopify://shop_images/Untitled_Capture0834.jpg",
+            "image": "shopify://shop_images/resized_for_shopify.jpg",
             "layout": "left",
             "bnrwd": 50,
-            "cwd": 90,
+            "cwd": 50,
             "txtbg": "#ffffff",
             "bgg": "",
             "talign": "tl",
