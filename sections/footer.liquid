@@ -54,7 +54,7 @@
                                         <a target="_blank" href="{{ block.settings.url1 }}">
                                             {% capture logoWd %}{{ block.settings.logo-wd }}x{% endcapture %}
                                             <img class="imgFl" src="{{ block.settings.logo | img_url: logoWd }}" width="{{ block.settings.logo-wd }}" height="{{ block.settings.logo-wd | divided_by: block.settings.logo.aspect_ratio | floor }}"
-                                                srcset="{{ block.settings.logo | img_url: logoWd }} 1x, {{ block.settings.logo | img_url: logoWd, scale: 2 }} 2x" alt="{{ block.settings.logo.alt }}">
+                                                srcset="{{ block.settings.logo | img_url: logoWd }} 1x, {{ block.settings.logo | img_url: logoWd, scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: shop.name }}">
                                         </a>
                                     </p>
                                 {% endif %}

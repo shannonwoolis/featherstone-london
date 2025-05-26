@@ -273,7 +273,7 @@
       	  <div class="filterBx hide-sm hide-md" {{ block.shopify_attributes }}>
             {% if blkSt.link != blank %}<a href="{{ blkSt.link }}">{% endif %}
             {% if blkSt.img != blank %}
-            <img loading="lazy" style="border-radius:{{ blkSt.rad }}px" class="imgFl lazyload wow zoomIn mb30" src="{{ blkSt.img | img_url: '50x' }}" 	data-srcset="{% render 'lazyload', image:  blkSt.img, sizes: '180,360' %}" data-sizes="auto" alt="{{ blkSt.img.alt | escape }}">                     
+            <img loading="lazy" style="border-radius:{{ blkSt.rad }}px" class="imgFl lazyload wow zoomIn mb30" src="{{ blkSt.img | img_url: '50x' }}" 	data-srcset="{% render 'lazyload', image:  blkSt.img, sizes: '180,360' %}" data-sizes="auto" alt="{{ blkSt.img.alt | default: blkSt.title | default: shop.name | escape }}">                     
             {% else %}
               {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
               {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}

@@ -4,7 +4,7 @@
         {%- if secSt.isbdr -%}<hr style="margin:0;border-bottom:{{ secSt.lht }}px {{ secSt.lns }} {{ secSt.bdr }};">{%- endif -%}
         {%- if secSt.image != blank -%}
             <img loading="lazy" class="imgFl lazyload" src="{{ secSt.image | img_url: "100x" }}" width="{{ secSt.image.width }}" height="{{ secSt.image.height }}"
-                data-srcset="{% render 'lazyload', image: secSt.image %}" data-sizes="auto" alt="{{ secSt.image.alt | escape }}">
+                data-srcset="{% render 'lazyload', image: secSt.image %}" data-sizes="auto" alt="{{ secSt.image.alt | default: shop.name | escape }}">
         {%- endif -%}
     </div>
 </div>

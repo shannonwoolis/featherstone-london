@@ -15,7 +15,7 @@
                             <div class="fl pd10 f-aic h_100 lg{{ section.id }}" style="background-color:{{ section.settings.logobg }}; border:1px solid {{ section.settings.logobd }};">
                                 <{% if block.settings.link != blank %}a  {% if block.settings.newtab %} target="blank" {%  endif %} href="{{ block.settings.link }}"{% else %}span{% endif %} class="db w_100 m_auto" style="max-width:{{ block.settings.image.width }}px">
                                     {% if block.settings.image != blank %}
-                                        <img loading="lazy" class="imgFl lazyload" data-srcset="{% render 'lazyload', image: block.settings.image, sizes: '100,250,420' %}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" data-sizes="auto" alt="{{ block.settings.image.alt | escape }}" />
+                                        <img loading="lazy" class="imgFl lazyload" data-srcset="{% render 'lazyload', image: block.settings.image, sizes: '100,250,420' %}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" data-sizes="auto" alt="{{ block.settings.image.alt | default: shop.name | escape }}" />
                                     {% else %}
                                         {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
                                     {% endif %}

@@ -709,7 +709,7 @@
 						{%- if blkst.pimg != blank -%}
 							<div class="trust_badge mb{{ blkst.bm }}" style="--timw:{{blkst.timw}}%" {{ block.shopify_attributes }}>
 								{% if blkst.pimg_url != blank %}<a href="{{ blkst.pimg_url }}">{% endif %}
-								<img class="imgFl lazyload w_auto {% if blkst.img_align %}m_auto{% endif %}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ blkst.pimg | img_url: "master" }}" width="{{ blkst.pimg.width }}" height="{{ blkst.pimg.height }}" alt="{{ settings.pimg.alt }}">
+								<img class="imgFl lazyload w_auto {% if blkst.img_align %}m_auto{% endif %}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ blkst.pimg | img_url: "master" }}" width="{{ blkst.pimg.width }}" height="{{ blkst.pimg.height }}" alt="{{ settings.pimg.alt | default: shop.name }}">
 								{% if blkst.pimg_url != blank %}</a>{% endif %}
 							</div>
 						{%- endif -%}
@@ -787,12 +787,12 @@
 			{% if collection.previous_product %}
 				<a href="{{ collection.previous_product }}" class="pr_nav fl f-jcsb f-aic prev{% if blkst.sprnavm %} hide-sm hide-md{% endif %}" title="{{ 'products.product.prev' | t }}">
 					<span class="details fl1 pd5">{{ collection.previous_product.title | truncate: 30 }}<br /><span class="db mt10">{{ collection.previous_product.price |money }}</span></span>
-					<span class="img"><img class="imgFl" src="{{ collection.previous_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="" /></span>
+					<span class="img"><img class="imgFl" src="{{ collection.previous_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="{{ collection.previous_product.images[0].alt | default: collection.previous_product.title | default: shop.name }}" /></span>
 				</a>
 			{% endif %}
 			{% if collection.next_product %}
 				<a href="{{ collection.next_product }}" class="pr_nav fl f-jcsb f-aic next{% if blkst.sprnavm %} hide-sm hide-md{% endif %}" title="{{ 'products.product.next' | t }}">
-					<span class="img"><img class="imgFl" src="{{ collection.next_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="" /></span>
+					<span class="img"><img class="imgFl" src="{{ collection.next_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="{{ collection.next_product.images[0].alt | default: collection.next_product.title | default: shop.name }}" /></span>
 					<span class="details fl1 pd5">{{ collection.next_product.title | truncate: 30 }}<br /><span class="db mt10">{{ collection.next_product.price |money }}</span></span>
 				</a>
 			{% endif %}

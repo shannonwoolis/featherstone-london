@@ -44,7 +44,7 @@
                                           <div class="icnWr">
                                               {%- if blkSt.image != blank -%}
                                                   {%- assign iconsz = secSt.icns | times: 2 | append: 'x' -%}
-                                                  <img class="imgFl lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ blkSt.image | img_url: iconsz }}" width="{{ secSt.icns }}" height="{{ secSt.icns }}" alt="{{ blkSt.image.alt }}" />                                             
+                                                  <img class="imgFl lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ blkSt.image | img_url: iconsz }}" width="{{ secSt.icns }}" height="{{ secSt.icns }}" alt="{{ blkSt.image.alt | default: shop.name | escape }}" />                                             
                                               {%- endif -%}
                                           </div>
                                         {%- endif -%}
