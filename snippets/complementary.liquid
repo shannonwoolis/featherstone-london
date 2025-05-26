@@ -9,10 +9,10 @@
                 {%- for product in recommendations.products limit: block.settings.products_per_page offset: continue -%}
                     <div class="swiper-slide gitem tc">
                         <div class="grid_bx">
-                        <a class="grid_lnk" href="{{ product.url | within: collection }}">
+                        <a class="grid_lnk" href="{{ product.url }}">
                             <div class="grid_img mb15 lazyload{% if secondImg and product.images.size > 1 %} primary{% endif %}" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes: sizes %}" data-sizes="auto" data-parent-fit="contain"></div>
                         </a>
-                        <div class="grid_title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+                        <div class="grid_title"><a href="{{ product.url }}">{{ product.title }}</a></div>
                         {% unless settings.catalogmode %}<div class="grid_meta">{% render 'product-price', product: product %}</div>{% endunless %}
                         </div>
                     </div>

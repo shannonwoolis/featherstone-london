@@ -3,7 +3,7 @@
 {%- assign grid_image_scale = '2' -%}
 <div class="grid_bx style1">
 	<div class="grid_img_wr">
-		<a class="grid-view-item__link grid_img lazyload" href="{{ product.url | within: collection }}" data-bgset="{% render 'prgrid-img', image: product.featured_image %}" data-sizes="auto" data-parent-fit="contain"></a>
+		<a class="grid-view-item__link grid_img lazyload" href="{{ product.url }}" data-bgset="{% render 'prgrid-img', image: product.featured_image %}" data-sizes="auto" data-parent-fit="contain"></a>
       	<!-- product label -->
       	{% unless block.type == 'megamenu2' %}
 		{% if settings.pr_lbl %}
@@ -25,7 +25,7 @@
     </div>
     <div class="details">
       	{% if settings.show_vendor %}<div class="grid_vendor">{{ product.vendor }}</div>{% endif %}
-        <a href="{{ product.url | within: collection }}" class="grid_title">{{ product.title }}</a>
+        <a href="{{ product.url }}" class="grid_title">{{ product.title }}</a>
       	{%- unless settings.hide-price -%}<div class="grid_meta">{% render 'product-price',product:product %}</div>{% endunless %}
 	</div>
 </div>

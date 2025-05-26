@@ -62,12 +62,12 @@
 								<div class="reviewpr">
 									<div class="fl f-aic">
 										<div class="pr_list_img">    
-										<a class="db" href="{{ product.url | within: collection }}">         
+										<a class="db" href="{{ product.url }}">         
 										<div class="grid_img lazyload{% if secondImg and product.images.size > 1 %} primary{% endif %}" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes:'100,200,300,400' %}" data-sizes="auto" data-parent-fit="contain"></div>
 										</a>   
 										</div>
 										</a>   
-										<a href="{{ product.url | within: collection }}" class="pr_list_ttl">{{ product.title }}</a>
+										<a href="{{ product.url }}" class="pr_list_ttl">{{ product.title }}</a>
 									</div>
 								</div>
 								{% endif %}

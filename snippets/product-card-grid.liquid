@@ -19,7 +19,7 @@
 
     assign product_box = forloop.index | minus:1
 	assign delay_time = 50 | times : product_box
-    assign prUrl = product.url | within: collection
+    assign prUrl = product.url
 	assign quickUrl = product.url | split: "?" | first
     
     if settings.clurl

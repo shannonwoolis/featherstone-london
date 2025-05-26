@@ -1,7 +1,7 @@
 {% assign product_box = forloop.index | minus:1 %}
 {% assign delay_time = 50 | times : product_box %}
 {%- liquid
-    assign prUrl = product.url | within: collection
+    assign prUrl = product.url
     if settings.clurl
         assign prUrl = product.url
     endif

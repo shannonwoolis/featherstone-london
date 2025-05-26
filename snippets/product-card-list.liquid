@@ -19,14 +19,14 @@
 
 {%- liquid
     assign quickUrl = product.url | split: "?" | first
-    assign prUrl = product.url | within: collection  
+    assign prUrl = product.url
    if settings.clurl 
     assign prUrl = product.url
    endif
 -%}
  
   <div class="lv_image_col">
-    <a href="{{ product.url | within: collection }}" class="db">
+    <a href="{{ product.url }}" class="db">
       <div class="grid_img lazyload{% if secondImg and product.images.size > 1 %} primary{% endif %}" data-bgset="{% render 'prgrid-img', image: product.featured_image, sizes:'100,200,300,400' %}" data-sizes="auto" data-parent-fit="contain"></div>
     </a>
     
@@ -61,7 +61,7 @@
   <div class="grid_vendor">{{ product.vendor }}</div>
   {% endif %}
 
-  <a href="{{ product.url | within: collection }}" class="lv_item_ttl mb5">{{ product.title }}</a>
+  <a href="{{ product.url }}" class="lv_item_ttl mb5">{{ product.title }}</a>
 
   {% if prReview %}<div class="mb10">{% render 'ratings' %}</div>{% endif %}
 
@@ -85,7 +85,7 @@
                   {% if settings.quickshop %}
                   <a class="btn btn-options quickShop" href="{{ quickUrl }}?section_id=quick-shop">{{ 'products.product.quick_shop' | t}}</a>
                 {% else %}
-                    <a class="btn btn-options" href="{{ product.url | within: collection }}">{{ 'products.product.select_options' | t }}</a>                  	                  	
+                    <a class="btn btn-options" href="{{ product.url }}">{{ 'products.product.select_options' | t }}</a>                  	                  	
                 {% endif %}
               {% else %}
                   <a class="btn btn-link add-to-cart" href="{{ prUrl }}"   title="{{ 'products.product.add_to_cart' | t }}">{{ 'products.product.add_to_cart' | t }}</a>                 

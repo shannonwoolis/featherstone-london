@@ -1,5 +1,5 @@
 {%- liquid
-    assign prUrl = product.url | within: collection
+    assign prUrl = product.url
 	assign quickUrl = product.url | split: "?" | first
     
     if settings.clurl
