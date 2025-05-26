@@ -33,17 +33,17 @@
     {%- if settings.favicon_retina != blank -%}<link rel="apple-touch-icon-precomposed" type="image/png" sizes="152x152" href="{{ settings.favicon_retina | img_url: '152x' }}">{%- endif -%}
 
   	<title>{{ seo_title }}</title>
-    {% if collection.handle == 'all' %}
+    {% if page_description != blank %}
+      {% assign first_sentence = page_description | strip_html | escape | split: '.' | first %}
+      <meta name="description" content="{{ first_sentence }}." /> 
+    {% elsif collection.handle == 'all' %}
       <meta name="description" content="Shop our complete Featherstone London collection—timeless menswear essentials including knitwear, shirts, trousers, footwear, and accessories." />
     {% elsif collection.description != blank %}
       <meta name="description" content="{{ collection.description | strip_html | escape }}" />
-    {% elsif page_description != blank %}
-      {% comment %} <meta name="description" content="{{ page_description | strip_html | escape }}" /> {% endcomment %}
-      {% assign first_sentence = page_description | strip_html | escape | split: '.' | first %}
-      <meta name="description" content="{{ first_sentence }}." /> 
     {% else %}
       <meta name="description" content="{{ settings.meta_description | escape }}" />
     {% endif %}
+
   	{% comment %} {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%} {% endcomment %}
   	{%- render 'social-meta-tags' -%}
   {%- endcapture -%}
