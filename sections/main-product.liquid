@@ -994,7 +994,7 @@
 						"priceValidUntil": "{{ "now" | date: '%s' | plus: "86400" | date: "%Y-%m-%d %H:%M" }}",
 						"priceCurrency" : "{{ shop.currency }}",
 						"url" : "{{ shop.url }}{{ variant.url }}",
-                        "offerCount": "{{ variant.inventory_quantity }}"
+                        {% comment %} "offerCount": "{{ variant.inventory_quantity }}" {% endcomment %}
 					}{% unless forloop.last %},{% endunless %}
 				{%- endfor -%}
 			]
@@ -1012,7 +1012,7 @@
 				,"aggregateRating":{
 					"@type": "AggregateRating",      
 					"ratingValue": "{{ product.metafields.loox.avg_rating }}",      
-					"reviewCount": "{{ product.metafields.loox.num_reviews }}"   
+					"reviewCount": "{{ product.metafields.loox.num_reviews | default: 0 }}"   
 				}
 			{% elsif settings.reviews == 'yotpo' %}
 				,"aggregateRating":{
