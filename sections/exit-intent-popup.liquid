@@ -11,7 +11,7 @@
                 {% for block in section.blocks %}
                     {%- assign blkSt = block.settings -%}
                     {% if block.type == 'heading' %}
-                        <h3 class="heroTtl mb{{ blkSt.mbm }} mb{{ blkSt.mb }}-md" style="--cl:{{ blkSt.cl }};--fs:{{ blkSt.fs }}px;--fsm:{{ blkSt.fsm }}px;--ls:{{ blkSt.ls }}px;--lh:{{ blkSt.lh }};" {{ block.shopify_attributes }}>{{ blkSt.title }}</h3>
+                        <h2 class="heroTtl mb{{ blkSt.mbm }} mb{{ blkSt.mb }}-md" style="--cl:{{ blkSt.cl }};--fs:{{ blkSt.fs }}px;--fsm:{{ blkSt.fsm }}px;--ls:{{ blkSt.ls }}px;--lh:{{ blkSt.lh }};" {{ block.shopify_attributes }}>{{ blkSt.title }}</h2>
                     {% elsif block.type == 'text' %}
                         <div class="heroTxt mb{{ blkSt.mbm }} mb{{ blkSt.mb }}-md{% if section.settings.hidemb %} hide-sm{% endif %}{% if blkSt.addbg %} bg{% endif %}" style="--cl:{{ blkSt.cl }};--bg:{{ blkSt.bg }};--fs:{{ blkSt.fs }}px;--fsm:{{ blkSt.fsm }}px;--ls:{{ blkSt.ls }}px;--lh:{{ blkSt.lh }};" {{ block.shopify_attributes }}>{{ blkSt.title }}</div>
                     {% elsif block.type == 'button' %}

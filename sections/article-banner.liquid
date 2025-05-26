@@ -16,7 +16,7 @@
                         {%- for block in section.blocks -%}
                             {% assign blkSt = block.settings %}
                             {% if block.type == 'title' %}
-                                <h2 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.ftsm }}px;--fw:{{ block.settings.fw }};" {{ block.shopify_attributes }}>{{ article.title }}</h2>
+                                <h1 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.ftsm }}px;--fw:{{ block.settings.fw }};" {{ block.shopify_attributes }}>{{ article.title }}</h1>
                             {% elsif block.type == 'detail' %}
                                 {% if blkSt.date or blkSt.author or blog.comments_enabled? %}
                                     <ul class="fl f-jcc artDet mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md" style="--adcl:{{ blkSt.cl }};--adfs:{{ blkSt.fs }}px;--adfsm:{{ blkSt.fsm }}px;" {{ block.shopify_attributes }}>

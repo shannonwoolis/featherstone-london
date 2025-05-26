@@ -22,7 +22,7 @@
                     <div class="hero_cap pr{% if section.settings.text-align %} tc{% endif %}" style="background-color:rgba({{ section.settings.tbg | color_to_rgb | remove:'rgb(' | remove: ')' }},{{ section.settings.opt }});">
                         {% for block in section.blocks %}
                             {% if block.type == 'title' %}
-                                <h2 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.ftsm }}px;--fw:{{ block.settings.fw }};" {{ block.shopify_attributes }}>{{ blog.title }}</h2>
+                                <h1 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.ftsm }}px;--fw:{{ block.settings.fw }};" {{ block.shopify_attributes }}>{{ blog.title }}</h1>
                             {% elsif block.type == 'text' %}
                                 <div class="heroTxt mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if section.settings.hidemb %} hide-sm{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fs }}px;--fsm:{{ block.settings.fsm }}px;--lh:{{ block.settings.lh }};" {{ block.shopify_attributes }}>{{ block.settings.title }}</div>
                             {% endif %}

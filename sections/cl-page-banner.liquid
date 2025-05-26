@@ -16,7 +16,7 @@
                     <div class="hero_cap pr" style="background-color:rgba({{ section.settings.tbg | color_to_rgb | remove:'rgb(' | remove: ')' }},{{ section.settings.opt }});">
                         {% for block in section.blocks %}
                             {% if block.type == 'title' %}
-                                <h2 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.fsm }}px;--fw:{{ block.settings.hfw }};" {{ block.shopify_attributes }}>{{ collection.title }}</h2>
+                                <h1 class="heroTtl mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md{% if block.settings.tuu %} ttu{% endif %}" style="--cl:{{ block.settings.cl }};--fs:{{ block.settings.fts }}px;--fsm:{{ block.settings.fsm }}px;--fw:{{ block.settings.hfw }};" {{ block.shopify_attributes }}>{{ collection.title }}</h1>
                             {% elsif block.type == 'countdown' %}
                                 <div class="atCounter fl{% if section.settings.text-align %} f-jcc{% endif %} tc mb{{ block.settings.mbm }} mb{{ block.settings.mb }}-md ttu" data-date="{{ block.settings.date }}"
                                      style="--cl:{{ block.settings.cl }};--bg:{{ block.settings.bg }};--bd:{{ block.settings.bdr }};--br:{{ block.settings.radius }}px;--fs:{{ block.settings.fs }}px;--fsl:{{ block.settings.fsl }}px;" {{ block.shopify_attributes }}>
