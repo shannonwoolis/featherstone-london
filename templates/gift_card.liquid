@@ -41,11 +41,12 @@
       {% assign sentences = page_description | strip_html | escape | split: '.' %}
       {% assign sentence_count = sentences | size %}
       {% comment %} {% assign first_sentence = page_description | strip_html | escape | split: '.' %} {% endcomment %}
-      {% if sentence_count > 3 %}
+      {% if sentence_count > 4 %}
         <meta name="description" content="
           {{ sentences[0] | strip }}
           {% if sentences[1] != blank %} {{ sentences[1] | strip }}.{% endif %}
           {% if sentences[2] != blank %} {{ sentences[2] | strip }}.{% endif %}
+          {% if sentences[3] != blank %} {{ sentences[3] | strip }}.{% endif %}
         " />
       {% else %}
         <meta name="description" content="{{ page_description }}" /> 
@@ -53,7 +54,7 @@
     {% else %}
       <meta name="description" content="{{ settings.meta_description | escape }}" />
     {% endif %}
-    
+
   	{% comment %} {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%} {% endcomment %}
   	{%- render 'social-meta-tags' -%}
   {%- endcapture -%}
