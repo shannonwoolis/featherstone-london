@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded',function(){
               if routes.root_url == '/'
                 assign base = ''
               else
-                assign base = routes.root_url
+                assign base = request.protocol | append: '://' | append: request.host
               endif
             %}
         	if ((typeof Shopify) === 'undefined') { Shopify = {}; }
