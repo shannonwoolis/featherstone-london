@@ -37,7 +37,7 @@
     {% assign sentence_count = sentences | size %}
 
     {% if page_description != blank %}
-      {% if sentence_count > 1 %}
+      {% if sentence_count > 3 %}
         <meta name="description" content="{{ sentences[0] }}." />
         {% else %}
           <meta name="description" content="{{ page_description | strip_html | escape }}" />
