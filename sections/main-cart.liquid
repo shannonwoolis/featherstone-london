@@ -478,7 +478,7 @@
                 <p>{{ 'cart.general.empty' | t }}. <a class="btnLink" href="{{ routes.all_products_collection_url }}">{{ 'cart.button.continue_shopping' | t }}</a></p>              
                 {%- if shop.customer_accounts_enabled and customer == nil -%}
                     <h2 class="mb5">{{ 'cart.login.title' | t }}</h2>
-                    <p>{{ 'cart.login.paragraph_html' | t: link: routes.account_login_url }}</p>
+                    <p>{{ 'cart.login.paragraph_html' | t: link: routes.account_login_url  | replace: '/customer_authentication/redirect', '/account/login' }}</p>
                 {%- endif -%}
                 <p>&nbsp;</p><p>&nbsp;</p>
             </div>

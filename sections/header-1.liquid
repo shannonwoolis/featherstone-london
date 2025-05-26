@@ -65,7 +65,7 @@
   <p class="m0 hide">{{ 'sections.header.search' | t }}</p>
   </a> {% endif %}
   
-  {% if shop.customer_accounts_enabled %} <a class="hdicon user-menu" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" title="{{ 'sections.header.account' | t }}"> {% render 'icon-account', icntyp: secSt.icntyp %}
+  {% if shop.customer_accounts_enabled %} <a class="hdicon user-menu" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url  | replace: '/customer_authentication/redirect', '/account/login' }}{%- endif -%}" title="{{ 'sections.header.account' | t }}"> {% render 'icon-account', icntyp: secSt.icntyp %}
   <p class="m0{% if secSt.icntyp == '1' %} hide{% else %} hide-sm hide-md{% endif %}{% if secSt.icntyp == '2' %} pdt5{% endif %}">{{ 'sections.header.account' | t }}</p>
   </a> {% endif %}
   

@@ -39,7 +39,7 @@
                 </li>
             {%- elsif block.type == 'act' -%}
                 <li>
-                    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="db">
+                    <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url  | replace: '/customer_authentication/redirect', '/account/login' }}{%- endif -%}" class="db">
                         {% render 'icon-account' %}
                         {% unless secSt.hdtxt %}{{ blkSt.title }}{% endunless %}
                     </a>
