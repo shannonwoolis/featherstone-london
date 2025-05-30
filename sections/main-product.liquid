@@ -993,7 +993,7 @@
 						"price" : "{{ variant.price | divided_by: 100.00 }}",
 						"priceValidUntil": "{{ "now" | date: '%s' | plus: "86400" | date: "%Y-%m-%d %H:%M" }}",
 						"priceCurrency" : "{{ shop.currency }}",
-						"url" : "{{ shop.url }}{{ variant.url }}",
+						"url" : "{{ shop.url }}{{ variant.url }}"
                         {% comment %} "offerCount": "{{ variant.inventory_quantity }}" {% endcomment %}
 					}{% unless forloop.last %},{% endunless %}
 				{%- endfor -%}
