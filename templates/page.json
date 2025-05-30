@@ -1,1 +1,74 @@
-{"sections":{"banner":{"type":"page-banner","blocks":{"title":{"type":"title","settings":{"cl":"#000000","fts":22,"ftsm":20,"fw":"600","tuu":false,"mb":5,"mbm":5}}},"block_order":["title"],"settings":{"hit":220,"hitt":220,"hitm":150,"bg":"#f4f4f4","bgg":"","cntwd":1000,"text-align":true,"tbg":"rgba(0,0,0,0)","opt":0.9,"bpd":30,"bpdm":20,"brad":0}},"breadcrumb":{"type":"breadcrumb","settings":{"sw":false,"hidemb":false,"tc":false}},"main":{"type":"main-page","settings":{"hidettl":false,"hide_hdft":false,"sst":30,"ssb":30,"sstm":15,"ssbm":15,"bg":"","sw":false}}},"order":["banner","breadcrumb","main"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "cl": "#000000",
+            "fts": 22,
+            "ftsm": 20,
+            "fw": "600",
+            "tuu": false,
+            "mb": 5,
+            "mbm": 5
+          }
+        }
+      },
+      "block_order": [
+        "title"
+      ],
+      "disabled": true,
+      "settings": {
+        "hit": 220,
+        "hitt": 220,
+        "hitm": 150,
+        "bg": "#f4f4f4",
+        "bgg": "",
+        "cntwd": 1000,
+        "text-align": true,
+        "tbg": "rgba(0,0,0,0)",
+        "opt": 0.9,
+        "bpd": 30,
+        "bpdm": 20,
+        "brad": 0
+      }
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "sw": false,
+        "hidemb": false,
+        "tc": false
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "hidettl": false,
+        "hide_hdft": false,
+        "sst": 30,
+        "ssb": 30,
+        "sstm": 15,
+        "ssbm": 15,
+        "bg": "",
+        "sw": false
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "breadcrumb",
+    "main"
+  ]
+}
