@@ -1,1 +1,145 @@
-{"sections":{"banner":{"type":"page-banner","blocks":{"title":{"type":"title","settings":{"cl":"#ffffff","fts":30,"ftsm":18,"fw":"500","tuu":false,"mb":5,"mbm":5}},"ae7e7626-d494-4eff-bef9-b8c6846a4fff":{"type":"text","settings":{"title":"<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. <br\/>Quisque non nulla nulla de tincidunt <\/p>","hidemb":true,"cl":"#ffffff","fs":14,"fsm":14,"lh":1.5,"mb":30,"mbm":20}}},"block_order":["title","ae7e7626-d494-4eff-bef9-b8c6846a4fff"],"disabled":true,"settings":{"hit":220,"hitt":220,"hitm":100,"bg":"#f4f4f4","bgg":"","cntwd":1000,"text-align":true,"tbg":"rgba(0,0,0,0)","opt":0.9,"bpd":30,"bpdm":20,"brad":0}},"breadcrumb":{"type":"breadcrumb","disabled":true,"settings":{"sw":false,"hidemb":false,"tc":false}},"main":{"type":"main-page","disabled":true,"settings":{"hidettl":true,"hide_hdft":false,"sst":0,"ssb":0,"sstm":0,"ssbm":0,"bg":"","sw":false}},"3cd44002-ded2-454a-a5c9-40b2a9894d4c":{"type":"richtext","blocks":{"template--17818064224545__3cd44002-ded2-454a-a5c9-40b2a9894d4c-16757425716ed3c54e-0":{"type":"text","settings":{"ttl":"<h4><a href=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0880\/6590\/0879\/files\/men_size_chart_1.png?v=1738327942\" target=\"_blank\" title=\"Men's Size Chart (International)\">Click here for Men's Size Chart (International)<\/a><\/h4><h4><\/h4><h3><strong>Key Notes:<\/strong><\/h3><ol><li><strong>Chest Measurement<\/strong>: Measure around the fullest part of your chest, keeping the tape measure parallel to the floor.<\/li><li><strong>Waist Measurement<\/strong>: Measure around the natural waistline, where the waistband of your pants typically sits.<\/li><li><strong>Hip Measurement<\/strong>: Measure around the fullest part of your hips.<\/li><\/ol><p><\/p><h4><a href=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0880\/6590\/0879\/files\/International_men_size_chart.png?v=1738327942\" target=\"_blank\" title=\"International Shoe Size Chart (Men's)\">Click here for International Shoe Size Chart (Men's)<\/a><\/h4><h4><\/h4><h3>Tips for Customers:<\/h3><ul><li>When converting shoe sizes, always refer to the foot length in centimeters or inches, as this is the most accurate way to determine the correct size across different systems.<\/li><li><strong>Foot Length (inches and cm): <\/strong>This is the measurement of the length of your foot. To measure, place your foot flat on the floor and measure from the heel to the longest toe. It’s important to measure both feet, as one foot can be slightly larger than the other.<\/li><\/ul>","fs":20,"fsm":25,"fw":"400","lh":1,"cl":"#111111","mb":5}}},"block_order":["template--17818064224545__3cd44002-ded2-454a-a5c9-40b2a9894d4c-16757425716ed3c54e-0"],"settings":{"maxwd":70,"lefta":false,"sst":70,"ssb":70,"sstm":30,"ssbm":30,"bg":"#ffffff","bgg":"","ganim":false,"animsp":15,"sw":false,"hidem":false,"hided":false}},"custom_liquid_N9qaDC":{"type":"custom-liquid","disabled":true,"settings":{"title":"Custom Liquid","subtitle":"Describe about this section...","custom_liquid":"","sst":30,"ssb":30,"sstm":15,"ssbm":15,"bg":"","bgg":"","sw":false,"hidem":false,"hided":false}}},"order":["banner","breadcrumb","main","3cd44002-ded2-454a-a5c9-40b2a9894d4c","custom_liquid_N9qaDC"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "page-banner",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "cl": "#ffffff",
+            "fts": 30,
+            "ftsm": 18,
+            "fw": "500",
+            "tuu": false,
+            "mb": 5,
+            "mbm": 5
+          }
+        },
+        "ae7e7626-d494-4eff-bef9-b8c6846a4fff": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. <br/>Quisque non nulla nulla de tincidunt </p>",
+            "hidemb": true,
+            "cl": "#ffffff",
+            "fs": 14,
+            "fsm": 14,
+            "lh": 1.5,
+            "mb": 30,
+            "mbm": 20
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "ae7e7626-d494-4eff-bef9-b8c6846a4fff"
+      ],
+      "settings": {
+        "hit": 220,
+        "hitt": 220,
+        "hitm": 100,
+        "bg": "#000000",
+        "bgg": "",
+        "cntwd": 1000,
+        "text-align": true,
+        "tbg": "rgba(0,0,0,0)",
+        "opt": 0.9,
+        "bpd": 30,
+        "bpdm": 20,
+        "brad": 0
+      }
+    },
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "disabled": true,
+      "settings": {
+        "sw": false,
+        "hidemb": false,
+        "tc": false
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "hidettl": true,
+        "hide_hdft": false,
+        "sst": 0,
+        "ssb": 0,
+        "sstm": 0,
+        "ssbm": 0,
+        "bg": "",
+        "sw": false
+      }
+    },
+    "3cd44002-ded2-454a-a5c9-40b2a9894d4c": {
+      "type": "richtext",
+      "blocks": {
+        "template--17818064224545__3cd44002-ded2-454a-a5c9-40b2a9894d4c-16757425716ed3c54e-0": {
+          "type": "text",
+          "settings": {
+            "ttl": "<h4><a href=\"https://cdn.shopify.com/s/files/1/0880/6590/0879/files/men_size_chart_1.png?v=1738327942\" target=\"_blank\" title=\"Men's Size Chart (International)\">Click here for Men's Size Chart (International)</a></h4><h4></h4><h3><strong>Key Notes:</strong></h3><ol><li><strong>Chest Measurement</strong>: Measure around the fullest part of your chest, keeping the tape measure parallel to the floor.</li><li><strong>Waist Measurement</strong>: Measure around the natural waistline, where the waistband of your pants typically sits.</li><li><strong>Hip Measurement</strong>: Measure around the fullest part of your hips.</li></ol><p></p><h4><a href=\"https://cdn.shopify.com/s/files/1/0880/6590/0879/files/International_men_size_chart.png?v=1738327942\" target=\"_blank\" title=\"International Shoe Size Chart (Men's)\">Click here for International Shoe Size Chart (Men's)</a></h4><h4></h4><h3>Tips for Customers:</h3><ul><li>When converting shoe sizes, always refer to the foot length in centimeters or inches, as this is the most accurate way to determine the correct size across different systems.</li><li><strong>Foot Length (inches and cm): </strong>This is the measurement of the length of your foot. To measure, place your foot flat on the floor and measure from the heel to the longest toe. It’s important to measure both feet, as one foot can be slightly larger than the other.</li></ul>",
+            "fs": 20,
+            "fsm": 25,
+            "fw": "400",
+            "lh": 1,
+            "cl": "#111111",
+            "mb": 5
+          }
+        }
+      },
+      "block_order": [
+        "template--17818064224545__3cd44002-ded2-454a-a5c9-40b2a9894d4c-16757425716ed3c54e-0"
+      ],
+      "settings": {
+        "maxwd": 70,
+        "lefta": false,
+        "sst": 70,
+        "ssb": 70,
+        "sstm": 30,
+        "ssbm": 30,
+        "bg": "#ffffff",
+        "bgg": "",
+        "ganim": false,
+        "animsp": 15,
+        "sw": false,
+        "hidem": false,
+        "hided": false
+      }
+    },
+    "custom_liquid_N9qaDC": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "title": "Custom Liquid",
+        "subtitle": "Describe about this section...",
+        "custom_liquid": "",
+        "sst": 30,
+        "ssb": 30,
+        "sstm": 15,
+        "ssbm": 15,
+        "bg": "",
+        "bgg": "",
+        "sw": false,
+        "hidem": false,
+        "hided": false
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "breadcrumb",
+    "main",
+    "3cd44002-ded2-454a-a5c9-40b2a9894d4c",
+    "custom_liquid_N9qaDC"
+  ]
+}
