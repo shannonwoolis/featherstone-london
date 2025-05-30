@@ -803,7 +803,7 @@
 			<div class="fl f-aic f-jcc">
 			{%- capture "form_classes" %} product-form-{{ product.id }} fl f-jcc f-aic{%- endcapture %}
 
-					<div class="img"><img src="{{ featured_img.src | img_url: '60x60' }}" class="db stickCtImg" alt="{{ image.alt | escape }}"></div>
+					<div class="img"><img src="{{ featured_img.src | img_url: '60x60' }}" class="db stickCtImg" alt="{{ image.alt | default: secSt.title | default: shop.name escape }}"></div>
 					<div class="prdata tl">
 						<p class="sticky-title mb0">{{ product.title }}</p>
 						<p class="stPrice">{{ current_variant.price | money }}</p>
