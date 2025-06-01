@@ -440,7 +440,7 @@
                     {% if section.settings.climg and collection.image != blank %}
                     <div class="fl1{% if section.settings.clttl != blank %} clImg{% endif %}">
                           <img class="lazyload imgFl cl_img" src="{{ collection.image | img_url: '100x' }}" width="{{ collection.image.width }}" height="{{ collection.image.height }}"
-                            data-srcset="{% render 'lazyload', image: collection.image, sizes: '180,320,540,720,1000,1400,1900' %}" data-sizes="auto" alt="{{ collection.image.alt | escape }}" />
+                            data-srcset="{% render 'lazyload', image: collection.image, sizes: '180,320,540,720,1000,1400,1900' %}" data-sizes="auto" alt="{{ collection.image.alt | default: shop.name | escape }}" />
                       </div>
                     {% endif %}
                 </div>

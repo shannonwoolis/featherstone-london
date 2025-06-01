@@ -55,7 +55,7 @@
       <div class="widget_con">
         {% for article in blogs[blog.handle].articles limit:5 %}
           <div class="post recentPost fl f-aic">
-            <a href="{{ article.url }}" class="article-img mr15"><img class="imgFl lazyload" data-src="{{ article | img_url: '100x100', crop:'center' }}" width="100" height="100" alt="{{ article.title | default: shop.name }}"></a>
+            <a href="{{ article.url }}" class="article-img mr15"><img class="imgFl lazyload" data-src="{{ article | img_url: '100x100', crop:'center' }}" width="100" height="100" alt="{{ article.title | default: shop.name | escape }}"></a>
             <div class="fl1 details">
                 <a href="{{ article.url }}" class="post_name">{{ article.title }}</a>
                 <span class="post_date">{{ article.published_at | time_tag: format: 'month_day_year' }}</span>
@@ -105,7 +105,7 @@
   <div class="sb_widget static-banner" {{ bkat }}>
     {% if block.link != blank %}<a href="{{ block.link }}">{% endif %}
     {% if block.img != blank %}
-        <img class="imgFl lazyload mb10" data-src="{{ block.img | img_url: '400x' }}" width="{{ block.img.width }}" height="{{ block.img.height }}" alt="{{ block.img.alt | default: article.title | default: shop.name }}">
+        <img class="imgFl lazyload mb10" data-src="{{ block.img | img_url: '400x' }}" width="{{ block.img.width }}" height="{{ block.img.height }}" alt="{{ block.img.alt | default: article.title | default: shop.name | escape }}">
     {% else %}
           {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
           {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}

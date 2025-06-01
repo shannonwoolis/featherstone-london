@@ -37,10 +37,10 @@
 <div class="header-logo"> <a href="{{ routes.root_url }}" itemprop="url" class="hdr_logo_lnk"> {%- capture logoWidth -%}{{ settings.logo_width }}x{%- endcapture -%}
     {%- assign istrLogo = false -%}
     {%- if istrnsparent and logo != blank -%}
-        <img loading="lazy" src="{{ logo | img_url: logoWidth }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: logo.aspect_ratio | floor }}" alt="{{ logo.alt | default: shop.name }}" srcset="{{ logo | img_url: logoWidth }} 1x, {{ logo | img_url: logoWidth, scale: 2 }} 2x" class="trlogo">
+        <img loading="lazy" src="{{ logo | img_url: logoWidth }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: logo.aspect_ratio | floor }}" alt="{{ logo.alt | default: shop.name | escape }}" srcset="{{ logo | img_url: logoWidth }} 1x, {{ logo | img_url: logoWidth, scale: 2 }} 2x" class="trlogo">
     {%- endif -%}
     {%- if settings.logo != blank -%}
-        <img loading="lazy" src="{{ logo | img_url: logoWidth }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | floor }}" alt="{{ settings.logo.alt | default: shop.name }}" srcset="{{ settings.logo | img_url: logoWidth, scale: 2 }} 1x, {{ settings.logo | img_url: logoWidth, scale: 4 }} 1.1x" class="stlogo">
+        <img loading="lazy" src="{{ logo | img_url: logoWidth }}" width="{{ settings.logo_width }}" height="{{ settings.logo_width | divided_by: settings.logo.aspect_ratio | floor }}" alt="{{ settings.logo.alt | default: shop.name | escape }}" srcset="{{ settings.logo | img_url: logoWidth, scale: 2 }} 1x, {{ settings.logo | img_url: logoWidth, scale: 4 }} 1.1x" class="stlogo">
     {%- else -%}
         {{ shop.name }}
     {%- endif -%} <span class="hidden_txt">{{ shop.name }}</span> </a> </div>
@@ -50,7 +50,7 @@
     {%- if secSt.promo_head != blank or secSt.promo_text != blank -%}
 <div class="fl f-aic promo_txt hide-sm hide-md">
   {%- if secSt.prico != blank -%}
-    <img class="at-icon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ secSt.prico | img_url: iconsz }}" width="30" height="30" alt="{{ secSt.prico.alt }}" />
+    <img class="at-icon lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ secSt.prico | img_url: iconsz }}" width="30" height="30" alt="{{ secSt.prico.alt | default: shop.name | escape }}" />
   {%- endif -%}
   <div style="color:{{ section.settings.ptxtcl }}"> {%- if section.settings.promo_head != blank -%}
     <p class="mb0">{{ section.settings.promo_head }}</p>

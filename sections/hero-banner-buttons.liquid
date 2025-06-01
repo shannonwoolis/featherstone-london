@@ -7,11 +7,11 @@
                 <div class="heroImg">
                     {% if section.settings.image != blank %}
                       <img loading="lazy" class="imgFt lazyload{% if secSt.parallax %} prlxImg{% endif %}{% if secSt.imagem != blank %} hide-sm{% endif %}" src="{{ secSt.image | img_url: "100x" }}" width="{{ secSt.image.width }}" height="{{ secSt.image.height }}"
-                          data-srcset="{% render 'lazyload', image: secSt.image, sizes: '400,700,1000,1200,1600,2000' %}" data-sizes="auto" alt="{{ secSt.image.alt | escape }}" style="--ipos:{{ secSt.image.presentation.focal_point | default: 'center center' }};">
+                          data-srcset="{% render 'lazyload', image: secSt.image, sizes: '400,700,1000,1200,1600,2000' %}" data-sizes="auto" alt="{{ secSt.image.alt | default: shop.name | escape }}" style="--ipos:{{ secSt.image.presentation.focal_point | default: 'center center' }};">
                     {% endif %}
                     {% if section.settings.imagem != blank %}
                         <img loading="lazy" class="imgFt hide-md hide-lg lazyload{% if secSt.parallax %} prlxImg{% endif %}" src="{{ secSt.imagem | img_url: "100x" }}" width="{{ secSt.imagem.width }}" height="{{ secSt.imagem.height }}"
-                            data-srcset="{% render 'lazyload', image: secSt.imagem, sizes: '400,700,1000' %}" data-sizes="auto" alt="{{ secSt.imagem.alt | escape }}" style="--ipos:{{ secSt.imagem.presentation.focal_point | default: 'center center' }};">
+                            data-srcset="{% render 'lazyload', image: secSt.imagem, sizes: '400,700,1000' %}" data-sizes="auto" alt="{{ secSt.imagem.alt | default: shop.name | escape }}" style="--ipos:{{ secSt.imagem.presentation.focal_point | default: 'center center' }};">
                     {% endif %}
                 </div>
             {% endif %}

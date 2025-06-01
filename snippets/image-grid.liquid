@@ -3,7 +3,7 @@
 <img loading="lazy" class="imgFl lazyload wow zoomIn" src="{{ image | img_url: "50x" }}" width="{{ image.width }}" height="{{ image.height }}"
     data-srcset="{% render 'lazyload', image: image, sizes: '200,400,600,800,1000,1200,1400' %}" data-sizes="auto" alt="{{ image.alt | default: shop.name | escape }}">
 {%- else -%}
-    <img src="{{ 'https://dummyimage.com/' | append: imgSize | append: '/F4F4F4/ccc' }}" class="db" />
+    <img src="{{ 'https://dummyimage.com/' | append: imgSize | append: '/F4F4F4/ccc' }}" class="db" alt="Dummy image" />
 {%- endif -%}
 {%- if text1 != blank or text2 != blank or text3 != blank %}
 <div class="fl grid_btxtwrap {{ pos }} {% if text_a %}tl{% else %}tc{% endif %}">

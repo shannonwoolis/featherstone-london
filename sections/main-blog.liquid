@@ -43,7 +43,7 @@
                                 <div class="articleImg mb20{% if secSt.layout == 'l1' or secSt.layout == 'l2' %} wd40-md mb0-md{% endif %}">
                                     <a class="db pr" href="{{ article.url }}" style="padding-bottom:{{ secSt.img_ratio }}%;">
                                         <img loading="lazy" class="imgFt lazyload" src="{{ article.image | img_url: "100x" }}" width="{{ article.image.width }}" height="{{ article.image.height }}"
-                                            data-srcset="{% render 'lazyload', image: article.image, sizes: '500,670,800,1000,1300' %}" data-sizes="auto" alt="{{ article.image.alt | escape }}">
+                                            data-srcset="{% render 'lazyload', image: article.image, sizes: '500,670,800,1000,1300' %}" data-sizes="auto" alt="{{ article.image.alt | default: shop.name | escape }}">
                                     </a>
                                 </div>
                             {% endif %}

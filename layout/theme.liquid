@@ -49,7 +49,7 @@
       {% assign sentences = page_description | strip_html | escape | split: '.' %}
       {% assign sentence_count = sentences | size %}
       {% comment %} {% assign first_sentence = page_description | strip_html | escape | split: '.' %} {% endcomment %}
-      {% if sentence_count > 3 %}
+      {% if sentence_count > 2 %}
         <meta name="description" content="
           {{ sentences[0] | strip }}
           {% if sentences[1] != blank %} {{ sentences[1] | strip }}.{% endif %}
@@ -115,7 +115,7 @@
 </script>
 <noscript>
   <img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=631519746442167&ev=PageView&noscript=1"/>
+  src="https://www.facebook.com/tr?id=631519746442167&ev=PageView&noscript=1" alt="Facebook"/>
 </noscript>
 <!-- End Meta Pixel Code -->
   {% if template contains 'product' and product %}

@@ -50,7 +50,7 @@
               <a href="{% if ttlink != blank %}{{ ttlink }}{% else %}#{% endif %}" {% if blkSt.title contains '[new]' %} target="_blank" {% endif %}>
                   {% if navType == 'cat' and secSt.sicn and collection.metafields.custom.icon != blank %}
                     {% capture icnSz %}{{ secSt.icn | plus: 50 }}x{% endcapture %}
-                    <img class="icn lazyload mr10" loading="lazy" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icn }}" height="{{ secSt.icn }}" alt="{{ collection.title }}" />
+                    <img class="icn lazyload mr10" loading="lazy" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icn }}" height="{{ secSt.icn }}" alt="{{ collection.title | default: shop.name | escape }}" />
                   {% endif %}
                   {{ blkSt.title | split: '[' | first }}
                   {% if blkSt.title contains '[label' %}<span class="lbl {{ label }}">{{ settings[label] }}</span>{% endif %}

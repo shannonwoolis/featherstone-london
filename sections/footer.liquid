@@ -32,7 +32,7 @@
                                 <p class="fimg{% if blkSt.center %} m_auto{% endif %}" style="max-width:{{ block.settings.logo-wd }}px" {% if block.settings.center %}class="m_auto"{% endif %}>
                                     <img class="imgFl" src="{{ block.settings.logo | img_url: logoWd }}" width="{{ block.settings.logo-wd }}" height="{{ block.settings.logo-wd | divided_by: block.settings.logo.aspect_ratio | floor }}"
                                         srcset="{{ block.settings.logo | img_url: logoWd }} 1x, {{ block.settings.logo | img_url: logoWd, scale: 2 }} 2x"
-                                        alt="{{ block.settings.logo.alt | default: shop.name }}">
+                                        alt="{{ block.settings.logo.alt | default: shop.name | escape }}">
                                 </p>
                             {% endif %}
                             {% if block.settings.txt != blank %}<div class="text txt mb20">{{ block.settings.txt }}</div>{% endif %}
@@ -54,7 +54,7 @@
                                         <a target="_blank" href="{{ block.settings.url1 }}">
                                             {% capture logoWd %}{{ block.settings.logo-wd }}x{% endcapture %}
                                             <img class="imgFl" src="{{ block.settings.logo | img_url: logoWd }}" width="{{ block.settings.logo-wd }}" height="{{ block.settings.logo-wd | divided_by: block.settings.logo.aspect_ratio | floor }}"
-                                                srcset="{{ block.settings.logo | img_url: logoWd }} 1x, {{ block.settings.logo | img_url: logoWd, scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: shop.name }}">
+                                                srcset="{{ block.settings.logo | img_url: logoWd }} 1x, {{ block.settings.logo | img_url: logoWd, scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: shop.name | escape }}">
                                         </a>
                                     </p>
                                 {% endif %}
@@ -63,7 +63,7 @@
                                         <a target="_blank" href="{{ block.settings.url2 }}">
                                             {% capture logoWd2 %}{{ block.settings.logo-wd2 }}x{% endcapture %}
                                             <img class="imgFl" src="{{ block.settings.logo2 | img_url: logoWd2 }}" width="{{ block.settings.logo-wd2 }}" height="{{ block.settings.logo-wd2 | divided_by: block.settings.logo2.aspect_ratio | floor }}"
-                                                srcset="{{ block.settings.logo2 | img_url: logoWd2 }} 1x, {{ block.settings.logo2 | img_url: logoWd2, scale: 2 }} 2x" alt="{{ block.settings.logo2.alt | default: shop.name }}">
+                                                srcset="{{ block.settings.logo2 | img_url: logoWd2 }} 1x, {{ block.settings.logo2 | img_url: logoWd2, scale: 2 }} 2x" alt="{{ block.settings.logo2.alt | default: shop.name | escape }}">
                                         </a>
                                     </p>
                                 {% endif %}
@@ -96,7 +96,7 @@
                                 <p style="max-width:{{ block.settings.logo-wd }}px">
                                     {% capture logoWd %}{{ block.settings.logo-wd }}x{% endcapture %}
                                     <img src="{{ block.settings.logo | img_url: logoWd }}" width="{{ block.settings.logo.width }}"
-                                        srcset="{{ block.settings.logo | img_url: logoWd }} 1x, {{ block.settings.logo | img_url: logoWd, scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: shop.name }}">
+                                        srcset="{{ block.settings.logo | img_url: logoWd }} 1x, {{ block.settings.logo | img_url: logoWd, scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: shop.name | escape }}">
                                 </p>
                             {% endif %}
                             <ul class="f_addr mb20">
@@ -164,7 +164,7 @@
             {% if secSt.show_payment %}
                 <div class="fl1{% if secSt.copyright_text != blank %} wd50-md tr-md{% endif %} tc">
                     {%- if secSt.payimg != blank -%}
-                        <p class="footer-img"><img src="{{ secSt.payimg | img_url: '600x' }}" alt="{{ secSt.logo.alt }}" style="max-width:{{ secSt.payimgwd }}px" /></p>
+                        <p class="footer-img"><img src="{{ secSt.payimg | img_url: '600x' }}" alt="{{ secSt.logo.alt | default: shop.name | escape }}" style="max-width:{{ secSt.payimgwd }}px" /></p>
                     {%- else -%}
                         {% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'payment_item' }}{% endfor %}
                     {%- endif -%}

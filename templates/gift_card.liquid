@@ -41,7 +41,7 @@
       {% assign sentences = page_description | strip_html | escape | split: '.' %}
       {% assign sentence_count = sentences | size %}
       {% comment %} {% assign first_sentence = page_description | strip_html | escape | split: '.' %} {% endcomment %}
-      {% if sentence_count > 3 %}
+      {% if sentence_count > 2 %}
         <meta name="description" content="
           {{ sentences[0] | strip }}
           {% if sentences[1] != blank %} {{ sentences[1] | strip }}.{% endif %}
@@ -189,7 +189,7 @@
 
     <main class="gift-card mb30">
       <div class="gift-card__image-wrapper">
-        <img src="{{ 'gift-card/card.svg' | shopify_asset_url }}" alt="" class="gift-card__image" height="{{ 570 | divided_by: 1.5 }}" width="570" loading="lazy">
+        <img src="{{ 'gift-card/card.svg' | shopify_asset_url }}" alt="Gift card" class="gift-card__image" height="{{ 570 | divided_by: 1.5 }}" width="570" loading="lazy">
       </div>
       <div class="gift-card__qr-code" data-identifier="{{ gift_card.qr_identifier }}"></div>
       <div class="gift-card__information tc">

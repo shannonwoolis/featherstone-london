@@ -1,7 +1,7 @@
 <div class="wrap-blog pr mb15 brad of_hidden mb30-md {{ section.blog_align }}" style="--brad:{{ section.bbrad }}px">
     {% if article.image %}
         <a class="db pr mb20 of_hidden brad" href="{{ article.url }}" style="padding-bottom:{{ section.img_ratio }}%;--brad:{{ section.brad }}px;" title="{{ article.title | escape }}">
-            <img loading="lazy" class="imgFt lazyload wow zoomInCnt" src="{{ article.image | img_url: "100x" }}" alt="{{ article.image.alt | escape }}"
+            <img loading="lazy" class="imgFt lazyload wow zoomInCnt" src="{{ article.image | img_url: "100x" }}" alt="{{ article.image.alt | default: shop.name | escape }}"
                  data-srcset="{% render 'lazyload', image: article.image, sizes: '160,360,560,860,1200' %}" width="{{ article.image.width }}" height="{{ article.image.height }}" data-sizes="auto">
         </a>
     {% endif %}
