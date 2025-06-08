@@ -56,6 +56,7 @@
       {% if chars > 160 %}
         {% assign sentences = page_description | strip_html | split: '.' %}
         {% assign sentence_count = sentences | size %}
+        {{ sentences }}
         {% if sentence_count > 2 %}
           {% 
             assign firstSentence = sentences[0] | strip 
