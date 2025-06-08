@@ -606,7 +606,7 @@
 				"@type": "Brand",
 				"name": "{{ product.vendor | escape }}"
 			},
-			"offers": [
+			{% comment %} "offers": [
 				{%- for variant in product.variants -%}
 					{
 						"@type" : "Offer",
@@ -620,7 +620,7 @@
 						"url" : "{{ shop.url }}{{ variant.url }}"
 					}{% unless forloop.last %},{% endunless %}
 				{%- endfor -%}
-			]
+			] {% endcomment %}
 			{% if settings.reviews == 'shopify' %}
 				{%- assign ratingCount = product.metafields.spr.reviews | split: '"reviewCount": "' | last | split: '"' | first | plus: 0 -%}
 				{%- assign ratingValue = product.metafields.spr.reviews | split: '"ratingValue": "' | last | split: '"' | first | plus: 0  -%}

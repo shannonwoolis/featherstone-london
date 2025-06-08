@@ -108,7 +108,8 @@
     {%  endif %}
     
     {% if settings.wishlist %}<a class="btn wishlist addto-wishlist" href="/pages/wishlist" rel="{{ product.handle | handleize }}">{% render 'icon-wishlist' %}<span class="tooltip-label">{{ 'products.product.add_to_wishlist' | t }}</span></a>{% endif %}
-    {% if settings.quick_view %}<a href="{{ quickUrl }}?section_id=quick-view" rel="nofollow" class="btn quick-view">
+    {% comment %} {% if settings.quick_view %}<a href="{{ quickUrl }}?section_id=quick-view" rel="nofollow" class="btn quick-view"> {% endcomment %}
+    {% if settings.quick_view %}<a href="{{ quickUrl }}?section_id=quick-view" class="btn quick-view">
 	{% render 'icon-search' %}
 	<span class="tooltip-label">{{ 'products.product.quick_view' | t }}</span></a>{% endif %}
   </div> 

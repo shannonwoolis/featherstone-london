@@ -39,7 +39,8 @@
 {% endcapture %}
 {% capture btnQuickview %}
   {% if settings.quick_view %}
-      <a href="{{ quickUrl }}?section_id=quick-view" rel="nofollow" class="gbtn pr quick-view" aria-label="{{ 'products.product.quick_view' | t}}">
+      {% comment %} <a href="{{ quickUrl }}?section_id=quick-view" rel="nofollow" class="gbtn pr quick-view" aria-label="{{ 'products.product.quick_view' | t}}"> {% endcomment %}
+      <a href="{{ quickUrl }}?section_id=quick-view" class="gbtn pr quick-view" aria-label="{{ 'products.product.quick_view' | t}}">
         {% render 'icon-search' %}<span class="tooltip-label {{lblposition}}">{{ 'products.product.quick_view' | t}}</span>
       </a>
   {% endif %}
