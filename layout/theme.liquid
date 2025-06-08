@@ -26,7 +26,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.theme_clr }}">
     <meta name="format-detection" content="telephone=no">
-    <link rel="canonical" href="{{ canonical_url }}">
+    {% if '?page=' in canonical_url %}
+      <link rel="canonical" href="{{ canonical_url | split: '?' | first }}">
+    {% else %}
+      <link rel="canonical" href="{{ canonical_url }}">
+    {% endif %}
   	<meta name="google-site-verification" content="Bd1u9pvj722sGVEa_JLqKMrjoFStj1_J0egkUheN6oU" />
   	
   	<link rel="dns-prefetch" href="https://{{shop.domain}}" crossorigin>
