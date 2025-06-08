@@ -58,10 +58,8 @@
         {% assign sentence_count = sentences | size %}
 
         {% if sentence_count > 2 %}
-          {% 
-            assign firstSentence = sentences[0] | strip 
-            assign secondSentence = sentences[1] | strip
-          %}
+          {% assign firstSentence = sentences[0] | strip %}
+          {% assign secondSentence = sentences[1] | strip %}
           {% assign first_len = firstSentence | size %}
           {% assign second_len = secondSentence | size %}
           {% assign combined_length = first_len | plus: second_len %}
