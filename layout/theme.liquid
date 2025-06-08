@@ -65,7 +65,7 @@
           %}
           <meta name="description" content="{{ firstSentence }}.{% if secondSentence and combined_length <= 160 %} {{ secondSentence }}.{% endif %}" />
         {% else %}
-          <meta name="description" content="hello{{ page_description | strip_html | escape }}" /> 
+          <meta name="description" content="{{ page_description | strip_html | escape }}" /> 
         {% endif %}
       {% else %}
         <meta name="description" content="{{ page_description | strip_html | escape }}" /> 
