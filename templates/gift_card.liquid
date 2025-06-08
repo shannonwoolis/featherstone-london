@@ -43,10 +43,10 @@
       {% comment %} {% assign first_sentence = page_description | strip_html | escape | split: '.' %} {% endcomment %}
       {% if sentence_count > 2 %}
         <meta name="description" content="
-          {{ sentences[0] | strip }}
-          {% if sentences[1] != blank %} {{ sentences[1] | strip }}.{% endif %}
+          {{ sentences[0] | strip }}.
+          {% comment %} {% if sentences[1] != blank %} {{ sentences[1] | strip }}.{% endif %}
           {% if sentences[2] != blank %} {{ sentences[2] | strip }}.{% endif %}
-          {% if sentences[3] != blank %} {{ sentences[3] | strip }}.{% endif %}
+          {% if sentences[3] != blank %} {{ sentences[3] | strip }}.{% endif %} {% endcomment %}
         " />
       {% else %}
         <meta name="description" content="{{ page_description }}" /> 
