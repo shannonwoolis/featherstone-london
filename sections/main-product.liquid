@@ -577,7 +577,7 @@
                     {%-  when 'link-popup' -%}                                                                
                         <div class="poplink mfp-link f-wrap mb15" style="--fs:{{ blkst.fs }};--cl:{{ blkst.cl }};--bg:{{ blkst.clbg }};--fw:{{ blkst.fw }};--brad:{{ blkst.brad }}px;--bdr:{{ blkst.bdr }};">
                             <a href="#lp{{ block.id }}" data-effect="mfp-zoom-in" class="poplink fl mfp mr15 {{ blkst.lstyle }}">
-                                {% if blkst.icon != blank %}<img style="color:{{ blkst.cl }};" class="at-icon" loading="lazy" src="{{ blkst.icon | img_url: '60x' }}" width="18" height="18" alt="" />{% endif %} 
+                                {% if blkst.icon != blank %}<img style="color:{{ blkst.cl }};" class="at-icon" loading="lazy" src="{{ blkst.icon | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.icon.alt | default: blkst.title | default: 'Featherstone London' | escape }}" />{% endif %} 
                                 {{ blkst.text }}
                             </a>
                         </div>
