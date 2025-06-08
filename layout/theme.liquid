@@ -54,7 +54,6 @@
     {% elsif page_description != blank %}
       {% assign chars = page_description | size %}
       {% if chars > 160 %}
-        {{ chars }}
         {% assign sentences = page_description | strip_html | split: '.' %}
         {% assign sentence_count = sentences | size %}
         {% if sentence_count > 2 %}
@@ -63,6 +62,7 @@
             assign second = sentences[1] | strip 
             assign combined_length = first | size | plus: second | size 
           %}{{ first }}.{% if second and combined_length <= 160 %} {{ second }}.{% endif %}" />
+          {{ first }}
         {% else %}
           <meta name="description" content="{{ page_description | strip_html | escape }}" /> 
         {% endif %}
