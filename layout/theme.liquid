@@ -63,7 +63,7 @@
             assign secondSentence = sentences[1] | strip 
             assign combined_length = first | size | plus: second | size 
           %}
-          <meta name="description" content="{{ firstSentence }}.{% if secondSentence and combined_length <= 160 %} {{ secondSentence }}.{% endif %}" />
+          <meta name="description" content="hello{{ firstSentence }}.{% if secondSentence and combined_length <= 160 %} {{ secondSentence }}.{% endif %}" />
         {% else %}
           <meta name="description" content="{{ page_description | strip_html | escape }}" /> 
         {% endif %}
@@ -73,8 +73,6 @@
     {% else %}
       <meta name="description" content="{{ settings.meta_description | escape }}" />
     {% endif %}
-
-
 
   	{% comment %} {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%} {% endcomment %}
   	{%- render 'social-meta-tags' -%}
