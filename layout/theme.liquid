@@ -57,12 +57,13 @@
         {% assign sentences = page_description | strip_html | split: '.' %}
         {% assign sentence_count = sentences | size %}
         {% if sentence_count > 2 %}
-          <meta name="description" content="{% 
+          {% 
             assign first = sentences[0] | strip 
             assign second = sentences[1] | strip 
             assign combined_length = first | size | plus: second | size 
-          %}{{ first }}.{% if second and combined_length <= 160 %} {{ second }}.{% endif %}" />
-          {{ first }}
+          %}
+  {{ first }}
+          <meta name="description" content="{{ first }}.{% if second and combined_length <= 160 %} {{ second }}.{% endif %}" />
         {% else %}
           <meta name="description" content="{{ page_description | strip_html | escape }}" /> 
         {% endif %}
