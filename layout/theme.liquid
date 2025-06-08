@@ -53,6 +53,7 @@
       <meta name="description" content="{{ collection.description | strip_html | escape }}" />
     {% elsif page_description != blank %}
       {% assign chars = page_description | size %}
+      {{ chars }}
       {% if chars > 160 %}
         {% assign sentences = page_description | strip_html | split: '.' %}
         {% assign sentence_count = sentences | size %}
