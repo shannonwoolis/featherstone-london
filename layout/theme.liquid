@@ -46,16 +46,20 @@
     {% elsif collection.description != blank %}
       <meta name="description" content="{{ collection.description | strip_html | escape }}" />
     {% elsif page_description != blank %}
-      {% assign sentences = page_description | strip_html | escape | split: '.' %}
-      {% assign sentence_count = sentences | size %}
-      {% comment %} {% assign first_sentence = page_description | strip_html | escape | split: '.' %} {% endcomment %}
-      {% if sentence_count > 2 %}
-        <meta name="description" content="
-          {{ sentences[0] | strip }}.
-          {% comment %} {% if sentences[1] != blank %} {{ sentences[1] | strip }}.{% endif %}
-          {% if sentences[2] != blank %} {{ sentences[2] | strip }}.{% endif %}
-          {% if sentences[3] != blank %} {{ sentences[3] | strip }}.{% endif %} {% endcomment %}
-        " />
+      {% if product.description == page_description %}
+        {% assign sentences = page_description | strip_html | escape | split: '.' %}
+        {% assign sentence_count = sentences | size %}
+        {% comment %} {% assign first_sentence = page_description | strip_html | escape | split: '.' %} {% endcomment %}
+        {% if sentence_count > 2 %}
+          <meta name="description" content="
+            {{ sentences[0] | strip }}.
+            {% if sentences[1] != blank %} {{ sentences[1] | strip }}.{% endif %}
+            {% comment %} {% if sentences[2] != blank %} {{ sentences[2] | strip }}.{% endif %}
+            {% if sentences[3] != blank %} {{ sentences[3] | strip }}.{% endif %} {% endcomment %} {% endcomment %}
+          " />
+        {% else %}
+          <meta name="description" content="{{ page_description }}" /> 
+        {% endif %}
       {% else %}
         <meta name="description" content="{{ page_description }}" /> 
       {% endif %}
