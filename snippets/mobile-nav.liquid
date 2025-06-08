@@ -21,7 +21,7 @@
             <a class="hasSub" href="{% if blkSt.url != blank %}{{ ttlink }}{% else %}#{% endif %}">
                 {% if secSt.sicnm and collection.metafields.custom.icon != blank and navType == 'cat' %}
                     {% capture icnSz %}{{ secSt.icnm | plus: 50 }}x{% endcapture %}
-                    <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: shop.name | escape }}" />
+                    <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: 'Featherstone London' | escape }}" />
                 {% endif %}
                 {{ blkSt.title | split: '[' | first }}
                 {% if blkSt.title contains '[label' %} <span class="lbl {{ label }}">{{ settings[label] }}</span>{% endif %}

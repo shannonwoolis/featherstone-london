@@ -1,8 +1,8 @@
 {%- liquid
-  assign og_title = page_title | default: shop.name
+  assign og_title = page_title | default: 'Featherstone London'
   assign og_url = canonical_url | default: shop.url
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_description = page_description | default: shop.description | default: 'Featherstone London'
 
   if request.page_type == 'product'
     assign og_type = 'product'

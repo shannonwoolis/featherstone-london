@@ -58,10 +58,10 @@
                         {% if blkSt.display_btn != true and blkSt.link != blank and block.type != 'video' %}<a href="{{ blkSt.link }}" class="ss_link">{% endif %}
                         {% if block.type == 'image' and blkSt.image != blank %}
                             <img loading="lazy" class="ssimg imgFt lazyload swiper-lazy{% if blkSt.imagem != blank %} hide-sm{% endif %}{% if section.settings.imganim %} anim{% endif %}" src="{{ blkSt.image | img_url: "100x" }}" width="{{ blkSt.image.width }}" height="{{ blkSt.image.height }}"
-                                 data-srcset="{% render 'lazyload', image: blkSt.image, sizes: '400,700,1000,1200,1600,2000' %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: shop.name | escape }}" style="--ipos:{{ imgPos }};">
+                                 data-srcset="{% render 'lazyload', image: blkSt.image, sizes: '400,700,1000,1200,1600,2000' %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: 'Featherstone London' | escape }}" style="--ipos:{{ imgPos }};">
                             {% if blkSt.imagem != blank %}
                                 <img class="ssimg imgFt hide-md hide-lg lazyload{% if forloop.first %} lazypreload{% else %} swiper-lazy{% endif %}" {% if forloop.first %}src="{{ blkSt.imagem | img_url: "700x" }}" fetchpriority="high"{% endif %} width="{{ blkSt.imagem.width }}" height="{{ blkSt.imagem.height }}"
-                                 data-srcset="{% render 'lazyload', image: blkSt.imagem, sizes: '400,700,1000,1400' %}" data-sizes="auto" alt="{{ blkSt.imagem.alt | default: shop.name | escape }}" style="--ipos:{{ img2Pos }};">
+                                 data-srcset="{% render 'lazyload', image: blkSt.imagem, sizes: '400,700,1000,1400' %}" data-sizes="auto" alt="{{ blkSt.imagem.alt | default: 'Featherstone London' | escape }}" style="--ipos:{{ img2Pos }};">
                             {% endif %}
                             <div class="swiper-lazy-preloader"></div>
                         {% elsif block.type == 'video' and blkSt.video_url != blank %}

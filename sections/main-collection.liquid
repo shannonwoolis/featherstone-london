@@ -273,7 +273,7 @@
       	  <div class="filterBx hide-sm hide-md" {{ block.shopify_attributes }}>
             {% if blkSt.link != blank %}<a href="{{ blkSt.link }}">{% endif %}
             {% if blkSt.img != blank %}
-            <img loading="lazy" style="border-radius:{{ blkSt.rad }}px" class="imgFl lazyload wow zoomIn mb30" src="{{ blkSt.img | img_url: '50x' }}" 	data-srcset="{% render 'lazyload', image:  blkSt.img, sizes: '180,360' %}" data-sizes="auto" alt="{{ blkSt.img.alt | default: blkSt.title | default: shop.name | escape }}">                     
+            <img loading="lazy" style="border-radius:{{ blkSt.rad }}px" class="imgFl lazyload wow zoomIn mb30" src="{{ blkSt.img | img_url: '50x' }}" 	data-srcset="{% render 'lazyload', image:  blkSt.img, sizes: '180,360' %}" data-sizes="auto" alt="{{ blkSt.img.alt | default: blkSt.title | default: 'Featherstone London' | escape }}">                     
             {% else %}
               {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
               {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
@@ -440,7 +440,7 @@
                     {% if section.settings.climg and collection.image != blank %}
                     <div class="fl1{% if section.settings.clttl != blank %} clImg{% endif %}">
                           <img class="lazyload imgFl cl_img" src="{{ collection.image | img_url: '100x' }}" width="{{ collection.image.width }}" height="{{ collection.image.height }}"
-                            data-srcset="{% render 'lazyload', image: collection.image, sizes: '180,320,540,720,1000,1400,1900' %}" data-sizes="auto" alt="{{ collection.image.alt | default: shop.name | escape }}" />
+                            data-srcset="{% render 'lazyload', image: collection.image, sizes: '180,320,540,720,1000,1400,1900' %}" data-sizes="auto" alt="{{ collection.image.alt | default: 'Featherstone London' | escape }}" />
                       </div>
                     {% endif %}
                 </div>

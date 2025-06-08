@@ -161,7 +161,7 @@
                         {%- assign imgNo = forloop.index0 -%}
                         <div class="swiper-slide pr_thumbs_item{% if media.media_type == 'video' or media.media_type == 'external_video' or media.media_type == 'model' %} vd{% endif %}" data-slide="{{ imgNo }}">
                             <span class="grid_img pr_thumb pr_thumb{{ section.id }} of_hidden" data-img="{{ media | img_url: "150x" }}">
-                                <img class="imgFt swiper-lazy" src="{{ media | img_url: "150x" }}" width="150" height="{{ 150 | divided_by: media.aspect_ratio | times:100 | round }}" alt="{{ media.alt | default: shop.name | escape }}">
+                                <img class="imgFt swiper-lazy" src="{{ media | img_url: "150x" }}" width="150" height="{{ 150 | divided_by: media.aspect_ratio | times:100 | round }}" alt="{{ media.alt | default: 'Featherstone London' | escape }}">
                                 {% if media.media_type == 'video' or media.media_type == 'external_video'  %}<svg class="at-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6zM48 453.5v-395c0-4.6 5.1-7.5 9.1-5.2l334.2 197.5c3.9 2.3 3.9 8 0 10.3L57.1 458.7c-4 2.3-9.1-.6-9.1-5.2z"/></svg>{% endif %}
                                 {% if media.media_type == 'model' or media.media_type == 'external_video'  %}<svg class="at-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M239.1 7.5l-208 78c-18.7 7-31.1 25-31.1 45v225.1c0 18.2 10.3 34.8 26.5 42.9l208 104c13.5 6.8 29.4 6.8 42.9 0l208-104c16.3-8.1 26.5-24.8 26.5-42.9V130.5c0-20-12.4-37.9-31.1-44.9l-208-78C262 3.4 250 3.4 239.1 7.5zm16.9 45l208 78v.3l-208 84.5-208-84.5v-.3l208-78zM48 182.6l184 74.8v190.2l-184-92v-173zm232 264.9V257.4l184-74.8v172.9l-184 92z"/></svg>{% endif %}
                             </span>
@@ -183,7 +183,7 @@
                 {% elsif product.metafields.custom.sizechart.type == 'file_reference' %}
                   {% assign szvalue = product.metafields.custom.sizechart.value %}
                   {% if szvalue.media_type == 'image' %}
-                    <img src="{{ szvalue | img_url: 'master' }}" alt="{{ szvalue.width | default: shop.name | escape }}" width="{{ szvalue.width }}" height="{{ szvalue.height }}">
+                    <img src="{{ szvalue | img_url: 'master' }}" alt="{{ szvalue.width | default: 'Featherstone London' | escape }}" width="{{ szvalue.width }}" height="{{ szvalue.height }}">
                   {% else %}
                     {{ szvalue | video_tag: image_size: "1100x", controls: true, muted: false }}
                   {% endif %}
@@ -277,7 +277,7 @@
 					{%  when 'spoint' %}
 						<div class="mb{{ blkst.bm }} salepoint rgTxt fl f-aic{%  if blkst.atc %} f-jcc{% endif %}" style="--cl:{{ blkst.cl }}; --clbg:{{ blkst.clbg }}; --fs:{{ blkst.fs }}px;--fsm:{{ blkst.fsm }}px;--tpd:{{ blkst.tpd }}px;" {{ block.shopify_attributes }}>
 							{% if blkst.sicon != blank %}
-                              <img class="at-icon mr5" loading="lazy" src="{{ blkst.sicon | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon.alt | blkst.title | default: shop.name | escape }}" />
+                              <img class="at-icon mr5" loading="lazy" src="{{ blkst.sicon | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon.alt | blkst.title | default: 'Featherstone London' | escape }}" />
 							{% else %}
 								 {% render 'icons', icon: blkst.icon %}
 							{% endif %}
@@ -288,7 +288,7 @@
                       {%  if blkst.text != blank %}
                       <div class="tc fl1">
                                 {% if blkst.sicon != blank %}
-                                  <img class="at-icon mb5" loading="lazy" src="{{ blkst.sicon | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon.alt | blkst.title | default: shop.name | escape }}" />
+                                  <img class="at-icon mb5" loading="lazy" src="{{ blkst.sicon | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon.alt | blkst.title | default: 'Featherstone London' | escape }}" />
                                 {% else %}
                                  {% render 'icons', icon: blkst.icon %}
                                 {% endif %}
@@ -297,7 +297,7 @@
                         {% endif %}
                        {%  if blkst.text2 != blank %}
                        <div class="tc fl1">
-                                {% if blkst.sicon2 != blank %}<img loading="lazy" class="at-icon mb5" src="{{ blkst.sicon2 | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon2.alt | blkst.title | default: shop.name | escape }}" />
+                                {% if blkst.sicon2 != blank %}<img loading="lazy" class="at-icon mb5" src="{{ blkst.sicon2 | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon2.alt | blkst.title | default: 'Featherstone London' | escape }}" />
                                 {% else %}
                                  {% render 'icons', icon: blkst.icon2 %}
                                 {% endif %}
@@ -306,7 +306,7 @@
                        {% endif %}
                       {%  if blkst.text3 != blank %}
                       <div class="tc fl1">
-                                {% if blkst.sicon3 != blank %}<img loading="lazy" class="at-icon mb5" src="{{ blkst.sicon3 | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon3.alt | blkst.title | default: shop.name | escape }}" />
+                                {% if blkst.sicon3 != blank %}<img loading="lazy" class="at-icon mb5" src="{{ blkst.sicon3 | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.sicon3.alt | blkst.title | default: 'Featherstone London' | escape }}" />
                                 {% else %}
                                  {% render 'icons', icon: blkst.icon3 %}
                                 {% endif %}
@@ -317,7 +317,7 @@
 					{% when 'coltabs' %}
 						<details class="sumtabs mb{{ blkst.bm }}{% if blkst.tbdr %} tbdr{% endif %}{% if blkst.bbdr %} bbdr{% endif %}" style="--tfs:{{ blkst.tfs }}px;--bdrcl:{{ blkst.bdrcl }}" {% if block.settings.tbopen %}open=""{% endif %}>  
 							<summary class="pr fl f-aic" {{ block.shopify_attributes }}>							
-								{% if blkst.sicon != blank %}<span><img class="at-icon mr10" src="{{ blkst.sicon | img_url: "master" }}" alt="{{ blkst.sicon.alt | blkst.title | default: shop.name | escape }}"/></span>
+								{% if blkst.sicon != blank %}<span><img class="at-icon mr10" src="{{ blkst.sicon | img_url: "master" }}" alt="{{ blkst.sicon.alt | blkst.title | default: 'Featherstone London' | escape }}"/></span>
 								{% else %}
 								<span>{% render 'icons', block:blkst %}</span>
 								{% endif %}
@@ -361,7 +361,7 @@
 							-%}
 							<a class="vendorLink" href="{{ vlink }}">
 								{% if imgSrc contains '?v=' and blkst.img %}
-									<img class="vendImg lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ imgSrc }}" width="{{ blkst.lwd }}" height="100" alt="{{ product.vendor | default: shop.name | escape }}">
+									<img class="vendImg lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ imgSrc }}" width="{{ blkst.lwd }}" height="100" alt="{{ product.vendor | default: 'Featherstone London' | escape }}">
 								{% else %}
 									{{ product.vendor }}
 								{% endif %}
@@ -577,7 +577,7 @@
                     {%-  when 'link-popup' -%}                                                                
                         <div class="poplink mfp-link f-wrap mb15" style="--fs:{{ blkst.fs }};--cl:{{ blkst.cl }};--bg:{{ blkst.clbg }};--fw:{{ blkst.fw }};--brad:{{ blkst.brad }}px;--bdr:{{ blkst.bdr }};">
                             <a href="#lp{{ block.id }}" data-effect="mfp-zoom-in" class="poplink fl mfp mr15 {{ blkst.lstyle }}">
-                                {% if blkst.icon != blank %}<img style="color:{{ blkst.cl }};" class="at-icon" loading="lazy" src="{{ blkst.icon | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.icon.alt | blkst.title | default: shop.name | escape }}" />{% endif %} 
+                                {% if blkst.icon != blank %}<img style="color:{{ blkst.cl }};" class="at-icon" loading="lazy" src="{{ blkst.icon | img_url: '60x' }}" width="18" height="18" alt="{{ blkst.icon.alt | blkst.title | default: 'Featherstone London' | escape }}" />{% endif %} 
                                 {{ blkst.text }}
                             </a>
                         </div>
@@ -709,7 +709,7 @@
 						{%- if blkst.pimg != blank -%}
 							<div class="trust_badge mb{{ blkst.bm }}" style="--timw:{{blkst.timw}}%" {{ block.shopify_attributes }}>
 								{% if blkst.pimg_url != blank %}<a href="{{ blkst.pimg_url }}">{% endif %}
-								<img class="imgFl lazyload w_auto {% if blkst.img_align %}m_auto{% endif %}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ blkst.pimg | img_url: "master" }}" width="{{ blkst.pimg.width }}" height="{{ blkst.pimg.height }}" alt="{{ blkst.pimg.alt | settings.pimg.alt | default: shop.name | escape }}">
+								<img class="imgFl lazyload w_auto {% if blkst.img_align %}m_auto{% endif %}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ blkst.pimg | img_url: "master" }}" width="{{ blkst.pimg.width }}" height="{{ blkst.pimg.height }}" alt="{{ blkst.pimg.alt | settings.pimg.alt | default: 'Featherstone London' | escape }}">
 								{% if blkst.pimg_url != blank %}</a>{% endif %}
 							</div>
 						{%- endif -%}
@@ -787,12 +787,12 @@
 			{% if collection.previous_product %}
 				<a href="{{ collection.previous_product }}" class="pr_nav fl f-jcsb f-aic prev{% if blkst.sprnavm %} hide-sm hide-md{% endif %}" title="{{ 'products.product.prev' | t }}">
 					<span class="details fl1 pd5">{{ collection.previous_product.title | truncate: 30 }}<br /><span class="db mt10">{{ collection.previous_product.price |money }}</span></span>
-					<span class="img"><img class="imgFl" src="{{ collection.previous_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="{{ collection.previous_product.images[0].alt | default: collection.previous_product.title | default: shop.name | escape }}" /></span>
+					<span class="img"><img class="imgFl" src="{{ collection.previous_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="{{ collection.previous_product.images[0].alt | default: collection.previous_product.title | default: 'Featherstone London' | escape }}" /></span>
 				</a>
 			{% endif %}
 			{% if collection.next_product %}
 				<a href="{{ collection.next_product }}" class="pr_nav fl f-jcsb f-aic next{% if blkst.sprnavm %} hide-sm hide-md{% endif %}" title="{{ 'products.product.next' | t }}">
-					<span class="img"><img class="imgFl" src="{{ collection.next_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="{{ collection.next_product.images[0].alt | default: collection.next_product.title | default: shop.name | escape }}" /></span>
+					<span class="img"><img class="imgFl" src="{{ collection.next_product.images[0].src | img_url: '60x' }}" width="60" height="60" class="db" alt="{{ collection.next_product.images[0].alt | default: collection.next_product.title | default: 'Featherstone London' | escape }}" /></span>
 					<span class="details fl1 pd5">{{ collection.next_product.title | truncate: 30 }}<br /><span class="db mt10">{{ collection.next_product.price |money }}</span></span>
 				</a>
 			{% endif %}
@@ -803,7 +803,7 @@
 			<div class="fl f-aic f-jcc">
 			{%- capture "form_classes" %} product-form-{{ product.id }} fl f-jcc f-aic{%- endcapture %}
 
-					<div class="img"><img src="{{ featured_img.src | img_url: '60x60' }}" class="db stickCtImg" alt="{{ image.alt | default: secSt.title | default: shop.name | escape }}"></div>
+					<div class="img"><img src="{{ featured_img.src | img_url: '60x60' }}" class="db stickCtImg" alt="{{ image.alt | default: product.title | default: secSt.title | default: 'Featherstone London' | escape }}"></div>
 					<div class="prdata tl">
 						<p class="sticky-title mb0">{{ product.title }}</p>
 						<p class="stPrice">{{ current_variant.price | money }}</p>

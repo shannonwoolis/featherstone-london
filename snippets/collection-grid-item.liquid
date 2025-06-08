@@ -18,7 +18,7 @@
 	<a href="{{ block.url | default:collection.url }}" class="cl_item_link" title="{{ block.title }}">
       <div class="img pr of_hidden{% if block.isbox == false and block.frame %} frameb{% endif %}" style="--ibr:{{ section.radius }}px;--irad:{{block.brad }}px;{% if block.isbox == false and block.frame %}--fstl:{{ block.fstl }};--frcl:{{ block.fcl }};{% endif %}" >
          {%- if collection_image != blank -%}
-        	<img loading="lazy" class="imgFl lazyload w_100 db wow zoomIn" src="{{ collection_image | img_url: '50x' }}" data-srcset="{% render 'lazyload', image: collection_image, sizes: '160,360,560,860,1200' %}" data-sizes="auto" width="{{ collection_image.width }}" height="{{ collection_image.height }}" alt="{{ collection_image.alt | default: block.title | default: shop.name | escape }}" />
+        	<img loading="lazy" class="imgFl lazyload w_100 db wow zoomIn" src="{{ collection_image | img_url: '50x' }}" data-srcset="{% render 'lazyload', image: collection_image, sizes: '160,360,560,860,1200' %}" data-sizes="auto" width="{{ collection_image.width }}" height="{{ collection_image.height }}" alt="{{ collection_image.alt | default: block.title | default: 'Featherstone London' | escape }}" />
          {% else %} 
         	{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}{{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}    
          {% endif %}

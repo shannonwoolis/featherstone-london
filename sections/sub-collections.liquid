@@ -35,7 +35,7 @@
                         <a href="{{ collection.url }}" class="sbLink fl f-aic f-jcc {{ section.settings.ffml }} {{ section.settings.fw }}{% if section.settings.case %} ttu{% endif %}">
                             {% if section.settings.sicn and collection.metafields.custom.icon != blank %}
                                 {% capture icnSz %}{{ section.settings.icn | plus: 50 }}x{% endcapture %}
-                                <img class="icon lazyload mr15" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ section.settings.icn }}" height="{{ section.settings.icn }}" alt="{{ collection.title | default: shop.name | escape }}" />
+                                <img class="icon lazyload mr15" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ section.settings.icn }}" height="{{ section.settings.icn }}" alt="{{ collection.title | default: 'Featherstone London' | escape }}" />
                             {% endif %}
                             {{ collection.title }}
                         </a>
@@ -45,7 +45,7 @@
                           <a href="{{ collection.url }}" class="sbLink dbi tc {{ section.settings.ffml }} {{ section.settings.fw }}{% if section.settings.case %} ttu{% endif %}">
                               {% if section.settings.sicn and collection.metafields.custom.icon != blank %}
                                   {% capture icnSz %}{{ section.settings.icn | plus: 50 }}x{% endcapture %}
-                                  <div class="img pr"><img class="imgFt anim lazyload" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="100" height="100" alt="{{ collection.title | default: shop.name | escape }}" /></div>
+                                  <div class="img pr"><img class="imgFt anim lazyload" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="100" height="100" alt="{{ collection.title | default: 'Featherstone London' | escape }}" /></div>
                               {% endif %}
                               {{ collection.title }}
                           </a>

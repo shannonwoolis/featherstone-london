@@ -122,7 +122,7 @@
                                     <td class="cart_image">
                                         {% if item.image %}
                                             <a href="{{ item.url }}" class="cart-item__link" aria-hidden="true" tabindex="-1">
-                                                <img src="{{ item.image | image_url: width: 200 }}" class="cart-item__image imgFl" alt="{{ item.image.alt | default: shop.name | escape }}" loading="lazy" width="150" height="150">
+                                                <img src="{{ item.image | image_url: width: 200 }}" class="cart-item__image imgFl" alt="{{ item.image.alt | default: 'Featherstone London' | escape }}" loading="lazy" width="150" height="150">
                                             </a>
                                         {% endif %}
                                     </td>
@@ -422,7 +422,7 @@
                       {%- if blkSt.shopp -%}
                             {% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'payment_item' }}{% endfor %}
                       {%- elsif blkSt.payment != blank -%}
-                            <img src="{{ blkSt.payment | img_url: "400X" }}" width="400" alt="{{ blkSt.payment.alt | default: shop.name | escape }}" />
+                            <img src="{{ blkSt.payment | img_url: "400X" }}" width="400" alt="{{ blkSt.payment.alt | default: 'Featherstone London' | escape }}" />
                       {%- endif -%}
                   </div>
               {% elsif block.type == 'text' %}

@@ -40,7 +40,7 @@
 							
                             <div class="w_100 quotes_txt fl f-col f-jcs"> 
 								
-                                {% if block.settings.author_pic != blank %}<div class="quote_img"><img class="imgFl lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ block.settings.author_pic | img_url: '150x150', crop: 'center' }}" width="100" height="100" alt="{{  block.settings.author_pic | default: block.settings.title | default: shop.name | escape }}" /></div>{% endif %}
+                                {% if block.settings.author_pic != blank %}<div class="quote_img"><img class="imgFl lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ block.settings.author_pic | img_url: '150x150', crop: 'center' }}" width="100" height="100" alt="{{  block.settings.author_pic | default: block.settings.title | default: 'Featherstone London' | escape }}" /></div>{% endif %}
 								
 								{% if block.settings.title != blank %}<div class="mb10 qttl" >{{ block.settings.title }}</div>{% endif %}
 								

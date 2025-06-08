@@ -6,7 +6,7 @@
         {% assign collection = link.object %}
         {% if secSt.sicnm and collection.metafields.custom.icon != blank %}
             {% capture icnSz %}{{ secSt.icnm | plus: 50 }}x{% endcapture %}
-            <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: shop.name | escape }}" />
+            <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: 'Featherstone London' | escape }}" />
         {% endif %}
         {{ link.title | split: '[' | first }}
         {% if link.title contains '[label' %}<span class="lbl {{ label1 }}">{{ settings[label1] }}</span>{% endif %}
@@ -26,7 +26,7 @@
                         {% assign collection = childlink.object %}
                         {% if secSt.sicnm and collection.metafields.custom.icon != blank %}
                             {% capture icnSz %}{{ secSt.icnm | plus: 50 }}x{% endcapture %}
-                            <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: shop.name | escape }}" />
+                            <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: 'Featherstone London' | escape }}" />
                         {% endif %}
                         {{ childlink.title | split: '[' | first }}
                         {% if childlink.title contains '[label' %}<span class="lbl {{ label2 }}">{{ settings[label2] }}</span>{% endif %}
@@ -46,7 +46,7 @@
                                         {% assign collection = lvl3link.object %}
                                         {% if secSt.sicnm and collection.metafields.custom.icon != blank %}
                                             {% capture icnSz %}{{ secSt.icnm | plus: 50 }}x{% endcapture %}
-                                            <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: shop.name | escape }}" />
+                                            <img class="icn lazyload mr10" data-src="{{ collection.metafields.custom.icon | img_url: icnSz }}" width="{{ secSt.icnm }}" height="{{ secSt.icnm }}" alt="{{ collection.title | default: 'Featherstone London' | escape }}" />
                                         {% endif %}
                                         {{ lvl3link.title | split: '[' | first }}
                                         {% if lvl3link.title contains '[label' %}<span class="lbl {{ label3 }}">{{ settings[label3] }}</span>{% endif %}

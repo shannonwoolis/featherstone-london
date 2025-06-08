@@ -18,7 +18,7 @@
                                     {%- if blkSt.imgurl != blank -%}<a href="{{ blkSt.imgurl }}">{%- endif -%}
                                          <div class="imgWrapper" style="max-width:{{ blkSt.image.width }}px;--brad:{{ blkSt.brad }}px">
                                             <img loading="lazy" class="imgFl ctimg lazyload wow zoomIn" src="{{ blkSt.image | img_url: "100x" }}" width="{{ blkSt.image.width }}" height="{{ blkSt.image.height }}"
-                                                data-srcset="{% render 'lazyload', image: blkSt.image, sizes: '500,670,800,1000,1300,1600' %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: blkSt.title | default: shop.name | escape }}">
+                                                data-srcset="{% render 'lazyload', image: blkSt.image, sizes: '500,670,800,1000,1300,1600' %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: blkSt.title | default: 'Featherstone London' | escape }}">
                                         </div>
                                     {%- if blkSt.imgurl != blank -%}</a>{%- endif -%}
                                 {%- else -%}

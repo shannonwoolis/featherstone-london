@@ -45,7 +45,7 @@
                {% when 'address' %}
                 <div class="col">
                 {% if block.settings.logo %}
-                <p class="mb20" {{ block.shopify_attributes }}><img src="{{ block.settings.logo | img_url: '300x' }}" srcset="{{ block.settings.logo | img_url: '300x' }} 1x, {{ block.settings.logo | img_url: '300x', scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: shop.name }}"></p>
+                <p class="mb20" {{ block.shopify_attributes }}><img src="{{ block.settings.logo | img_url: '300x' }}" srcset="{{ block.settings.logo | img_url: '300x' }} 1x, {{ block.settings.logo | img_url: '300x', scale: 2 }} 2x" alt="{{ block.settings.logo.alt | default: 'Featherstone London' }}"></p>
                 {% endif %}
                 {% if block.settings.cnt_title != blank %}<div {{ block.shopify_attributes }} class="h4 fwm mb10">{{ block.settings.cnt_title }}</div>{% endif %}       
                 {% if block.settings.store_address != blank or block.settings.store_phone != blank or block.settings.store_email != blank %}

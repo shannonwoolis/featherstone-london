@@ -39,7 +39,7 @@
                             <a {% if section.settings.imgclick == '1' %}class="zoom pr db ltbx"{% endif %}  href="{% if section.settings.imgclick == '1' %}{{ blkSt.image | img_url:'master' }}{% else %}{{ blkSt.imgurl }}{% endif %}" data-pswp-width="{{ blkSt.image.width }}" data-pswp-height="{{ blkSt.image.height }}">
                                 {% if blkSt.image!= blank %}
                                     <img loading="lazy" class="imgFl lazyload wow zoomIn" src="{{ blkSt.image | img_url: '100x' }}" width="{{ blkSt.image.width }}" height="{{ blkSt.image.height }}"
-                                         data-srcset="{% render 'lazyload', image: blkSt.image, sizes: '300,500,750,1000,1350,1600,2000' %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: blkSt.title | default: shop.name | escape }}" />
+                                         data-srcset="{% render 'lazyload', image: blkSt.image, sizes: '300,500,750,1000,1350,1600,2000' %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: blkSt.title | default: 'Featherstone London' | escape }}" />
                                 {% else %} 
                                     {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}{{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}    
                                 {% endif %}

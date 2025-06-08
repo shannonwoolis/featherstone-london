@@ -14,7 +14,7 @@
                         <div class="msitem gitem lkbk {{ blkSt.width }}" {{ block.shopify_attributes }}>
                            <div class="pr w_100 of_hidden brad" style="--brad:{{ secSt.sbrad  }}px;">
                                <img loading="lazy" class="imgFl lazyload wow zoomIn" src="{{ blkSt.image | img_url: '50x' }}" width="{{ blkSt.image.width }}" height="{{ blkSt.image.height }}"
-                                data-srcset="{% render 'lazyload', image: blkSt.image %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: blkSt.title | default: shop.name | escape }}" /></div>
+                                data-srcset="{% render 'lazyload', image: blkSt.image %}" data-sizes="auto" alt="{{ blkSt.image.alt | default: blkSt.title | default: 'Featherstone London' | escape }}" /></div>
                             {% comment %} *** Lookbook Shop *** {% endcomment %}
                             {% if blkSt.pr1 != blank %}
                                 <div class="products pa" style="top:{{ blkSt.p1_top }}%;left:{{ blkSt.p1_left }}%;">
