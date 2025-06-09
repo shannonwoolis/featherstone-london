@@ -27,9 +27,9 @@
     <meta name="theme-color" content="{{ settings.theme_clr }}">
     <meta name="format-detection" content="telephone=no">
     {% if collection.handle == 'all' %}
-      <link rel="canonical" href="{{ shop.url }}{{ routes.collections_url }}/frontpage">
-    {% elsif canonical_url contains '?page=' %}
-      <link rel="canonical" href="{{ canonical_url | split: '?' | first }}">
+      <link rel="canonical" href="{{ canonical_url | replace: 'all', 'frontpage' }}">
+    {% comment %} {% elsif canonical_url contains '?page=' %}
+      <link rel="canonical" href="{{ canonical_url | split: '?' | first }}"> {% endcomment %}
     {% else %}
       <link rel="canonical" href="{{ canonical_url }}">
     {% endif %}
