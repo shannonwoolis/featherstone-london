@@ -18,8 +18,8 @@
       "settings": {
         "vstyle": "video_bg",
         "video_url": "",
-        "mp4url": "shopify://files/videos/spring summer banner (1).mp4",
-        "mp4urlm": "shopify://files/videos/spring-summer-2025-mobile.mp4",
+        "mp4url": "shopify://files/videos/BTS Reel desktop 2 (1).mp4",
+        "mp4urlm": "shopify://files/videos/BTS Reel mobile 2 (1).mp4",
         "title": "<span class=\"hero-pretitle\">New collection</span>\nSpring - Summer 2025",
         "hidet": false,
         "cntwd": 2000,
@@ -57,7 +57,7 @@
           "settings": {
             "hidem": true,
             "hided": false,
-            "image": "shopify://shop_images/spring-summer-banner.jpg",
+            "image": "shopify://shop_images/autumn-winter-desk.jpg",
             "imgurl": "https://featherstonelondon.co.uk/collections/frontpage",
             "alignment": "f-ass",
             "brad": 0,
@@ -69,7 +69,7 @@
           "settings": {
             "hidem": false,
             "hided": true,
-            "image": "shopify://shop_images/spring_summer_banner_option_2_mob.jpg",
+            "image": "shopify://shop_images/autumn-winter-mob.jpg",
             "imgurl": "",
             "alignment": "f-ass",
             "brad": 0,
