@@ -1205,8 +1205,8 @@
           "type": "text_block",
           "settings": {
             "image": "shopify://shop_images/truck-fast-solid.png",
-            "title": "FAST DELIVERY",
-            "text": "2-4 Working Days Delivery within UK",
+            "title": "FREE DELIVERY",
+            "text": "1-3 Business Days Delivery within UK",
             "url": ""
           }
         },
