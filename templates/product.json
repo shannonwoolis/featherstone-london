@@ -1,1 +1,437 @@
-{"sections":{"breadcrumb":{"type":"breadcrumb","settings":{"sw":false,"hidemb":false,"tc":false}},"main":{"type":"main-product","blocks":{"d3ad6ba3-0eeb-40b7-baa2-e58f0c1e9537":{"type":"title","settings":{"cl":"#000000","fs":25,"fsm":20,"fw":"fwm","fcase":false,"bm":5}},"14ef8023-405a-448f-8a70-58d1957131d5":{"type":"rating","settings":{"bm":25}},"fa9c66a2-d2aa-4d30-974e-61bb044bb59d":{"type":"price","settings":{"pcl":"#000000","pcls":"#e95144","fs":25,"fsm":20,"pfw":"500","saved":true,"salet":"#ffffff","salebg":"#e95144","fw":"fwm","taxship":false,"bm":25}},"f1d46c9f-2b72-405e-a1e8-4bfab6ac6a8c":{"type":"countdown","settings":{"cds":"1","clbl":"Hurry up! Sale End In :","cl":"#000000","tcl":"#000000","bg":"#fafafa","nfs":13,"tfs":13,"brad":0,"bm":20}},"72e2acab-2fcd-4a7a-8088-123a653bf7f5":{"type":"shiptime","settings":{"shipmsg_ico":true,"estimate_ship":"4\/10","estimate_shipping_msg":"Estimated Delivery is 2-4 Working Days","bm":30}},"d3f45ea4-ab08-46d0-ab08-3771d2eb15d3":{"type":"order","disabled":true,"settings":{"icon":true,"orders":30,"otime":24,"omsg":"[orders] sold in last [hours] hours","cl":"#dd2c6c","bm":25}},"6d3abe0f-70e1-4941-a738-c7121359069a":{"type":"more-color","settings":{"title":"More colors","cl":"#000000","fs":16,"fsm":16,"fw":"600","wd":70,"bd":"#000000","bm":15}},"variants_e43NdX":{"type":"variants","settings":{"sold":false,"cltype":"vi","othervr":"sw","bm":15}},"link_popup_jBWzJk":{"type":"link-popup","settings":{"text":"Men's Size Chart (International)","opt":"richtext","page":"men-size-chart","poptext":"<h4><a href=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0880\/6590\/0879\/files\/Mens_Sizing_Chart_MAR25.pdf?v=1742294629\" target=\"_blank\" title=\"Men's Size Chart (International)\">Click here for Men's Size Chart (International)<\/a><\/h4><h4><\/h4><h3><strong>Key Notes:<\/strong><\/h3><ol><li><strong>Chest Measurement<\/strong>: Measure around the fullest part of your chest, keeping the tape measure parallel to the floor.<\/li><li><strong>Waist Measurement<\/strong>: Measure around the natural waistline, where the waistband of your pants typically sits.<\/li><li><strong>Hip Measurement<\/strong>: Measure around the fullest part of your hips.<\/li><\/ol><p><\/p><h4><a href=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0880\/6590\/0879\/files\/Mens_Shirt_Sizing_MAR25.pdf?v=1742234558\" target=\"_blank\" title=\"Men's Shirt Size Chart (International)\">Click here for Men's Shirt Size Chart (International)<\/a><\/h4><p><\/p><h4><a href=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0880\/6590\/0879\/files\/Mens_Shoe_Sizing_MAR25.pdf?v=1742234558\" target=\"_blank\" title=\"International Shoe Size Chart (Men's)\">Click here for Men's Shoe Size Chart (International)<\/a><\/h4><h4><\/h4><h3>Tips for Customers:<\/h3><ul><li>When converting shoe sizes, always refer to the foot length in centimeters or inches, as this is the most accurate way to determine the correct size across different systems.<\/li><li><strong>Foot Length (inches and cm): <\/strong>This is the measurement of the length of your foot. To measure, place your foot flat on the floor and measure from the heel to the longest toe. It’s important to measure both feet, as one foot can be slightly larger than the other.<\/li><\/ul>","lstyle":"button","fs":14,"fw":"400","cl":"#333333","clbg":"#f5f5f5","bdr":"#333333","brad":0,"bm":15}},"ccd4e61d-1477-4664-bd33-351a9aa1ec00":{"type":"inventory","settings":{"maxqty":0,"fs":13,"cl":"#111111","fcase":false,"anim":true,"instock":"#54c63a","lstock":"#f4af29","ostock":"#ee1111","bm":25}},"f3aed949-c526-4cd5-affb-f209a0499d89":{"type":"cta","settings":{"qty_sel":true,"qlbl":true,"askpr":false,"askph":false,"asksub":false,"gift_recipient":false,"atc-style":"btn1","dynamic_btn":false,"btnbg":"#f4857b","btntext":"#ffffff","btnbdr":"#f4857b","ext-btn":"btn7","btns_font":13,"btns_case":"uppercase","bm":5}},"ca8d39b9-1d74-46b2-b65b-f27d65261075":{"type":"img","settings":{"pimg_url":"","timw":68,"img_align":true,"bm":30}},"text_QNWJpB":{"type":"text","settings":{"text":"<p>Free Shipping on UK Orders over £300<\/p>","cl":"#333333","fs":14,"fsm":14,"bm":20}},"text_X9r3gW":{"type":"text","settings":{"text":"<p>14-day-free <a href=\"\/pages\/terms-and-conditions\" title=\"Terms and Conditions\"><span style=\"text-decoration:underline\">return policy<\/span><\/a><\/p>","cl":"#333333","fs":14,"fsm":14,"bm":20}},"coltabs_emUfPh":{"type":"coltabs","settings":{"icon":"none","title":"<strong>Description <\/strong>","tfs":15,"tbdr":true,"bbdr":false,"bdrcl":"#eeeeee","opt":"des","richtxt":"","tbopen":true,"bm":0}},"68994def-e552-45b0-bd90-20cf81d0255c":{"type":"freeship","disabled":true,"settings":{"bm":20}}},"block_order":["d3ad6ba3-0eeb-40b7-baa2-e58f0c1e9537","14ef8023-405a-448f-8a70-58d1957131d5","fa9c66a2-d2aa-4d30-974e-61bb044bb59d","f1d46c9f-2b72-405e-a1e8-4bfab6ac6a8c","72e2acab-2fcd-4a7a-8088-123a653bf7f5","d3f45ea4-ab08-46d0-ab08-3771d2eb15d3","6d3abe0f-70e1-4941-a738-c7121359069a","variants_e43NdX","link_popup_jBWzJk","ccd4e61d-1477-4664-bd33-351a9aa1ec00","f3aed949-c526-4cd5-affb-f209a0499d89","ca8d39b9-1d74-46b2-b65b-f27d65261075","text_QNWJpB","text_X9r3gW","coltabs_emUfPh","68994def-e552-45b0-bd90-20cf81d0255c"],"settings":{"prstyle":"1","image-col":"md","przoom":true,"prlightbox":true,"prthumbs":"left","play_ico":"#ffffff","thumb_bdr":"#888888","sprnav":false,"sprnavm":true,"scart":true,"cl_bg":"#111111","cl_txt":"#ffffff","qty_bdr":"#eeeeee","btn-sticky":"btn2","sst":30,"ssb":30,"sstm":0,"ssbm":0,"bg":"#ffffff","sw":false}},"upsell":{"type":"upsell-bundle","settings":{"title":"Frequently Bought Together","subtitle":"","collection":"","grid":4,"gridtb":3,"gridmb":2,"autoplay":false,"speed":5,"sst":60,"ssb":60,"sstm":30,"ssbm":30,"bg":"#fafafa","bgg":"","sw":false,"hidem":false}},"tabs":{"type":"product-tabs","blocks":{"612c9c15-e72e-45af-8f23-6e5da8137791":{"type":"desc","settings":{"title":"Product Description"}},"22fd6c17-c92e-4ab9-81de-ddaf1e024e91":{"type":"custom","settings":{"title":"Shipping & Returns","content":"<h5><strong>DELIVERY<\/strong><\/h5><ul><li>Dispatch: Within 24 Hours<\/li><li>Free shipping across all products on a minimum purchase of $50.<\/li><li>International delivery time - 7-10 business days<\/li><li>Cash on delivery might be available<\/li><li>Easy 30 days returns and exchanges<\/li><\/ul><h5><strong>RETURNS<\/strong><\/h5><p>If you do not like the product you can return it within 15 days - no questions asked. This excludes bodysuits, swimwear and clearance sale items. <br\/>We have an easy and hassle free return policy. Please look at our Delivery &amp; Returns section for further information.<\/p>"}},"a17e0bd4-6e0d-4da8-bcd7-ff2f4c26ce72":{"type":"review","settings":{"title":"Product Reviews","otherapp":""}},"57c3ab64-9f06-4c48-a084-d084343690ba":{"type":"custom","settings":{"title":"General Tab","content":"It's a loose fit blouse. You could choose a size down it you prefer to get a more fitness blouse. <br\/>Please take our customers reviews as reference to help you make an informed purchase decision"}},"a6620c33-7486-4e39-93f0-f160607541bc":{"type":"richtext","settings":{"title":"Washing Care","content":""}}},"block_order":["612c9c15-e72e-45af-8f23-6e5da8137791","22fd6c17-c92e-4ab9-81de-ddaf1e024e91","a17e0bd4-6e0d-4da8-bcd7-ff2f4c26ce72","57c3ab64-9f06-4c48-a084-d084343690ba","a6620c33-7486-4e39-93f0-f160607541bc"],"disabled":true,"settings":{"tab_style":"2","tab_align":"left","tfs":14,"tfsm":14,"tff":"ft1","tfw":"500","cl":"#333333","tbg":"#eeeeee","cla":"#111111","tbga":"#000000","bdr":"#dddddd","bdra":"#000000","bdrr":0,"sst":40,"ssb":40,"sstm":15,"ssbm":20,"bg":"#ffffff","bgg":"","sw":false}},"related":{"type":"related-products","disabled":true,"settings":{"title":"Related Products","subtitle":"","type":"4","grid":4,"gridtb":3,"gridmb":2,"limit":5,"carousel":true,"autoplay":false,"speed":5,"arrow":true,"arrowm":false,"dot":false,"dotm":true,"sst":30,"ssb":0,"sstm":15,"ssbm":0,"bg":"#ffffff","bgg":"","sw":false,"hidem":false}},"recommanded":{"type":"product-recommendations","settings":{"title":"Recommended Products","subtitle":"","grid":4,"gridtb":3,"gridmb":2,"limit":5,"carousel":true,"autoplay":false,"speed":5,"arrow":true,"arrowm":true,"dot":false,"dotm":false,"sst":30,"ssb":30,"sstm":15,"ssbm":15,"bg":"#ffffff","bgg":"","sw":false,"hidem":false}},"recentviewed":{"type":"recently-viewed","settings":{"title":"Recently Viewed Products","subtitle":"","grid":4,"gridtb":3,"gridmb":2,"row":6,"carousel":true,"autoplay":false,"speed":5,"arrow":true,"arrowm":true,"dot":false,"dotm":false,"sst":30,"ssb":30,"sstm":15,"ssbm":20,"bg":"#ffffff","bgg":"","sw":false,"hidem":false}}},"order":["breadcrumb","main","upsell","tabs","related","recommanded","recentviewed"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "sw": false,
+        "hidemb": false,
+        "tc": false
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "d3ad6ba3-0eeb-40b7-baa2-e58f0c1e9537": {
+          "type": "title",
+          "settings": {
+            "cl": "#000000",
+            "fs": 25,
+            "fsm": 20,
+            "fw": "fwm",
+            "fcase": false,
+            "bm": 5
+          }
+        },
+        "14ef8023-405a-448f-8a70-58d1957131d5": {
+          "type": "rating",
+          "settings": {
+            "bm": 25
+          }
+        },
+        "fa9c66a2-d2aa-4d30-974e-61bb044bb59d": {
+          "type": "price",
+          "settings": {
+            "pcl": "#000000",
+            "pcls": "#e95144",
+            "fs": 25,
+            "fsm": 20,
+            "pfw": "500",
+            "saved": true,
+            "salet": "#ffffff",
+            "salebg": "#e95144",
+            "fw": "fwm",
+            "taxship": false,
+            "bm": 25
+          }
+        },
+        "f1d46c9f-2b72-405e-a1e8-4bfab6ac6a8c": {
+          "type": "countdown",
+          "settings": {
+            "cds": "1",
+            "clbl": "Hurry up! Sale End In :",
+            "cl": "#000000",
+            "tcl": "#000000",
+            "bg": "#fafafa",
+            "nfs": 13,
+            "tfs": 13,
+            "brad": 0,
+            "bm": 20
+          }
+        },
+        "72e2acab-2fcd-4a7a-8088-123a653bf7f5": {
+          "type": "shiptime",
+          "settings": {
+            "shipmsg_ico": true,
+            "estimate_ship": "4/10",
+            "estimate_shipping_msg": "Estimated Delivery is 2-4 Working Days",
+            "bm": 30
+          }
+        },
+        "d3f45ea4-ab08-46d0-ab08-3771d2eb15d3": {
+          "type": "order",
+          "disabled": true,
+          "settings": {
+            "icon": true,
+            "orders": 30,
+            "otime": 24,
+            "omsg": "[orders] sold in last [hours] hours",
+            "cl": "#dd2c6c",
+            "bm": 25
+          }
+        },
+        "6d3abe0f-70e1-4941-a738-c7121359069a": {
+          "type": "more-color",
+          "settings": {
+            "title": "More colors",
+            "cl": "#000000",
+            "fs": 16,
+            "fsm": 16,
+            "fw": "600",
+            "wd": 70,
+            "bd": "#000000",
+            "bm": 15
+          }
+        },
+        "variants_e43NdX": {
+          "type": "variants",
+          "settings": {
+            "sold": false,
+            "cltype": "vi",
+            "othervr": "sw",
+            "bm": 15
+          }
+        },
+        "link_popup_jBWzJk": {
+          "type": "link-popup",
+          "settings": {
+            "text": "Men's Size Chart (International)",
+            "opt": "richtext",
+            "page": "men-size-chart",
+            "poptext": "<h4><a href=\"https://cdn.shopify.com/s/files/1/0880/6590/0879/files/Mens_Sizing_Chart_MAR25.pdf?v=1742294629\" target=\"_blank\" title=\"Men's Size Chart (International)\">Click here for Men's Size Chart (International)</a></h4><h4></h4><h3><strong>Key Notes:</strong></h3><ol><li><strong>Chest Measurement</strong>: Measure around the fullest part of your chest, keeping the tape measure parallel to the floor.</li><li><strong>Waist Measurement</strong>: Measure around the natural waistline, where the waistband of your pants typically sits.</li><li><strong>Hip Measurement</strong>: Measure around the fullest part of your hips.</li></ol><p></p><h4><a href=\"https://cdn.shopify.com/s/files/1/0880/6590/0879/files/Mens_Shirt_Sizing_MAR25.pdf?v=1742234558\" target=\"_blank\" title=\"Men's Shirt Size Chart (International)\">Click here for Men's Shirt Size Chart (International)</a></h4><p></p><h4><a href=\"https://cdn.shopify.com/s/files/1/0880/6590/0879/files/Mens_Shoe_Sizing_MAR25.pdf?v=1742234558\" target=\"_blank\" title=\"International Shoe Size Chart (Men's)\">Click here for Men's Shoe Size Chart (International)</a></h4><h4></h4><h3>Tips for Customers:</h3><ul><li>When converting shoe sizes, always refer to the foot length in centimeters or inches, as this is the most accurate way to determine the correct size across different systems.</li><li><strong>Foot Length (inches and cm): </strong>This is the measurement of the length of your foot. To measure, place your foot flat on the floor and measure from the heel to the longest toe. It’s important to measure both feet, as one foot can be slightly larger than the other.</li></ul>",
+            "lstyle": "button",
+            "fs": 14,
+            "fw": "400",
+            "cl": "#333333",
+            "clbg": "#f5f5f5",
+            "bdr": "#333333",
+            "brad": 0,
+            "bm": 15
+          }
+        },
+        "ccd4e61d-1477-4664-bd33-351a9aa1ec00": {
+          "type": "inventory",
+          "settings": {
+            "maxqty": 0,
+            "fs": 13,
+            "cl": "#111111",
+            "fcase": false,
+            "anim": true,
+            "instock": "#54c63a",
+            "lstock": "#f4af29",
+            "ostock": "#ee1111",
+            "bm": 25
+          }
+        },
+        "f3aed949-c526-4cd5-affb-f209a0499d89": {
+          "type": "cta",
+          "settings": {
+            "qty_sel": true,
+            "qlbl": true,
+            "askpr": false,
+            "askph": false,
+            "asksub": false,
+            "gift_recipient": false,
+            "atc-style": "btn1",
+            "dynamic_btn": false,
+            "btnbg": "#f4857b",
+            "btntext": "#ffffff",
+            "btnbdr": "#f4857b",
+            "ext-btn": "btn7",
+            "btns_font": 13,
+            "btns_case": "uppercase",
+            "bm": 5
+          }
+        },
+        "ca8d39b9-1d74-46b2-b65b-f27d65261075": {
+          "type": "img",
+          "settings": {
+            "pimg_url": "",
+            "timw": 68,
+            "img_align": true,
+            "bm": 30
+          }
+        },
+        "text_QNWJpB": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Free Shipping on UK Orders </p>",
+            "cl": "#333333",
+            "fs": 14,
+            "fsm": 14,
+            "bm": 20
+          }
+        },
+        "text_X9r3gW": {
+          "type": "text",
+          "settings": {
+            "text": "<p>14-day-free <a href=\"/pages/terms-and-conditions\" title=\"Terms and Conditions\"><span style=\"text-decoration:underline\">return policy</span></a></p>",
+            "cl": "#333333",
+            "fs": 14,
+            "fsm": 14,
+            "bm": 20
+          }
+        },
+        "coltabs_emUfPh": {
+          "type": "coltabs",
+          "settings": {
+            "icon": "none",
+            "title": "<strong>Description </strong>",
+            "tfs": 15,
+            "tbdr": true,
+            "bbdr": false,
+            "bdrcl": "#eeeeee",
+            "opt": "des",
+            "richtxt": "",
+            "tbopen": true,
+            "bm": 0
+          }
+        },
+        "68994def-e552-45b0-bd90-20cf81d0255c": {
+          "type": "freeship",
+          "disabled": true,
+          "settings": {
+            "bm": 20
+          }
+        }
+      },
+      "block_order": [
+        "d3ad6ba3-0eeb-40b7-baa2-e58f0c1e9537",
+        "14ef8023-405a-448f-8a70-58d1957131d5",
+        "fa9c66a2-d2aa-4d30-974e-61bb044bb59d",
+        "f1d46c9f-2b72-405e-a1e8-4bfab6ac6a8c",
+        "72e2acab-2fcd-4a7a-8088-123a653bf7f5",
+        "d3f45ea4-ab08-46d0-ab08-3771d2eb15d3",
+        "6d3abe0f-70e1-4941-a738-c7121359069a",
+        "variants_e43NdX",
+        "link_popup_jBWzJk",
+        "ccd4e61d-1477-4664-bd33-351a9aa1ec00",
+        "f3aed949-c526-4cd5-affb-f209a0499d89",
+        "ca8d39b9-1d74-46b2-b65b-f27d65261075",
+        "text_QNWJpB",
+        "text_X9r3gW",
+        "coltabs_emUfPh",
+        "68994def-e552-45b0-bd90-20cf81d0255c"
+      ],
+      "settings": {
+        "prstyle": "1",
+        "image-col": "md",
+        "przoom": true,
+        "prlightbox": true,
+        "prthumbs": "left",
+        "play_ico": "#ffffff",
+        "thumb_bdr": "#888888",
+        "sprnav": false,
+        "sprnavm": true,
+        "scart": true,
+        "cl_bg": "#111111",
+        "cl_txt": "#ffffff",
+        "qty_bdr": "#eeeeee",
+        "btn-sticky": "btn2",
+        "sst": 30,
+        "ssb": 30,
+        "sstm": 0,
+        "ssbm": 0,
+        "bg": "#ffffff",
+        "sw": false
+      }
+    },
+    "upsell": {
+      "type": "upsell-bundle",
+      "settings": {
+        "title": "Frequently Bought Together",
+        "subtitle": "",
+        "collection": "",
+        "grid": 4,
+        "gridtb": 3,
+        "gridmb": 2,
+        "autoplay": false,
+        "speed": 5,
+        "sst": 60,
+        "ssb": 60,
+        "sstm": 30,
+        "ssbm": 30,
+        "bg": "#fafafa",
+        "bgg": "",
+        "sw": false,
+        "hidem": false
+      }
+    },
+    "tabs": {
+      "type": "product-tabs",
+      "blocks": {
+        "612c9c15-e72e-45af-8f23-6e5da8137791": {
+          "type": "desc",
+          "settings": {
+            "title": "Product Description"
+          }
+        },
+        "22fd6c17-c92e-4ab9-81de-ddaf1e024e91": {
+          "type": "custom",
+          "settings": {
+            "title": "Shipping & Returns",
+            "content": "<h5><strong>DELIVERY</strong></h5><ul><li>Dispatch: Within 24 Hours</li><li>Free shipping across all products on a minimum purchase of $50.</li><li>International delivery time - 7-10 business days</li><li>Cash on delivery might be available</li><li>Easy 30 days returns and exchanges</li></ul><h5><strong>RETURNS</strong></h5><p>If you do not like the product you can return it within 15 days - no questions asked. This excludes bodysuits, swimwear and clearance sale items. <br/>We have an easy and hassle free return policy. Please look at our Delivery &amp; Returns section for further information.</p>"
+          }
+        },
+        "a17e0bd4-6e0d-4da8-bcd7-ff2f4c26ce72": {
+          "type": "review",
+          "settings": {
+            "title": "Product Reviews",
+            "otherapp": ""
+          }
+        },
+        "57c3ab64-9f06-4c48-a084-d084343690ba": {
+          "type": "custom",
+          "settings": {
+            "title": "General Tab",
+            "content": "It's a loose fit blouse. You could choose a size down it you prefer to get a more fitness blouse. <br/>Please take our customers reviews as reference to help you make an informed purchase decision"
+          }
+        },
+        "a6620c33-7486-4e39-93f0-f160607541bc": {
+          "type": "richtext",
+          "settings": {
+            "title": "Washing Care",
+            "content": ""
+          }
+        }
+      },
+      "block_order": [
+        "612c9c15-e72e-45af-8f23-6e5da8137791",
+        "22fd6c17-c92e-4ab9-81de-ddaf1e024e91",
+        "a17e0bd4-6e0d-4da8-bcd7-ff2f4c26ce72",
+        "57c3ab64-9f06-4c48-a084-d084343690ba",
+        "a6620c33-7486-4e39-93f0-f160607541bc"
+      ],
+      "disabled": true,
+      "settings": {
+        "tab_style": "2",
+        "tab_align": "left",
+        "tfs": 14,
+        "tfsm": 14,
+        "tff": "ft1",
+        "tfw": "500",
+        "cl": "#333333",
+        "tbg": "#eeeeee",
+        "cla": "#111111",
+        "tbga": "#000000",
+        "bdr": "#dddddd",
+        "bdra": "#000000",
+        "bdrr": 0,
+        "sst": 40,
+        "ssb": 40,
+        "sstm": 15,
+        "ssbm": 20,
+        "bg": "#ffffff",
+        "bgg": "",
+        "sw": false
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "title": "Related Products",
+        "subtitle": "",
+        "type": "4",
+        "grid": 4,
+        "gridtb": 3,
+        "gridmb": 2,
+        "limit": 5,
+        "carousel": true,
+        "autoplay": false,
+        "speed": 5,
+        "arrow": true,
+        "arrowm": false,
+        "dot": false,
+        "dotm": true,
+        "sst": 30,
+        "ssb": 0,
+        "sstm": 15,
+        "ssbm": 0,
+        "bg": "#ffffff",
+        "bgg": "",
+        "sw": false,
+        "hidem": false
+      }
+    },
+    "recommanded": {
+      "type": "product-recommendations",
+      "settings": {
+        "title": "Recommended Products",
+        "subtitle": "",
+        "grid": 4,
+        "gridtb": 3,
+        "gridmb": 2,
+        "limit": 5,
+        "carousel": true,
+        "autoplay": false,
+        "speed": 5,
+        "arrow": true,
+        "arrowm": true,
+        "dot": false,
+        "dotm": false,
+        "sst": 30,
+        "ssb": 30,
+        "sstm": 15,
+        "ssbm": 15,
+        "bg": "#ffffff",
+        "bgg": "",
+        "sw": false,
+        "hidem": false
+      }
+    },
+    "recentviewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "title": "Recently Viewed Products",
+        "subtitle": "",
+        "grid": 4,
+        "gridtb": 3,
+        "gridmb": 2,
+        "row": 6,
+        "carousel": true,
+        "autoplay": false,
+        "speed": 5,
+        "arrow": true,
+        "arrowm": true,
+        "dot": false,
+        "dotm": false,
+        "sst": 30,
+        "ssb": 30,
+        "sstm": 15,
+        "ssbm": 20,
+        "bg": "#ffffff",
+        "bgg": "",
+        "sw": false,
+        "hidem": false
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "main",
+    "upsell",
+    "tabs",
+    "related",
+    "recommanded",
+    "recentviewed"
+  ]
+}
