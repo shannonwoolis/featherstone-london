@@ -151,7 +151,7 @@
             "asksub": false,
             "gift_recipient": false,
             "atc-style": "btn1",
-            "dynamic_btn": false,
+            "dynamic_btn": true,
             "btnbg": "#f4857b",
             "btntext": "#ffffff",
             "btnbdr": "#f4857b",
