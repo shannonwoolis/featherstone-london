@@ -177,7 +177,7 @@
         "text_QNWJpB": {
           "type": "text",
           "settings": {
-            "text": "<p>Free Shipping on UK Orders </p>",
+            "text": "<p>Free Shipping on UK Orders of £100 or more</p>",
             "cl": "#333333",
             "fs": 14,
             "fsm": 14,
