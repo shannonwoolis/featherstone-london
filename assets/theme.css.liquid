@@ -1670,7 +1670,17 @@ a.bottom_bdr img {vertical-align: sub;}
 .product__policies  {margin-top:-15px;}
 .product__policies a {text-decoration:underline;}
 
-.pageLbl { color:{{ settings.bodycl }}; background-color:{{ settings.bodybg }}; position:absolute; top:0; right:0; padding:5px 15px; box-shadow:-3px 3px 5px {{ settings.bodycl | | color_modify:'alpha', 0.2 }}; border-radius:0 0 0 7px; }
+.pageLbl { color:{{ settings.bodycl }}; background-color:{{ settings.bodybg }}; position:absolute; top:0; right:0; padding:5px 15px; box-shadow:-3px 3px 5px {{ settings.bodycl | color_modify: 'alpha', 0.2 }}; border-radius:0 0 0 7px; }
 
 {% comment %} /* Floating Obejcts */ {% endcomment %}
 
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ settings.bodycl | | color_modify:'alpha', 0.2 }}"
+  to: "{{ settings.bodycl | color_modify: 'alpha', 0.2 }}"
+  position: 92498..92548
+{% endcomment %}

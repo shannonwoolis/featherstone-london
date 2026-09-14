@@ -13,7 +13,7 @@
     {% if settings.newsletter_img != blank %}
       {% if settings.newsltr-style != "style3" and settings.newsltr-style != "style4" %}
        <div class="newsl_img{% if settings.newsltr-style == "style2" %} col-1 wd50-md{% endif %}">
-         <div class="bgImg lazyload" data-bgset="{% render 'prgrid-img', image: settings.newsletter_img,, sizes:'150,350,550,750,950' %}" data-sizes="auto" data-parent-fit="contain" style="padding-bottom:{{ 1 | divided_by: settings.newsletter_img.aspect_ratio | times: 100 }}%;"></div>
+         <div class="bgImg lazyload" data-bgset="{% render 'prgrid-img', image: settings.newsletter_img, sizes: '150,350,550,750,950' %}" data-sizes="auto" data-parent-fit="contain" style="padding-bottom:{{ 1 | divided_by: settings.newsletter_img.aspect_ratio | times: 100 }}%;"></div>
        </div>
       {% endif %}
     {% endif %}
@@ -231,4 +231,15 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 {% endcapture %}
-{{ themeModels | strip_newlines | remove: "  " | remove: "	" }}
+{{ themeModels | strip_newlines | remove: "  " | remove: "	" }}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'prgrid-img', image: settings.newsletter_img,, sizes:'150,350,550,750,950'
+    %}"
+  to: "{% render 'prgrid-img', image: settings.newsletter_img, sizes: '150,350,550,750,950'
+    %}"
+  position: 1331..1418
+{%- endcomment -%}

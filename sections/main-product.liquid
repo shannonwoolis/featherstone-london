@@ -801,7 +801,7 @@
 	{%- if secSt.scart -%}
 		<div class="stickyCart" style="--bg:{{ secSt.cl_bg }};--txt:{{ secSt.cl_txt }};--bdr:{{ secSt.qty_bdr }};--btnbg:{{ secSt.btn_bg }};--btntxt:{{ secSt.btn_text }};">
 			<div class="fl f-aic f-jcc">
-			{%- capture "form_classes" %} product-form-{{ product.id }} fl f-jcc f-aic{%- endcapture %}
+			{%- capture form_classes %} product-form-{{ product.id }} fl f-jcc f-aic{%- endcapture %}
 
 					<div class="img"><img src="{{ featured_img.src | img_url: '60x60' }}" class="db stickCtImg" alt="{{ image.alt | default: product.title | default: secSt.title | default: 'Featherstone London' | escape }}"></div>
 					<div class="prdata tl">
@@ -3721,4 +3721,13 @@
 		}
 	]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{%- capture "form_classes" %}'
+  to: "{%- capture form_classes %}"
+  position: 70324..70351
+{%- endcomment -%}
