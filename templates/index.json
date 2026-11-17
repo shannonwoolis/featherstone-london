@@ -20,7 +20,7 @@
         "video_url": "",
         "mp4url": "shopify://files/videos/BTS Reel desktop 3.mp4",
         "mp4urlm": "shopify://files/videos/BTS Reel mobile 2 (1).mp4",
-        "title": "<span class=\"hero-pretitle\">New collection</span>\nAutumn - Winter 2025",
+        "title": "<span class=\"hero-pretitle\">New collection</span>\nAutumn - Winter 2026",
         "hidet": false,
         "cntwd": 2000,
         "hdfs": 45,
@@ -1205,7 +1205,7 @@
           "type": "text_block",
           "settings": {
             "image": "shopify://shop_images/truck-fast-solid.png",
-            "title": "FREE DELIVERY FOR ORDERS £100 OR MORE",
+            "title": "FREE DELIVERY ON ORDERS £100 OR MORE",
             "text": "1-3 Business Days Delivery within UK",
             "url": ""
           }
